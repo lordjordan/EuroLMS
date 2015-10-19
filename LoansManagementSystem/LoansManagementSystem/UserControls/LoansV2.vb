@@ -666,7 +666,28 @@ Fix2:
                 Dim data As New Dictionary(Of String, Object)
                 data.Add("loan_id", loan_id)
 
-                dr = db.ExecuteReader("select * from tbl_loans where loan_id=@loan_id", data)
+                dr = db.ExecuteReader("select loan_id, L.client_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                "terms, date_start, date_end, application_status, loan_status, " & _
+                                "Co.company_name, B.branch_name " & _
+                                "from tbl_loans L " & _
+                                "left join tbl_clients C on L.client_id = C.client_id " & _
+                                "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                "where loan_id = @loan_id", data)
+
+                If dr.HasRows Then
+                    toggleLoanApplication(True)
+                    clearClientProfileBox()
+                    txtName.Text = dr.Item("loan_id")
+                    txtName.Text = dr.Item("name")
+                    txtCompany.Text = dr.Item("company_name")
+                    txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, False)
+                    txtBranch.Text = dr.Item("branch_name")
+                    'txtBiMonthlyAmort.Text = dr.Item("loan_id")
+                    dtStart.Value = StrToDate(dr.Item("date_start"))
+                    txtTerms.Text = dr.Item("terms")
+
+                End If
 
             Catch ex As Exception
 
