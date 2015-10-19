@@ -111,6 +111,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DueDateObj.vb" />
     <Compile Include="Controllers\GeneralMethods.vb" />
     <Compile Include="Controllers\MainPanelController.vb" />
     <Compile Include="DBHelper.vb" />
