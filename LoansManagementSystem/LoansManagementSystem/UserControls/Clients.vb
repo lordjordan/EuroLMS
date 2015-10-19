@@ -13,7 +13,7 @@ Public Class Clients
 
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
-    Dim db As New DBHelper("Data Source=" & My.Settings.ConString & "; Version=3;")
+    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
     Dim dr As SQLite.SQLiteDataReader
 
     Private Sub showAddEdit(mode As Boolean)
@@ -52,9 +52,9 @@ Public Class Clients
             Try
                 dr = db.ExecuteReader("select client_id ,company_name, branch_name, first_name,last_name,middle_name, birth_date, address, contact_number, date_hired," & _
                                   "employee_type, employee_no, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE client_id=" & ListView1.FocusedItem.Text)
-                
+
                 If dr.HasRows Then
-                    
+
                     txt_client.Text = dr.Item("client_id").ToString
                     'cbxCompany.Text = dr.Item("company_name").ToString
                     'cbxBranch.Text = dr.Item("branch_name").ToString
@@ -131,7 +131,7 @@ Public Class Clients
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        
+
         If gbxAddEdit.Text = "Add new client" Then
             If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
                         Or txt_Contact.Text = "" Or cbxEmpType.Text = "" Or txtEmpNum.Text = "" Or txt_Credit.Text = "" Then
@@ -472,7 +472,7 @@ Public Class Clients
         data.Add("searchkey2", "%" & txtSearchClient.Text & "%")
         data.Add("searchkey3", "%" + txtSearchClient.Text + "%")
 
-        Dim db As New DBHelper("Data Source=" & My.Settings.ConString & "; Version=3;")
+        Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
         Dim dr As SQLite.SQLiteDataReader
 
         Try

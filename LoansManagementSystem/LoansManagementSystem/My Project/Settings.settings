@@ -8,5 +8,8 @@
     <Setting Name="DB" Type="System.String" Scope="User">
       <Value Profile="(Default)">LMS.s3db</Value>
     </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=D:\LMSdb\LMS.s3db; Version=3;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

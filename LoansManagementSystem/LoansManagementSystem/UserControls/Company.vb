@@ -3,7 +3,7 @@ Public Class Company
 
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
-    Dim db As New DBHelper("Data Source=" & My.Settings.ConString & "; Version=3;")
+    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
     Dim dr As SQLite.SQLiteDataReader
     Dim cmd As SQLite.SQLiteCommand
 
@@ -226,7 +226,7 @@ Public Class Company
         data.Add("searchkey2", "%" & txtSearch.Text & "%")
         data.Add("searchkey3", "%" + txtSearch.Text + "%")
 
-        Dim db As New DBHelper("Data Source=" & My.Settings.ConString & "; Version=3;")
+        Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
         Dim dr As SQLite.SQLiteDataReader
 
         Try

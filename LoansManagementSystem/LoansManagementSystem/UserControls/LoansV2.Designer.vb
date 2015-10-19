@@ -45,6 +45,8 @@ Partial Class LoansV2
         Me.btnAddNew = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.gbxShowClient = New System.Windows.Forms.GroupBox()
         Me.btnClientBack = New System.Windows.Forms.Button()
         Me.lvClientList = New System.Windows.Forms.ListView()
@@ -61,7 +63,6 @@ Partial Class LoansV2
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.gbxClientData = New System.Windows.Forms.GroupBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.txtAvailableCredit = New System.Windows.Forms.TextBox()
         Me.txtBranch = New System.Windows.Forms.TextBox()
@@ -77,6 +78,7 @@ Partial Class LoansV2
         Me.lblEmployeeNumber = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.gbxLoanData1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.cboLoanStatus = New System.Windows.Forms.ComboBox()
         Me.cboApplicationStatus = New System.Windows.Forms.ComboBox()
         Me.txtPrincipal = New System.Windows.Forms.TextBox()
@@ -108,18 +110,16 @@ Partial Class LoansV2
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxShowClient.SuspendLayout()
         Me.gbxClientData.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxLoanData1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxLoanData2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -350,6 +350,25 @@ Partial Class LoansV2
         Me.gbxAddEdit.Text = "New Loan Application"
         Me.gbxAddEdit.Visible = False
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox2.Location = New System.Drawing.Point(591, 7)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(122, 121)
+        Me.PictureBox2.TabIndex = 171
+        Me.PictureBox2.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PictureBox1.Location = New System.Drawing.Point(583, 2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(137, 132)
+        Me.PictureBox1.TabIndex = 174
+        Me.PictureBox1.TabStop = False
+        '
         'gbxShowClient
         '
         Me.gbxShowClient.BackColor = System.Drawing.Color.DarkGray
@@ -507,16 +526,6 @@ Partial Class LoansV2
         Me.gbxClientData.Size = New System.Drawing.Size(738, 186)
         Me.gbxClientData.TabIndex = 173
         Me.gbxClientData.TabStop = False
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox2.Location = New System.Drawing.Point(591, 7)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(122, 121)
-        Me.PictureBox2.TabIndex = 171
-        Me.PictureBox2.TabStop = False
         '
         'txtName
         '
@@ -699,6 +708,14 @@ Partial Class LoansV2
         Me.gbxLoanData1.Size = New System.Drawing.Size(738, 272)
         Me.gbxLoanData1.TabIndex = 173
         Me.gbxLoanData1.TabStop = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Location = New System.Drawing.Point(440, 79)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(273, 174)
+        Me.DataGridView1.TabIndex = 174
         '
         'cboLoanStatus
         '
@@ -1071,23 +1088,6 @@ Partial Class LoansV2
         Me.Label23.Text = "Number of Co-makers"
         Me.Label23.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'DataGridView1
-        '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(440, 79)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(273, 174)
-        Me.DataGridView1.TabIndex = 174
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.PictureBox1.Location = New System.Drawing.Point(583, 2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(137, 132)
-        Me.PictureBox1.TabIndex = 174
-        Me.PictureBox1.TabStop = False
-        '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1101,19 +1101,19 @@ Partial Class LoansV2
         Me.pnlMain.ResumeLayout(False)
         Me.pnlMain.PerformLayout()
         Me.gbxAddEdit.ResumeLayout(False)
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxShowClient.ResumeLayout(False)
         Me.gbxShowClient.PerformLayout()
         Me.gbxClientData.ResumeLayout(False)
         Me.gbxClientData.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxLoanData1.ResumeLayout(False)
         Me.gbxLoanData1.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxLoanData2.ResumeLayout(False)
         Me.gbxLoanData2.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
