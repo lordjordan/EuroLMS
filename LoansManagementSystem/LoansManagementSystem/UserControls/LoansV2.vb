@@ -678,7 +678,8 @@ Fix2:
                 If dr.HasRows Then
                     toggleLoanApplication(True)
                     clearClientProfileBox()
-                    txtName.Text = dr.Item("loan_id")
+
+                    txtClientID.Text = dr.Item("client_id")
                     txtName.Text = dr.Item("name")
                     txtCompany.Text = dr.Item("company_name")
                     txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, False)
