@@ -228,6 +228,12 @@
     <Compile Include="UserControls\MainMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UserControls\PaymentHistory.Designer.vb">
+      <DependentUpon>PaymentHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PaymentHistory.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControls\System_User.Designer.vb">
       <DependentUpon>System_User.vb</DependentUpon>
     </Compile>
@@ -289,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MainMenu.resx">
       <DependentUpon>MainMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PaymentHistory.resx">
+      <DependentUpon>PaymentHistory.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\System_User.resx">
       <DependentUpon>System_User.vb</DependentUpon>

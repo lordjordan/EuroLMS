@@ -9,6 +9,7 @@
     Public uscLoans As New LoansV2
     Public uscCompanies As New Company
     Public uscExtra As New Loan_Calculator
+    Public uscPaymentHistory As New PaymentHistory
 
 
     'Public uscClientList As New ClientList
