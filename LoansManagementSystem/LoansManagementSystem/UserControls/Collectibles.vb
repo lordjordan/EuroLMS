@@ -11,7 +11,7 @@
     Dim itm As ListViewItem
     Dim colorChanger As Boolean
     '### Change the "Data Source" path to point to our own LMS Database
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim rec As Integer
     Dim data As New Dictionary(Of String, Object)
@@ -202,7 +202,7 @@
         Finally
             db.Dispose()
         End Try
-        
+
 
 
     End Sub
