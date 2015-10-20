@@ -98,7 +98,6 @@ Public Class Attachments
                     End If
 
                     Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
-
                     Dim pic As Byte() = dr.Item("picture")
                     imagestream = New System.IO.MemoryStream(pic)
                     PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
@@ -289,8 +288,7 @@ Public Class Attachments
             db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
-
-    Private Sub btnPreview_Click(sender As Object, e As EventArgs) Handles btnPreview.Click
+    Public Sub PreviewPic()
         PreviewImg.PictureBox1.Image = Nothing
         If ListView1.SelectedItems.Count > 0 Then
             PreviewImg.Show()
@@ -317,5 +315,16 @@ Public Class Attachments
         Else
             MessageBox.Show("Please select record to Preview.", "Important Note", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
         End If
+    End Sub
+    Private Sub btnPreview_Click(sender As Object, e As EventArgs) Handles btnPreview.Click
+        PreviewPic()
+    End Sub
+
+    Private Sub ListView1_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick
+        PreviewPic()
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
+
     End Sub
 End Class
