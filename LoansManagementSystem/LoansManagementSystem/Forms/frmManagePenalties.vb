@@ -9,7 +9,7 @@
     Dim a, b, c, splitter() As String
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim rec As Integer
     Dim data As New Dictionary(Of String, Object)
