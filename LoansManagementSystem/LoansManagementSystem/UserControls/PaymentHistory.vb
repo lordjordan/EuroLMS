@@ -1,12 +1,12 @@
 ﻿Public Class PaymentHistory
     Dim itm As ListViewItem
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim colorChanger As Boolean
 
     Public principal, monthlyRate, totalPaymentBiMonth, collectedAmount, rembal As Double
     Public biMonInterest As Decimal
-    Public interest As Double
+    Public interest, penalty As Double
     Dim ctr As Integer
     Dim conV As String
 
@@ -27,10 +27,10 @@
 
     End Sub
     Private Sub PaymentHistory_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        gbxShowClient.BringToFront()
     End Sub
 
-    
+
 
     Private Sub btnClientBack_Click(sender As Object, e As EventArgs) Handles btnClientBack.Click
         showClient(False)
@@ -81,14 +81,14 @@
             db.Dispose()
 
         End Try
-        
+
     End Sub
 
     Private Sub pnlMain_Paint(sender As Object, e As PaintEventArgs) Handles pnlMain.Paint
 
     End Sub
 
-    Private Sub btnViewLoan_Click(sender As Object, e As EventArgs) Handles btnViewLoan.Click
+    Private Sub btnViewLoan_Click(sender As Object, e As EventArgs)
         showClient(True)
         For Each Control In gbxShowClient.Controls
             If TypeOf Control Is TextBox Then
@@ -104,10 +104,26 @@
             colorChanger = False
             collectedAmount = 0
             If lvClientList.SelectedItems.Count > 0 Then
+                'get all penalty amount
+                dr = db.ExecuteReader("SELECT penalty_amt,penalty_status FROM tbl_collectibles WHERE loan_id = " & lvClientList.FocusedItem.SubItems(2).Text)
 
+                If dr.HasRows Then
+
+                    Do While dr.Read
+                        If dr.Item("penalty_status").ToString = 1 Then
+                            penalty += CDbl(dr.Item("penalty_amt").ToString.Insert(6, ","))
+                        End If
+                        txtTotalPenalties.Text = penalty
+                        If Not txtTotalPenalties.Text.Contains(".") Then
+                            txtTotalPenalties.Text &= ".00"
+                        End If
+                    Loop
+
+                End If
 
                 dr = db.ExecuteReader("Select tbl_loans.loan_id as loanid, payment_id, last_name || ', ' || first_name || ' ' || middle_name as name, " & _
-                                      "date_stamp , amount FROM tbl_payments INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
+                                      "date_stamp , amount,penalty_amt, penalty_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
+                                      "INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
                                       "INNER JOIN tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_id = " & _
                                       lvClientList.FocusedItem.SubItems(2).Text)
                 Do While dr.Read
@@ -119,7 +135,13 @@
                         lvPH.Items(ctr).SubItems(2).Text &= ".00"
                     End If
                     collectedAmount += lvPH.Items(ctr).SubItems(2).Text
-
+                    If dr.Item("penalty_status").ToString = 1 Then
+                        itm.SubItems.Add("YES")
+                        itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
+                    Else
+                        itm.SubItems.Add("NO")
+                        itm.SubItems.Add("0.00")
+                    End If
                     If colorChanger = True Then
                         itm.BackColor = Color.LemonChiffon
                         colorChanger = False
@@ -149,10 +171,13 @@
                 If Not conV.Contains(".") Then
                     conV &= ".00"
                 End If
-                txtCollectedAmt.Text = conV
-                txtBalance.Text = rembal - CDbl(txtCollectedAmt.Text)
+                txtCollectedAmt.Text = conV - penalty
+                txtBalance.Text = (rembal - CDbl(txtCollectedAmt.Text)) + penalty
                 If Not txtBalance.Text.Contains(".") Then
                     txtBalance.Text &= ".00"
+                End If
+                If Not txtCollectedAmt.Text.Contains(".") Then
+                    txtCollectedAmt.Text &= ".00"
                 End If
                 If Not txtPrincipalAmt.Text.Contains(".") Then
                     txtPrincipalAmt.Text &= ".00"
@@ -162,7 +187,9 @@
                 End If
                 'terms left
             Else
+                txtTotalPenalties.Clear()
                 MsgBox("Please select a loan", MsgBoxStyle.Exclamation + vbOKOnly)
+
             End If
             conV = ""
             rembal = 0
@@ -182,5 +209,4 @@
         btnSelectSearchClient_Click(sender, e)
     End Sub
 
-   
 End Class
