@@ -77,7 +77,8 @@ Partial Class Clients
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ServiceController1 = New System.ServiceProcess.ServiceController()
-        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.ofdPic = New System.Windows.Forms.OpenFileDialog()
+        Me.txtpicID = New System.Windows.Forms.TextBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.Picturebox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -251,6 +252,7 @@ Partial Class Clients
         '
         Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
+        Me.gbxAddEdit.Controls.Add(Me.txtpicID)
         Me.gbxAddEdit.Controls.Add(Me.txtEmpNum)
         Me.gbxAddEdit.Controls.Add(Me.Label16)
         Me.gbxAddEdit.Controls.Add(Me.cbxCompany)
@@ -644,9 +646,19 @@ Partial Class Clients
         Me.Label1.TabIndex = 47
         Me.Label1.Text = "Client List"
         '
-        'OpenFileDialog
+        'ofdPic
         '
-        Me.OpenFileDialog.FileName = "OpenFileDialog1"
+        Me.ofdPic.FileName = "OpenFileDialog1"
+        '
+        'txtpicID
+        '
+        Me.txtpicID.Enabled = False
+        Me.txtpicID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtpicID.Location = New System.Drawing.Point(442, 1)
+        Me.txtpicID.Name = "txtpicID"
+        Me.txtpicID.Size = New System.Drawing.Size(31, 26)
+        Me.txtpicID.TabIndex = 71
+        Me.txtpicID.Visible = False
         '
         'Clients
         '
@@ -718,6 +730,7 @@ Partial Class Clients
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtSearchClient As System.Windows.Forms.TextBox
     Friend WithEvents ColumnHeader6 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents OpenFileDialog As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents ofdPic As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents txtpicID As System.Windows.Forms.TextBox
 End Class
 
