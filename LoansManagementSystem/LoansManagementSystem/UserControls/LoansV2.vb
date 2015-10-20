@@ -329,7 +329,7 @@ Public Class LoansV2
 
     Public Sub LoadListView()
         lvLoanList.Items.Clear()
-        Using db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Using db As New DBHelper(My.Settings.ConnectionString)
             Dim dr As SQLite.SQLiteDataReader
 
             'Dim rec As Integer

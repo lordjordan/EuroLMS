@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
 Public Class frmLogin
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim cmd As SQLite.SQLiteCommand
 

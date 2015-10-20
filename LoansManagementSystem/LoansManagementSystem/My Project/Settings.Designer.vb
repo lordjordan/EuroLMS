@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=D:\LMSdb\LMS.s3db; Version=3;")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=\\ACER\LMSdb\LMS.s3db; Version=3;")>  _
         Public Property ConnectionString() As String
             Get
                 Return CType(Me("ConnectionString"),String)
