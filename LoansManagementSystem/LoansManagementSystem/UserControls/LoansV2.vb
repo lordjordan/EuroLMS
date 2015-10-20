@@ -167,7 +167,7 @@ Public Class LoansV2
     Private Sub saveCollectibles()
         Dim rows As Byte = DataGridView1.RowCount - 1
         For i = 0 To rows - 1
-            Using db2 As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+            Using db2 As New DBHelper(My.Settings.ConnectionString)
                 Dim rec As Integer
                 Try
                     Dim data As New Dictionary(Of String, Object)
@@ -266,7 +266,7 @@ Public Class LoansV2
         ''        Next
     End Sub
     Private Sub saveNewForm()
-        Using db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
             Try
@@ -305,7 +305,7 @@ Public Class LoansV2
 
         End Using
 
-        ''Using db3 As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        ''Using db3 As New DBHelper(My.Settings.ConnectionString)
         ''    'Dim rec As Integer
         ''    Dim data As New Dictionary(Of String, Object)
         ''    Try
@@ -329,7 +329,7 @@ Public Class LoansV2
 
     Public Sub LoadListView()
         lvLoanList.Items.Clear()
-        Using db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Using db As New DBHelper(My.Settings.ConnectionString)
             Dim dr As SQLite.SQLiteDataReader
 
             'Dim rec As Integer
@@ -398,7 +398,7 @@ Public Class LoansV2
         data.Add("searchkey2", "%" & txtSearchClient.Text & "%")
         data.Add("searchkey3", "%" + txtSearchClient.Text + "%")
 
-        Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Dim db As New DBHelper(My.Settings.ConnectionString)
         Dim dr As SQLite.SQLiteDataReader
 
         Try
@@ -658,7 +658,7 @@ Fix2:
     End Sub
 
     Private Sub loadEditForm(loan_id As Long)
-        Using db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Using db As New DBHelper(My.Settings.ConnectionString)
 
             'Dim rec As Integer
             Try

@@ -518,7 +518,7 @@
                                          "' AND loan_id= " & lvCollectibles.Items(x - 1).SubItems(0).Text, data)
                 data.Clear()
                 'data set ulit para sa adjustment note: tbl_collectibles ay nag babago bago ng data.....
-                con.ConnectionString = "Data Source=D:\LMSdb\LMS.s3db; Version=3;"
+                con.ConnectionString = My.Settings.ConnectionString
                 query = "SELECT ctb_id, due_date, penalty_status, payable_amt , collected_amt, previous_balance, penalty_amt FROM tbl_collectibles WHERE due_date <= '" & _
                                       Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "' AND " & _
                                       "loan_id = " & lvCollectibles.Items(x - 1).Text
