@@ -1,12 +1,16 @@
-﻿
+﻿Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography
+Imports System.Text
 Public Class LoansV2
     Dim active_loan_id As Long = 0
+    Dim isLOADING As Boolean = False
 
     Private Sub computeTotalLoan()
         If Val(txtTerms.Text) < 1 Or Val(cboInterest.Text) <= 0 Or Val(txtPrincipal.Text) < 1 Or _
             Not IsNumeric(txtPrincipal.Text) Or _
             Not IsNumeric(cboInterest.Text) Or _
-            Not IsNumeric(txtTerms.Text) Then
+            Not IsNumeric(txtTerms.Text) Or _
+            isLOADING Then
             txtTotalLoanAmount.Text = 0
             txtTotalInterest.Text = 0
             txtMonthlyInterest.Text = 0
@@ -89,6 +93,7 @@ Public Class LoansV2
 
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
         'gbxAddEdit.Visible = True
+        gbxAddEdit.Text = "New Loan Application"
         toggleLoanApplication(True)
         btnFind_Click(Me, e)
 
@@ -130,24 +135,37 @@ Public Class LoansV2
         pnlMain.Enabled = Not mode
     End Sub
 
+    Private Sub toggleVerifyActivation(Optional mode As Boolean = False)
+        gbxVerifyActivation.Visible = mode
+        gbxVerifyActivation.Enabled = mode
+        If mode Then
+            gbxVerifyActivation.BringToFront()
+        Else
+            gbxVerifyActivation.SendToBack()
+        End If
+
+        gbxClientData.Enabled = Not mode
+
+        pnlMain.Enabled = Not mode
+    End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         toggleLoanApplication()
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If validateInputs() = False Then Exit Sub
+
         If gbxAddEdit.Text = "New Loan Application" Then
-            If validateInputs() = False Then Exit Sub
             saveNewForm()
-            saveCollectibles()
-            MsgBox("Record saved!", MsgBoxStyle.Information)
-            toggleLoanApplication()
-            LoadListView()
-
         Else
-
+            saveEditForm()
         End If
 
+        saveCollectibles()
 
+        MsgBox("Record saved!", MsgBoxStyle.Information)
+        toggleLoanApplication()
+        LoadListView()
         'toggleLoanApplication()
     End Sub
 
@@ -165,6 +183,36 @@ Public Class LoansV2
 
     End Function
     Private Sub saveCollectibles()
+        If gbxAddEdit.Text = "Edit Loan Application" Then
+            'Dim ddate(DataGridView1.RowCount - 1) As DueDateObj
+            Using db1 As New DBHelper(My.Settings.ConnectionString)
+                'Dim dr As SQLite.SQLiteDataReader
+                Dim rec As Integer
+                Try
+                    Dim data As New Dictionary(Of String, Object)
+                    data.Add("loan_id", active_loan_id)
+                    rec = db1.ExecuteNonQuery("delete from tbl_collectibles where loan_id = @loan_id", data)
+
+
+                    'dr = db1.ExecuteReader("select * from tbl_collectibles where loan_id=@loan_id")
+
+                    'If dr.HasRows Then
+                    '    Dim index As Byte = 0
+                    '    Dim ddate(DataGridView1.RowCount - 1) As DueDateObj
+                    '    Do While dr.Read
+                    '        ddate(index) = New DueDateObj(dr.Item("ctb_id"), DataGridView1.Item(1, index).Value)
+                    '    Loop
+
+
+                    'End If
+
+                Catch ex As Exception
+
+                End Try
+            End Using
+
+        End If
+
         Dim rows As Byte = DataGridView1.RowCount - 1
         For i = 0 To rows - 1
             Using db2 As New DBHelper(My.Settings.ConnectionString)
@@ -201,6 +249,8 @@ Public Class LoansV2
 
             End Using
         Next
+
+
 
 
 
@@ -327,6 +377,49 @@ Public Class LoansV2
 
     End Sub
 
+    Private Sub saveEditForm()
+        Using db As New DBHelper(My.Settings.ConnectionString)
+            Dim rec As Integer
+            Dim data As New Dictionary(Of String, Object)
+            Try
+
+                data.Add("client_id", txtClientID.Text)
+                data.Add("principal", NumToStr(FormatNumber(txtPrincipal.Text, 2)))
+                data.Add("amortization", NumToStr(FormatNumber(txtBiMonthlyAmort.Text, 2)))
+                data.Add("date_start", Format(dtStart.Value, "yyyyMMdd"))
+                data.Add("date_end", Format(dtEnd.Value, "yyyyMMdd"))
+                data.Add("interest_percentage", cboInterest.Text)
+                data.Add("date_approved", "00000000")
+                data.Add("date_enrolled", Format(Now, "yyyyMMdd"))
+                data.Add("terms", Val(txtTerms.Text))
+                data.Add("application_status", cboApplicationStatus.SelectedIndex)
+                data.Add("loan_status", cboLoanStatus.SelectedIndex)
+                data.Add("loan_remarks", txtLoanRemarks.Text)
+                data.Add("loan_id", active_loan_id)
+
+
+                rec = db.ExecuteNonQuery("update tbl_loans set client_id = @client_id, principal = @principal, amortization = @amortization, date_start = @date_start, date_end = @date_end, " & _
+                                         "interest_percentage = @interest_percentage, date_approved = @date_approved, date_enrolled = @date_enrolled , terms = @terms, application_status = @application_status, loan_status = @loan_status, " & _
+                                         "loan_remarks = @loan_remarks where loan_id = @loan_id;", data)
+
+                If Not rec < 1 Then
+                    'MsgBox("Record saved!", MsgBoxStyle.Information)
+                    'toggleLoanApplication()
+                    'LoadListView()
+                    'Dim dr As SQLite.SQLiteDataReader
+                    'dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
+                    'active_loan_id = dr.Item("id")
+                End If
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            Finally
+                db.Dispose()
+            End Try
+
+        End Using
+
+    End Sub
+
     Public Sub LoadListView()
         lvLoanList.Items.Clear()
         Using db As New DBHelper(My.Settings.ConnectionString)
@@ -355,7 +448,7 @@ Public Class LoansV2
                 '                         "@loan_remarks)", data)
 
                 dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
-                                "terms, date_start, date_end, application_status, loan_status " & _
+                                "terms, date_start, date_end, application_status, loan_status, loan_remarks " & _
                                 "from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -375,9 +468,9 @@ Public Class LoansV2
                         itmx.SubItems.Add(dr.Item("terms").ToString)
                         itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
                         itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
-                        itmx.SubItems.Add(dr.Item("application_status").ToString)
-                        itmx.SubItems.Add(dr.Item("loan_status").ToString)
-
+                        itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                        itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                        itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
 
 
                     Loop
@@ -654,7 +747,17 @@ Fix2:
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        loadEditForm(lvLoanList.FocusedItem.Text)
+        Try
+            If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
+                MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be editted.", MsgBoxStyle.Critical, "Unable to edit")
+                Exit Sub
+            End If
+            active_loan_id = lvLoanList.FocusedItem.Text.Trim
+            loadEditForm(active_loan_id)
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
     Private Sub loadEditForm(loan_id As Long)
@@ -662,13 +765,14 @@ Fix2:
 
             'Dim rec As Integer
             Try
+                gbxAddEdit.Text = "Edit Loan Application"
                 Dim dr As SQLite.SQLiteDataReader
                 Dim data As New Dictionary(Of String, Object)
                 data.Add("loan_id", loan_id)
 
                 dr = db.ExecuteReader("select loan_id, L.client_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
                                 "terms, date_start, date_end, application_status, loan_status, " & _
-                                "Co.company_name, B.branch_name " & _
+                                "Co.company_name, B.branch_name, loan_remarks " & _
                                 "from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -676,6 +780,9 @@ Fix2:
                                 "where loan_id = @loan_id", data)
 
                 If dr.HasRows Then
+
+                    isLOADING = True
+
                     toggleLoanApplication(True)
                     clearClientProfileBox()
 
@@ -685,17 +792,133 @@ Fix2:
                     txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, False)
                     txtBranch.Text = dr.Item("branch_name")
                     'txtBiMonthlyAmort.Text = dr.Item("loan_id")
+                    txtLoanRemarks.Text = dr.Item("loan_remarks")
                     dtStart.Value = StrToDate(dr.Item("date_start"))
+                    cboApplicationStatus.SelectedIndex = dr.Item("application_status")
+                    cboLoanStatus.SelectedIndex = dr.Item("loan_status")
+
+                    isLOADING = False
+
                     txtTerms.Text = dr.Item("terms")
 
                 End If
 
             Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                db.Dispose()
+                isLOADING = False
+            End Try
 
+        End Using
+    End Sub
+
+    Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+        Dim isVERIFIED As Boolean = False
+
+        Using db As New DBHelper(My.Settings.ConnectionString)
+            Dim dr As SQLite.SQLiteDataReader
+            'Dim cmd As SQLite.SQLiteCommand
+            Dim data As New Dictionary(Of String, Object)
+            Dim user As String = txtUser.Text
+            Dim pass As String = txtPassword.Text
+            'Dim Usertype As String = lblUtype.Text
+            If txtUser.Text = "" And txtPassword.Text = "" Then
+                MsgBox("Please provide username and password.", MsgBoxStyle.Exclamation, "Authentication Error")
+                toggleVerifyActivation()
+                Exit Sub
+
+            End If
+
+            Try
+                dr = db.ExecuteReader("select * from tbl_users where user_name like '%" & txtUser.Text & "%' and user_password like '%" & Encrypt(txtPassword.Text, "Keys") & "%' ")
+                If dr.HasRows Then
+                    Do While dr.Read
+                        Dim encryptPass = Encrypt(txtPassword.Text, "Keys")
+                        Dim uname = (dr.Item("user_name").ToString)
+                        Dim upass = (dr.Item("user_password").ToString)
+                        'Dim utype = (CInt(dr.Item("user_type")))
+                        'lblUtype.Text = utype
+                        If uname = txtUser.Text And upass = encryptPass Then
+                            isVERIFIED = True
+
+                        End If
+                    Loop
+                Else
+                    MessageBox.Show("Username and Password do not match..", "Authentication Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    'Clear all fields
+                    txtPassword.Text = ""
+                    txtUser.Text = ""
+                    txtUser.Focus()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.ToString)
             Finally
                 db.Dispose()
             End Try
 
         End Using
+
+        If isVERIFIED Then
+            Using db2 As New DBHelper(My.Settings.ConnectionString)
+                Try
+                    Dim rec As Integer
+                    Dim data2 As New Dictionary(Of String, Object)
+
+                    data2.Add("loan_id", lvLoanList.FocusedItem.Text)
+                    rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=1 where loan_id=@loan_id", data2)
+
+                    MsgBox("Loan successfuly activated!", MsgBoxStyle.Information, "Activate Loan")
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Critical)
+                Finally
+                    db2.Dispose()
+                End Try
+
+            End Using
+        End If
+
+        toggleVerifyActivation()
+        LoadListView()
+    End Sub
+
+    Private Const EM_SETCUEBANNER As Integer = &H1501
+
+    <DllImport("user32.dll", CharSet:=CharSet.Auto)> _
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As Int32
+    End Function
+
+    Private Sub SetCueText(ByVal control As Control, ByVal text As String)
+        SendMessage(control.Handle, EM_SETCUEBANNER, 0, text)
+    End Sub
+    Private Shared DES As New TripleDESCryptoServiceProvider
+    Private Shared MD5 As New MD5CryptoServiceProvider
+
+    Public Shared Function MD5Hash(ByVal value As String) As Byte()
+        Return MD5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(value))
+    End Function
+
+    Public Shared Function Encrypt(ByVal stringToEncrypt As String, ByVal key As String) As String
+        DES.Key = frmLogin.MD5Hash(key)
+        DES.Mode = CipherMode.ECB
+        Dim Buffer As Byte() = ASCIIEncoding.ASCII.GetBytes(stringToEncrypt)
+        Return Convert.ToBase64String(DES.CreateEncryptor().TransformFinalBlock(Buffer, 0, Buffer.Length))
+    End Function
+
+
+    Private Sub btnActivateLoan_Click(sender As Object, e As EventArgs) Handles btnActivateLoan.Click
+        If lvLoanList.FocusedItem.SubItems(8).Text <> cboApplicationStatus.Items(1) Or lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
+            MsgBox("Unable to activated this loan. Please check Application status or Loan Status first.", MsgBoxStyle.Critical, "Unable to activate")
+            Exit Sub
+        End If
+        txtUser.Text = ""
+        txtPassword.Text = ""
+        SetCueText(txtUser, "Username")
+        SetCueText(txtPassword, "Password")
+        toggleVerifyActivation(True)
+    End Sub
+
+    Private Sub btnCloseVerification_Click(sender As Object, e As EventArgs) Handles btnCloseVerification.Click
+        toggleVerifyActivation()
     End Sub
 End Class
