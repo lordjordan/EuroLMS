@@ -3,7 +3,7 @@ Imports System.IO
 Public Class Attachments
     Dim itm As ListViewItem
 
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim cmd As SQLite.SQLiteCommand
     Private Sub showRequirement(mode As Boolean)
@@ -241,7 +241,7 @@ Public Class Attachments
         data.Add("searchkey2", "%" & txtSearchClient.Text & "%")
         data.Add("searchkey3", "%" + txtSearchClient.Text + "%")
 
-        Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+        Dim db As New DBHelper(My.Settings.ConnectionString)
         Dim dr As SQLite.SQLiteDataReader
 
         Try

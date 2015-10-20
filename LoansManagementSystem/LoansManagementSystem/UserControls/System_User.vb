@@ -6,7 +6,7 @@ Imports System.Text
 Public Class System_User
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim cmd As SQLite.SQLiteCommand
     Private Shared DES As New TripleDESCryptoServiceProvider

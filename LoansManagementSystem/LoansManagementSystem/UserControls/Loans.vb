@@ -5,7 +5,7 @@
     Public bilangNGhulog, daysNgmonth, interestRate As Integer
     Public dateStart, dateEnd As DateTime
     Dim itm As ListViewItem
-    Dim db As New DBHelper("Data Source=D:\LMSdb\LMS.s3db; Version=3;")
+    Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
 
     Private Sub showAddEdit(mode As Boolean)
