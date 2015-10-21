@@ -15,26 +15,23 @@ Public Class Attachments
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
     End Sub
+    Private Sub clearAll()
+        txtClientID.Text = ""
+        txtName.Text = ""
+        txt_Remarks.Text = ""
+        cbxReqType.SelectedItem = ""
+        PictureBox1.Image = Nothing
+    End Sub
 
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
+        clearAll()
         AddItemToListView()
     End Sub
 
     Private Sub AddItemToListView()
-
-        'Dim maxId As Integer = 0
-        'dr = db.ExecuteReader("select * from tbl_requirements")
         gbxAddEdit.Text = "Add New Requirement"
         showRequirement(True)
-
-        'While dr.Read = True
-        '    If maxId < dr.Item(0) Then maxId = dr.Item(0)
-        'End While
-        'txtClientID.Text = maxId + 1
-        'PictureBox1.Image =
-
         txtClientID.Focus()
-        txt_Remarks.Text = ""
     End Sub
 
     Private Function strToDate(str As String) As Date
@@ -74,6 +71,7 @@ Public Class Attachments
             db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
+    Dim pic As Byte()
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         PictureBox1.Image = Nothing
         txtReqID.Focus()
@@ -98,8 +96,7 @@ Public Class Attachments
                     End If
 
                     Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
-
-                    Dim pic As Byte() = dr.Item("picture")
+                    pic = dr.Item("picture")
                     imagestream = New System.IO.MemoryStream(pic)
                     PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
                     PictureBox1.Image = Drawing.Image.FromStream(imagestream)
@@ -122,6 +119,44 @@ Public Class Attachments
 
     Dim imgbyte As Byte() = Nothing
     Private Sub btnUpload_Click(sender As Object, e As EventArgs) Handles btnUpload.Click
+        If gbxAddEdit.Text = "Add New Requirement" Then
+            If OpenFileDialog1.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(OpenFileDialog1.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                imgbyte = imagestream.GetBuffer()
+
+                'MsgBox(imgbyte)
+                'txtFilename.Text = imgbyte.ToString
+                'Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                imagestream = New System.IO.MemoryStream(imgbyte)
+                PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
+                PictureBox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(OpenFileDialog1.FileName)
+
+            End If
+            Exit Sub
+        ElseIf gbxAddEdit.Text = "Edit Requirement" Then
+            If OpenFileDialog1.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(OpenFileDialog1.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                pic = imagestream.GetBuffer()
+
+                'MsgBox(imgbyte)
+                'txtFilename.Text = imgbyte.ToString
+                'Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                imagestream = New System.IO.MemoryStream(pic)
+                PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
+                PictureBox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(OpenFileDialog1.FileName)
+            End If
+            Exit Sub
+        End If
         If OpenFileDialog1.ShowDialog = vbOK Then
             Dim myimage As Image = Image.FromFile(OpenFileDialog1.FileName)
             Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
@@ -182,7 +217,7 @@ Public Class Attachments
             Try
                 data.Add("requirement_id", txtReqID.Text)
                 'data.Add("client_id", txtClientID.Text)
-                data.Add("picture", imgbyte)
+                data.Add("picture", pic)
                 data.Add("filename", System.IO.Path.GetFileName(OpenFileDialog1.FileName))
                 If cbxReqType.Text = "Loan application requirements" Then
                     data.Add("requirement_type", "0")
@@ -210,6 +245,8 @@ Public Class Attachments
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         showRequirement(False)
+        ListView1.SelectedItems.Clear()
+        clearAll()
     End Sub
 
     Private Sub Attachments_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -289,8 +326,7 @@ Public Class Attachments
             db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
-
-    Private Sub btnPreview_Click(sender As Object, e As EventArgs) Handles btnPreview.Click
+    Public Sub PreviewPic()
         PreviewImg.PictureBox1.Image = Nothing
         If ListView1.SelectedItems.Count > 0 Then
             PreviewImg.Show()
@@ -318,4 +354,12 @@ Public Class Attachments
             MessageBox.Show("Please select record to Preview.", "Important Note", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
         End If
     End Sub
+    Private Sub btnPreview_Click(sender As Object, e As EventArgs) Handles btnPreview.Click
+        PreviewPic()
+    End Sub
+
+    Private Sub ListView1_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick
+        PreviewPic()
+    End Sub
+
 End Class

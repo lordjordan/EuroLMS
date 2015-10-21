@@ -10,7 +10,10 @@ Imports System.Drawing.Imaging
 Imports System.IO
 
 Public Class Clients
-
+    Dim active_client_id As Long = 0
+    Dim picID As String
+    Dim selectBr As String
+    Dim pic As Byte()
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
     Dim db As New DBHelper(My.Settings.ConnectionString)
@@ -46,25 +49,93 @@ Public Class Clients
             db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
+    Private Function validateInputs() As Boolean
+        If cbxCompany.Text.Trim = "" Then
+            MsgBox("Cannot save this record. Please select a client first.", MsgBoxStyle.Critical, "New Loan Application - Error")
+            showAddEdit(True)
+            Return False
+        End If
+
+        'If cbxBranch.Text.Trim = "" Then
+        '    MsgBox("Cannot save this record. Please put a value for principal first.", MsgBoxStyle.Critical, "New Loan Application - Error")
+        '    txtPrincipal.Select()
+        '    Return False
+        'End If
+        Return True
+    End Function
+
+    Private Sub EditClient()
+        Dim rec As Integer
+        Dim data As New Dictionary(Of String, Object)
+        Dim cID, bID As String
+        cID = cbxCompany.SelectedItem
+        bID = cbxBranch.SelectedItem
+
+        Try
+            data.Add("first_name", txt_FName.Text)
+            data.Add("last_name", txt_LName.Text)
+            data.Add("middle_name", txt_MName.Text)
+            data.Add("birth_date", Format(DateTimePicker1.Value, "yyyyMMdd"))
+            data.Add("address", txt_address.Text)
+            data.Add("contact_number", txt_Contact.Text)
+            'data.Add("employee_type", cbxEmpType.Text)
+            If cbxEmpType.Text = "Contractual" Then 'in process
+                data.Add("employee_type", "0")
+                'cbxEmpType.Text = "Contractual"
+            ElseIf cbxEmpType.Text = "Regular" Then
+                data.Add("employee_type", "1")
+                'cbxEmpType.Text = "Regular"
+            ElseIf cbxEmpType.Text = "Probationary" Then
+                data.Add("employee_type", "2")
+                'cbxEmpType.Text = "Probationary"
+            End If
+            data.Add("employee_no", txtEmpNum.Text)
+            data.Add("credit_limit", NumToStr(txt_Credit.Text))
+            data.Add("branch_id", bID.Substring(bID.Length - 3))
+            'data.Add("picture", imgbyte)
+            data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
+
+            rec = db.ExecuteNonQuery("UPDATE tbl_clients SET first_name=@first_name, middle_name=@middle_name, last_name=@last_name, birth_date=@birth_date," & _
+                                     "address=@address, contact_number=@contact_number, employee_type=@employee_type, employee_no=@employee_no, credit_limit=@credit_limit, branch_id=@branch_id, date_hired=@date_hired WHERE client_id=" & txt_client.Text, data)
+
+            If Not rec < 1 Then
+                'MessageBox.Show("Record updated!", "Important Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+                'showAddEdit(False)
+                'LoadListView()
+
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            db.Dispose() '<--------CHECK THIS!
+        End Try
+    End Sub
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
+        clearAll()
         If ListView1.SelectedItems.Count > 0 Then
             txt_client.Text = ListView1.FocusedItem.Text
             Try
-                dr = db.ExecuteReader("select client_id ,company_name, branch_name, first_name,last_name,middle_name, birth_date, address, contact_number, date_hired," & _
-                                  "employee_type, employee_no, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE client_id=" & ListView1.FocusedItem.Text)
+                dr = db.ExecuteReader("select A.client_id ,company_name, branch_name, first_name,last_name,middle_name, birth_date, address, contact_number, date_hired," & _
+                                  "employee_type, employee_no, credit_limit, ppID, picture from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id " & _
+                                  "left join tbl_company as C on B.company_id=C.company_id left join tbl_profile_pics as D on A.client_id=D.client_id WHERE A.client_id= " & ListView1.FocusedItem.Text)
 
                 If dr.HasRows Then
-
+                    txtpicID.Text = dr.Item("ppID").ToString
                     txt_client.Text = dr.Item("client_id").ToString
-                    'cbxCompany.Text = dr.Item("company_name").ToString
-                    'cbxBranch.Text = dr.Item("branch_name").ToString
                     txt_FName.Text = dr.Item("first_name").ToString
                     txt_LName.Text = dr.Item("last_name").ToString
                     txt_MName.Text = dr.Item("middle_name").ToString
                     txt_address.Text = dr.Item("address").ToString
                     txt_Contact.Text = dr.Item("contact_number").ToString
                     cbxEmpType.Text = dr.Item("employee_type").ToString
-                    'pic1.Image = dr.Item("profile_pic")
+
+                    Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+                    pic = dr.Item("picture")
+                    imagestream = New System.IO.MemoryStream(pic)
+                    Picturebox1.BackgroundImage = Nothing
+                    Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
+                    Picturebox1.Image = Drawing.Image.FromStream(imagestream)
+
                     txtEmpNum.Text = dr.Item("employee_no").ToString
                     txt_Credit.Text = dr.Item("credit_limit").ToString
                     Dim bdate = dr.Item("birth_date").ToString
@@ -87,13 +158,12 @@ Public Class Clients
                     ElseIf dr.Item("employee_type") = 2 Then
                         cbxEmpType.Text = "Probationary"
                     End If
-
+                    'Dim str As String
+                    selectBr = dr.Item("branch_name").ToString
+                    'MsgBox(selectBr)
                     cbxCompany.SelectedIndex = cbxCompany.FindString(dr.Item("company_name").ToString)
-                    Dim str As String
-                    str = dr.Item("branch_name").ToString
-                    'str2 = dr.Item("employee_type").ToString
-                    loadBranch()
-                    cbxBranch.SelectedIndex = cbxBranch.FindString(str)
+                    cbxBranch.SelectedIndex = cbxBranch.FindString(dr.Item("branch_name").ToString)
+                    'loadBranch()
 
                 End If
 
@@ -113,8 +183,7 @@ Public Class Clients
         showAddEdit(True)
 
     End Sub
-
-    Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
+    Private Sub clearAll()
         cbxCompany.Text = " "
         cbxBranch.Text = " "
         txt_FName.Text = ""
@@ -125,20 +194,147 @@ Public Class Clients
         cbxEmpType.Text = ""
         txt_Credit.Text = ""
         txtEmpNum.Text = ""
+        Picturebox1.Image = Nothing
+    End Sub
+    Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
+        clearAll()
         txt_FName.Focus()
         gbxAddEdit.Text = "Add new client"
         showAddEdit(True)
     End Sub
+    Dim imgbyte As Byte() = Nothing
+    Private Sub btn_browse_Click(sender As Object, e As EventArgs) Handles btn_browse.Click
+        If gbxAddEdit.Text = "Add new client" Then
+            If ofdPic.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(ofdPic.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
 
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                imgbyte = imagestream.GetBuffer()
+
+                imagestream = New System.IO.MemoryStream(imgbyte)
+                Picturebox1.BackgroundImage = Nothing
+                Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
+                Picturebox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(ofdPic.FileName)
+            End If
+            Exit Sub
+        ElseIf gbxAddEdit.Text = "Edit client" Then
+            If ofdPic.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(ofdPic.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                pic = imagestream.GetBuffer()
+
+                imagestream = New System.IO.MemoryStream(pic)
+                Picturebox1.BackgroundImage = Nothing
+                Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
+                Picturebox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(ofdPic.FileName)
+            End If
+            Exit Sub
+        End If
+    End Sub
+    Private Sub UpdatePicture()
+        Dim rec As Integer
+        Dim data As New Dictionary(Of String, Object)
+        Dim cID, bID As String
+        cID = cbxCompany.SelectedItem
+        bID = cbxBranch.SelectedItem
+        Try
+
+            data.Add("client_id", txt_client.Text)
+            data.Add("ppID", txtpicID.Text)
+            data.Add("picture", pic)
+            rec = db.ExecuteNonQuery("UPDATE tbl_profile_pics SET ppID=@ppID, client_id=@client_id, picture=@picture WHERE client_id=" & txt_client.Text, data)
+
+            If Not rec < 1 Then
+                'MsgBox("Record saved!", MsgBoxStyle.Information)
+                'showAddEdit(False)
+                'LoadListView()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            db.Dispose() '<--------CHECK THIS!
+        End Try
+    End Sub
+    Private Sub NewPicture()
+        Dim rec As Integer
+        Dim data As New Dictionary(Of String, Object)
+        Dim cID, bID As String
+        cID = cbxCompany.SelectedItem
+        bID = cbxBranch.SelectedItem
+        Try
+            
+            data.Add("client_id", active_client_id)
+            data.Add("picture", imgbyte)
+            
+            rec = db.ExecuteNonQuery("INSERT INTO tbl_profile_pics values(NULL,@client_id,@picture)", data)
+            If Not rec < 1 Then
+                'MsgBox("Record saved!", MsgBoxStyle.Information)
+                'showAddEdit(False)
+                'LoadListView()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            db.Dispose() '<--------CHECK THIS!
+        End Try
+    End Sub
+    Private Sub NewClient()
+        Dim rec As Integer
+        Dim data As New Dictionary(Of String, Object)
+        Dim cID, bID As String
+        cID = cbxCompany.SelectedItem
+        bID = cbxBranch.SelectedItem
+        Try
+            data.Add("company_name", cbxCompany.Text)
+            data.Add("branch_id", bID.Substring(bID.Length - 3))
+            data.Add("first_name", txt_FName.Text)
+            data.Add("last_name", txt_LName.Text)
+            data.Add("middle_name", txt_MName.Text)
+            data.Add("birth_date", Format(DateTimePicker1.Value, "yyyyMMdd"))
+            data.Add("address", txt_address.Text)
+            data.Add("contact_number", txt_Contact.Text)
+            If cbxEmpType.Text = "Contractual" Then 'in process
+                data.Add("employee_type", "0")
+                'cbxEmpType.Text = "Contractual"
+            ElseIf cbxEmpType.Text = "Regular" Then
+                data.Add("employee_type", "1")
+                'cbxEmpType.Text = "Regular"
+            ElseIf cbxEmpType.Text = "Probationary" Then
+                data.Add("employee_type", "2")
+                'cbxEmpType.Text = "Probationary"
+            End If
+            data.Add("employee_no", txtEmpNum.Text)
+            data.Add("credit_limit", NumToStr(txt_Credit.Text))
+            data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
+
+            rec = db.ExecuteNonQuery("insert into tbl_clients values(NULL,@first_name,@last_name,@middle_name, @birth_date,@address,@branch_id,@contact_number,@employee_type,@employee_no,@date_hired,@credit_limit)", data)
+            If Not rec < 1 Then
+                'MsgBox("Record saved!", MsgBoxStyle.Information)
+                'showAddEdit(False)
+                'LoadListView()
+                Dim dr As SQLite.SQLiteDataReader
+                dr = db.ExecuteReader("select max(client_id) as id from tbl_clients")
+                active_client_id = dr.Item("id")
+                'MsgBox(active_client_id)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            db.Dispose() '<--------CHECK THIS!
+        End Try
+    End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
         If gbxAddEdit.Text = "Add new client" Then
             If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
-                        Or txt_Contact.Text = "" Or cbxEmpType.Text = "" Or txtEmpNum.Text = "" Or txt_Credit.Text = "" Then
-                MsgBox("Some fields are empty.", MsgBoxStyle.Exclamation, "Please fill up")
+                        Or txt_Contact.Text = "" Or cbxEmpType.Text = "" Or txtEmpNum.Text = "" Or txt_Credit.Text = "" Or Picturebox1.Image Is Nothing Then
+                MsgBox("Some fields are empty.", MsgBoxStyle.Exclamation, "Complete the registration")
                 Exit Sub
             End If
-
             Try
                 dr = db.ExecuteReader("select * from tbl_clients where first_name like '%" & txt_FName.Text & "%' and last_name like '%" & txt_LName.Text & "%' and middle_name like '%" & txt_MName.Text & "%' ")
 
@@ -147,171 +343,67 @@ Public Class Clients
                         Dim pangalan = (dr.Item("first_name").ToString)
                         Dim apelyido = (dr.Item("last_name").ToString)
                         Dim midname = (dr.Item("middle_name").ToString)
+                        'CHECK IF NAME ALREADY EXISTS IN DATABASE
                         If pangalan = txt_FName.Text And apelyido = txt_LName.Text And midname = txt_MName.Text Then
-                            Dim msgRslt As MsgBoxResult = MsgBox("Name already on the database. Do you want to continue to add this client?", vbExclamation + MsgBoxStyle.YesNo, "Message Alert")
-                            If msgRslt = MsgBoxResult.Yes Then
-                                Dim rec As Integer
-                                Dim data As New Dictionary(Of String, Object)
-                                Dim cID, bID As String
-                                cID = cbxCompany.SelectedItem
-                                bID = cbxBranch.SelectedItem
-                                Try
-                                    data.Add("company_name", cbxCompany.Text)
-                                    data.Add("branch_id", bID.Substring(bID.Length - 3))
-                                    data.Add("first_name", txt_FName.Text)
-                                    data.Add("last_name", txt_LName.Text)
-                                    data.Add("middle_name", txt_MName.Text)
-                                    data.Add("birth_date", Format(DateTimePicker1.Value, "yyyyMMdd"))
-                                    data.Add("address", txt_address.Text)
-                                    data.Add("contact_number", txt_Contact.Text)
-                                    If cbxEmpType.Text = "Contractual" Then 'in process
-                                        data.Add("employee_type", "0")
-                                        'cbxEmpType.Text = "Contractual"
-                                    ElseIf cbxEmpType.Text = "Regular" Then
-                                        data.Add("employee_type", "1")
-                                        'cbxEmpType.Text = "Regular"
-                                    ElseIf cbxEmpType.Text = "Probationary" Then
-                                        data.Add("employee_type", "2")
-                                        'cbxEmpType.Text = "Probationary"
-                                    End If
-                                    data.Add("employee_no", txtEmpNum.Text)
-                                    data.Add("credit_limit", txt_Credit.Text)
-                                    data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
-                                    data.Add("profile_pic", imgbyte)
-
-                                    rec = db.ExecuteNonQuery("insert into tbl_clients values(NULL,@first_name,@last_name,@middle_name, @birth_date,@address,@branch_id,@contact_number,@employee_type,@employee_no,@date_hired,@profile_pic,@credit_limit)", data)
-
-                                    If Not rec < 1 Then
-                                        MsgBox("Record saved!", MsgBoxStyle.Information)
-                                        showAddEdit(False)
-                                        LoadListView()
-                                    End If
-                                Catch ex As Exception
-                                    MsgBox(ex.ToString)
-                                Finally
-                                    db.Dispose() '<--------CHECK THIS!
-                                End Try
-
-                            ElseIf msgRslt = MsgBoxResult.No Then
-                                MsgBox("Exit saving...")
+                            Dim msgrslt As MsgBoxResult = MsgBox("Name already exists on the database. Do you want to continue to add this client?", vbExclamation + MsgBoxStyle.YesNo, "message alert")
+                            If msgrslt = MsgBoxResult.Yes Then
+                                'ADDING NEW CLIENT WITH THE SAME NAME
+                                NewClient()
+                                NewPicture()
+                            ElseIf msgrslt = MsgBoxResult.No Then
+                                MsgBox("exit saving...")
                                 Exit Sub
                             End If
                         End If
                     Loop
                 Else
-                    'MsgBox("No duplicate of name.", vbInformation + vbOKOnly, "OKIE")
-                    Dim rec As Integer
-                    Dim data As New Dictionary(Of String, Object)
-                    Dim cID, bID As String
-                    cID = cbxCompany.SelectedItem
-                    bID = cbxBranch.SelectedItem
-                    Try
-                        'dr = db.ExecuteReader("select client_id ,company_name, branch_name, first_name,last_name,middle_name, birth_date, address, contact_number, date_hired," & _
-                        '          "employee_type, employee_no, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE client_id=" & ListView1.FocusedItem.Text)
-                        'If dr.HasRows Then
-
-                        'End If
-
-                        data.Add("company_name", cbxCompany.Text)
-                        data.Add("branch_id", bID.Substring(bID.Length - 3))
-                        data.Add("first_name", txt_FName.Text)
-                        data.Add("last_name", txt_LName.Text)
-                        data.Add("middle_name", txt_MName.Text)
-                        data.Add("birth_date", Format(DateTimePicker1.Value, "yyyyMMdd"))
-                        data.Add("address", txt_address.Text)
-                        data.Add("contact_number", txt_Contact.Text)
-                        'data.Add("employee_type", cbxEmpType.Text)
-                        If cbxEmpType.Text = "Contractual" Then 'in process
-                            data.Add("employee_type", "0")
-                            'cbxEmpType.Text = "Contractual"
-                        ElseIf cbxEmpType.Text = "Regular" Then
-                            data.Add("employee_type", "1")
-                            'cbxEmpType.Text = "Regular"
-                        ElseIf cbxEmpType.Text = "Probationary" Then
-                            data.Add("employee_type", "2")
-                            'cbxEmpType.Text = "Probationary"
-                        End If
-                        data.Add("employee_no", txtEmpNum.Text)
-                        'data.Add("profile_pic", imgbyte)
-                        data.Add("credit_limit", txt_Credit.Text)
-                        data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
-
-                        rec = db.ExecuteNonQuery("insert into tbl_clients values(NULL,@first_name,@last_name,@middle_name, @birth_date,@address,@branch_id,@contact_number,@employee_type,@employee_no,@date_hired,NULL,@credit_limit)", data)
-
-                        If Not rec < 1 Then
-                            MsgBox("Record saved!", MsgBoxStyle.Information)
-                            showAddEdit(False)
-                            LoadListView()
-                        End If
-                    Catch ex As Exception
-                        MsgBox(ex.ToString)
-                    Finally
-                        db.Dispose() '<--------CHECK THIS!
-                    End Try
+                    'ADDING NEW CLIENT
+                    'MsgBox("add new client.")
+                    NewClient()
+                    NewPicture()
+                    Exit Sub
                 End If
             Catch ex As Exception
                 MsgBox(ex.ToString)
             Finally
-                db.Dispose() '<--------CHECK THIS!
+                db.Dispose() '<--------check this!
             End Try
+            Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
+            If result = DialogResult.OK Then
+                MessageBox.Show("Saving...")
+                MsgBox("Record saving...", MsgBoxStyle.Information)
+                showAddEdit(False)
+                LoadListView()
+                clearAll()
+            ElseIf result = DialogResult.Cancel Then
+                Exit Sub
+            End If
 
-
+            'EDIT CLIENTS INFORMATION
         ElseIf gbxAddEdit.Text = "Edit client" Then
-            Dim rec As Integer
-            Dim data As New Dictionary(Of String, Object)
-            Dim cID, bID As String
-            cID = cbxCompany.SelectedItem
-            bID = cbxBranch.SelectedItem
+            If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
+                        Or txt_Contact.Text = "" Or cbxEmpType.Text = "" Or txtEmpNum.Text = "" Or txt_Credit.Text = "" Or Picturebox1.Image Is Nothing Then
+                MsgBox("Some fields are empty.", MsgBoxStyle.Exclamation, "Complete the registration")
+                Exit Sub
+            End If
 
-            Try
-                data.Add("first_name", txt_FName.Text)
-                data.Add("last_name", txt_LName.Text)
-                data.Add("middle_name", txt_MName.Text)
-                data.Add("birth_date", Format(DateTimePicker1.Value, "yyyyMMdd"))
-                data.Add("address", txt_address.Text)
-                data.Add("contact_number", txt_Contact.Text)
-                'data.Add("employee_type", cbxEmpType.Text)
-                If cbxEmpType.Text = "Contractual" Then 'in process
-                    data.Add("employee_type", "0")
-                    'cbxEmpType.Text = "Contractual"
-                ElseIf cbxEmpType.Text = "Regular" Then
-                    data.Add("employee_type", "1")
-                    'cbxEmpType.Text = "Regular"
-                ElseIf cbxEmpType.Text = "Probationary" Then
-                    data.Add("employee_type", "2")
-                    'cbxEmpType.Text = "Probationary"
-                End If
-                data.Add("employee_no", txtEmpNum.Text)
-                data.Add("credit_limit", txt_Credit.Text)
-                data.Add("branch_id", bID.Substring(bID.Length - 3))
-                data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
-
-                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
-                Dim pic As Byte() = dr.Item("picture")
-                imagestream = New System.IO.MemoryStream(pic)
-                Picturebox1.Image = Drawing.Image.FromStream(imagestream)
-                'data.Add("profile_pic", )
-
-                rec = db.ExecuteNonQuery("UPDATE tbl_clients SET first_name=@first_name, middle_name=@middle_name, last_name=@last_name, birth_date=@birth_date," & _
-                                         "address=@address, contact_number=@contact_number, employee_type=@employee_type, employee_no=@employee_no, credit_limit=@credit_limit, branch_id=@branch_id, date_hired=@date_hired, profile_pic=@profile_pic WHERE client_id=" & txt_client.Text, data)
-
-                If Not rec < 1 Then
-                    MessageBox.Show("Record updated!", "Important Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-                    showAddEdit(False)
-                    LoadListView()
-
-                End If
-            Catch ex As Exception
-                MsgBox(ex.ToString)
-            Finally
-                db.Dispose() '<--------CHECK THIS!
-            End Try
+            EditClient()
+            UpdatePicture()
+            Dim result As Integer = MessageBox.Show("Do you want to update this record?", "Important Message", MessageBoxButtons.OKCancel)
+            If result = DialogResult.OK Then
+                MessageBox.Show("Updating...")
+                showAddEdit(False)
+                LoadListView()
+                clearAll()
+            ElseIf result = DialogResult.Cancel Then
+                Exit Sub
+            End If
         End If
     End Sub
-
-
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         showAddEdit(False)
+        clearAll()
+        ListView1.SelectedItems.Clear()
     End Sub
 
     Private Sub Clients_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -342,8 +434,8 @@ Public Class Clients
 
         Catch ex As Exception
             MsgBox(ex.ToString)
-        Finally
-            db.Dispose() '<--------CHECK THIS!
+            'Finally
+            '    db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
     Private Sub cbxCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxCompany.SelectedIndexChanged
@@ -428,7 +520,8 @@ Public Class Clients
     End Sub
 
     Private Sub Btn_add_req_Click(sender As Object, e As EventArgs) Handles Btn_add_req.Click
-        frmClientRequirement.ShowDialog()
+        'frmClientRequirement.ShowDialog()
+        showUSC(uscAttachments)
     End Sub
 
     Private Sub releaseObject(ByVal obj As Object)
@@ -440,29 +533,6 @@ Public Class Clients
         Finally
             obj = Nothing
         End Try
-    End Sub
-    Dim imgbyte As Byte() = Nothing
-    Private Sub btn_browse_Click(sender As Object, e As EventArgs) Handles btn_browse.Click
-        If OpenFileDialog.ShowDialog = vbOK Then
-            Dim myimage As Image = Image.FromFile(OpenFileDialog.FileName)
-            Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
-
-            myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
-            imgbyte = imagestream.GetBuffer()
-
-            imagestream = New System.IO.MemoryStream(imgbyte)
-            Picturebox1.BackgroundImage = Nothing
-            Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
-            Picturebox1.Image = Drawing.Image.FromStream(imagestream)
-            'txtFilename.Text = System.IO.Path.GetFileName(OpenFileDialog.FileName)
-        End If
-    End Sub
-
-    Private Sub loadImage()
-        Dim ms As New IO.MemoryStream
-        Picturebox1.Image.Save(ms, Imaging.ImageFormat.Jpeg)
-        Dim bytes = ms.ToArray()
-        'MsgBox(bytes)
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
@@ -543,12 +613,79 @@ Public Class Clients
         'End If
     End Sub
 
-    Private Sub ofd1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles OpenFileDialog.FileOk
-        OpenFileDialog.Filter = "Picture Files (*)|*.bmp;*.gif;*.jpg"
-        Picturebox1.Image = Image.FromFile(OpenFileDialog.FileName)
+    Private Sub ofd1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ofdPic.FileOk
+        ofdPic.Filter = "Picture Files (*)|*.bmp;*.gif;*.jpg"
+        Picturebox1.Image = Image.FromFile(ofdPic.FileName)
         Dim img As Image = Picturebox1.Image
         Dim ms As New System.IO.MemoryStream
         Me.Picturebox1.Image.Save(ms, Me.Picturebox1.Image.RawFormat)
+    End Sub
+
+
+    Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+        'Dim isVERIFIED As Boolean = False
+
+        'Using db As New DBHelper(My.Settings.ConnectionString)
+        '    Dim dr As SQLite.SQLiteDataReader
+        '    'Dim cmd As SQLite.SQLiteCommand
+        '    Dim data As New Dictionary(Of String, Object)
+        '    Dim user As String = txtUser.Text
+        '    Dim pass As String = txtPassword.Text
+        '    'Dim Usertype As String = lblUtype.Text
+        '    If txtUser.Text = "" And txtPassword.Text = "" Then
+        '        MsgBox("Please provide username and password.", MsgBoxStyle.Exclamation, "Authentication Error")
+        '        toggleVerifyActivation()
+        '        Exit Sub
+
+        '    End If
+
+        '    Try
+        '        dr = db.ExecuteReader("select * from tbl_users where user_name like '%" & txtUser.Text & "%' and user_password like '%" & Encrypt(txtPassword.Text, "Keys") & "%' ")
+        '        If dr.HasRows Then
+        '            Do While dr.Read
+        '                Dim encryptPass = Encrypt(txtPassword.Text, "Keys")
+        '                Dim uname = (dr.Item("user_name").ToString)
+        '                Dim upass = (dr.Item("user_password").ToString)
+        '                'Dim utype = (CInt(dr.Item("user_type")))
+        '                'lblUtype.Text = utype
+        '                If uname = txtUser.Text And upass = encryptPass Then
+        '                    isVERIFIED = True
+
+        '                End If
+        '            Loop
+        '        Else
+        '            MessageBox.Show("Username and Password do not match..", "Authentication Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        '            'Clear all fields
+        '            txtPassword.Text = ""
+        '            txtUser.Text = ""
+        '            txtUser.Focus()
+        '        End If
+        '    Catch ex As Exception
+        '        MsgBox(ex.ToString)
+        '    Finally
+        '        db.Dispose()
+        '    End Try
+
+        'End Using
+
+        'If isVERIFIED Then
+        '    Using db2 As New DBHelper(My.Settings.ConnectionString)
+        '        Try
+        '            Dim rec As Integer
+        '            Dim data2 As New Dictionary(Of String, Object)
+
+        '            data2.Add("loan_id", lvLoanList.FocusedItem.Text)
+        '            rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=1 where loan_id=@loan_id", data2)
+
+        '            MsgBox("Loan successfuly activated!", MsgBoxStyle.Information, "Activate Loan")
+        '        Catch ex As Exception
+        '            MsgBox(ex.Message, MsgBoxStyle.Critical)
+        '        Finally
+        '            db2.Dispose()
+        '        End Try
+
+        '    End Using
+        'End If
     End Sub
 End Class
 
