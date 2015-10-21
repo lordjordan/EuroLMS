@@ -74,10 +74,12 @@ Partial Class Attachments
         Me.btnSearchClient = New System.Windows.Forms.Button()
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxShowClient.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -106,7 +108,7 @@ Partial Class Attachments
         Me.pnlMain.Controls.Add(Me.btnEdit)
         Me.pnlMain.Controls.Add(Me.btnAddNew)
         Me.pnlMain.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.pnlMain.Location = New System.Drawing.Point(25, 75)
+        Me.pnlMain.Location = New System.Drawing.Point(25, 105)
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1107, 544)
         Me.pnlMain.TabIndex = 51
@@ -268,6 +270,8 @@ Partial Class Attachments
         '
         Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
+        Me.gbxAddEdit.Controls.Add(Me.PictureBox1)
+        Me.gbxAddEdit.Controls.Add(Me.PictureBox2)
         Me.gbxAddEdit.Controls.Add(Me.Label8)
         Me.gbxAddEdit.Controls.Add(Me.txtClientID)
         Me.gbxAddEdit.Controls.Add(Me.txtReqID)
@@ -282,12 +286,11 @@ Partial Class Attachments
         Me.gbxAddEdit.Controls.Add(Me.Label5)
         Me.gbxAddEdit.Controls.Add(Me.txt_Remarks)
         Me.gbxAddEdit.Controls.Add(Me.btnUpload)
-        Me.gbxAddEdit.Controls.Add(Me.PictureBox1)
         Me.gbxAddEdit.Controls.Add(Me.btnCancel)
         Me.gbxAddEdit.Controls.Add(Me.btnSave)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAddEdit.Location = New System.Drawing.Point(141, 58)
+        Me.gbxAddEdit.Location = New System.Drawing.Point(208, 97)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(832, 456)
         Me.gbxAddEdit.TabIndex = 62
@@ -444,9 +447,9 @@ Partial Class Attachments
         'PictureBox1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(456, 61)
+        Me.PictureBox1.Location = New System.Drawing.Point(460, 56)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(358, 260)
+        Me.PictureBox1.Size = New System.Drawing.Size(348, 254)
         Me.PictureBox1.TabIndex = 69
         Me.PictureBox1.TabStop = False
         '
@@ -498,7 +501,7 @@ Partial Class Attachments
         Me.gbxShowClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxShowClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxShowClient.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.gbxShowClient.Location = New System.Drawing.Point(230, 43)
+        Me.gbxShowClient.Location = New System.Drawing.Point(337, 84)
         Me.gbxShowClient.Name = "gbxShowClient"
         Me.gbxShowClient.Size = New System.Drawing.Size(753, 374)
         Me.gbxShowClient.TabIndex = 160
@@ -620,6 +623,15 @@ Partial Class Attachments
         Me.Label28.Text = "Search"
         Me.Label28.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PictureBox2.Location = New System.Drawing.Point(454, 44)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(359, 276)
+        Me.PictureBox2.TabIndex = 176
+        Me.PictureBox2.TabStop = False
+        '
         'Attachments
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -638,6 +650,7 @@ Partial Class Attachments
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxShowClient.ResumeLayout(False)
         Me.gbxShowClient.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -714,4 +727,5 @@ Partial Class Attachments
     Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader17 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
 End Class
