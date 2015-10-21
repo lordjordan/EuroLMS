@@ -1,5 +1,6 @@
 ﻿Module GeneralMethods
     Public Function NumToStr(number As String, Optional size As Byte = 8) As String
+        number = FormatNumber(number, 2)
         number = Replace(number, ".", "")
         number = Replace(number, ",", "")
         number = "00000000" & number

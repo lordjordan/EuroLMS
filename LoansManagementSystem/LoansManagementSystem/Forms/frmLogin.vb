@@ -171,4 +171,8 @@ Public Class frmLogin
             db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
+
+    Private Sub txtPassword_TextChanged(sender As Object, e As EventArgs) Handles txtPassword.TextChanged
+
+    End Sub
 End Class
