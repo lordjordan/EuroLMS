@@ -43,6 +43,7 @@ Partial Class Clients
         Me.btnEdit = New System.Windows.Forms.Button()
         Me.btnAddNew = New System.Windows.Forms.Button()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
+        Me.txtpicID = New System.Windows.Forms.TextBox()
         Me.txtEmpNum = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.cbxCompany = New System.Windows.Forms.ComboBox()
@@ -78,10 +79,17 @@ Partial Class Clients
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ServiceController1 = New System.ServiceProcess.ServiceController()
         Me.ofdPic = New System.Windows.Forms.OpenFileDialog()
-        Me.txtpicID = New System.Windows.Forms.TextBox()
+        Me.gbxVerifyActivation = New System.Windows.Forms.GroupBox()
+        Me.btnCloseVerification = New System.Windows.Forms.Button()
+        Me.btnVerify = New System.Windows.Forms.Button()
+        Me.txtPassword = New System.Windows.Forms.TextBox()
+        Me.txtUser = New System.Windows.Forms.TextBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.Picturebox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbxVerifyActivation.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlMain
@@ -252,7 +260,7 @@ Partial Class Clients
         '
         Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
-        Me.gbxAddEdit.Controls.Add(Me.txtpicID)
+        Me.gbxAddEdit.Controls.Add(Me.Picturebox1)
         Me.gbxAddEdit.Controls.Add(Me.txtEmpNum)
         Me.gbxAddEdit.Controls.Add(Me.Label16)
         Me.gbxAddEdit.Controls.Add(Me.cbxCompany)
@@ -268,7 +276,6 @@ Partial Class Clients
         Me.gbxAddEdit.Controls.Add(Me.txt_Credit)
         Me.gbxAddEdit.Controls.Add(Me.Label13)
         Me.gbxAddEdit.Controls.Add(Me.Label8)
-        Me.gbxAddEdit.Controls.Add(Me.Picturebox1)
         Me.gbxAddEdit.Controls.Add(Me.Label11)
         Me.gbxAddEdit.Controls.Add(Me.txt_Contact)
         Me.gbxAddEdit.Controls.Add(Me.Label12)
@@ -284,15 +291,27 @@ Partial Class Clients
         Me.gbxAddEdit.Controls.Add(Me.Label5)
         Me.gbxAddEdit.Controls.Add(Me.Label4)
         Me.gbxAddEdit.Controls.Add(Me.txt_FName)
+        Me.gbxAddEdit.Controls.Add(Me.PictureBox2)
+        Me.gbxAddEdit.Controls.Add(Me.txtpicID)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAddEdit.Location = New System.Drawing.Point(262, 61)
+        Me.gbxAddEdit.Location = New System.Drawing.Point(230, 61)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(735, 518)
         Me.gbxAddEdit.TabIndex = 49
         Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "Add New Client"
         Me.gbxAddEdit.Visible = False
+        '
+        'txtpicID
+        '
+        Me.txtpicID.Enabled = False
+        Me.txtpicID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtpicID.Location = New System.Drawing.Point(460, 50)
+        Me.txtpicID.Name = "txtpicID"
+        Me.txtpicID.Size = New System.Drawing.Size(48, 26)
+        Me.txtpicID.TabIndex = 71
+        Me.txtpicID.Visible = False
         '
         'txtEmpNum
         '
@@ -354,7 +373,7 @@ Partial Class Clients
         Me.Btn_add_req.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Btn_add_req.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_add_req.ForeColor = System.Drawing.Color.White
-        Me.Btn_add_req.Location = New System.Drawing.Point(273, 444)
+        Me.Btn_add_req.Location = New System.Drawing.Point(278, 444)
         Me.Btn_add_req.Name = "Btn_add_req"
         Me.Btn_add_req.Size = New System.Drawing.Size(108, 60)
         Me.Btn_add_req.TabIndex = 14
@@ -453,7 +472,7 @@ Partial Class Clients
         Me.Picturebox1.BackgroundImage = CType(resources.GetObject("Picturebox1.BackgroundImage"), System.Drawing.Image)
         Me.Picturebox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Picturebox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Picturebox1.Location = New System.Drawing.Point(442, 33)
+        Me.Picturebox1.Location = New System.Drawing.Point(442, 27)
         Me.Picturebox1.Name = "Picturebox1"
         Me.Picturebox1.Size = New System.Drawing.Size(274, 241)
         Me.Picturebox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -650,15 +669,75 @@ Partial Class Clients
         '
         Me.ofdPic.FileName = "OpenFileDialog1"
         '
-        'txtpicID
+        'gbxVerifyActivation
         '
-        Me.txtpicID.Enabled = False
-        Me.txtpicID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtpicID.Location = New System.Drawing.Point(442, 1)
-        Me.txtpicID.Name = "txtpicID"
-        Me.txtpicID.Size = New System.Drawing.Size(31, 26)
-        Me.txtpicID.TabIndex = 71
-        Me.txtpicID.Visible = False
+        Me.gbxVerifyActivation.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.gbxVerifyActivation.BackColor = System.Drawing.Color.Tomato
+        Me.gbxVerifyActivation.Controls.Add(Me.btnCloseVerification)
+        Me.gbxVerifyActivation.Controls.Add(Me.btnVerify)
+        Me.gbxVerifyActivation.Controls.Add(Me.txtPassword)
+        Me.gbxVerifyActivation.Controls.Add(Me.txtUser)
+        Me.gbxVerifyActivation.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.gbxVerifyActivation.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxVerifyActivation.Location = New System.Drawing.Point(376, 30)
+        Me.gbxVerifyActivation.Name = "gbxVerifyActivation"
+        Me.gbxVerifyActivation.Size = New System.Drawing.Size(442, 235)
+        Me.gbxVerifyActivation.TabIndex = 61
+        Me.gbxVerifyActivation.TabStop = False
+        Me.gbxVerifyActivation.Text = "Verify to Continue Client Registration"
+        Me.gbxVerifyActivation.Visible = False
+        '
+        'btnCloseVerification
+        '
+        Me.btnCloseVerification.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnCloseVerification.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCloseVerification.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCloseVerification.ForeColor = System.Drawing.Color.White
+        Me.btnCloseVerification.Location = New System.Drawing.Point(226, 148)
+        Me.btnCloseVerification.Name = "btnCloseVerification"
+        Me.btnCloseVerification.Size = New System.Drawing.Size(182, 48)
+        Me.btnCloseVerification.TabIndex = 69
+        Me.btnCloseVerification.Text = "Close"
+        Me.btnCloseVerification.UseVisualStyleBackColor = False
+        '
+        'btnVerify
+        '
+        Me.btnVerify.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnVerify.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnVerify.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerify.ForeColor = System.Drawing.Color.White
+        Me.btnVerify.Location = New System.Drawing.Point(38, 147)
+        Me.btnVerify.Name = "btnVerify"
+        Me.btnVerify.Size = New System.Drawing.Size(182, 48)
+        Me.btnVerify.TabIndex = 69
+        Me.btnVerify.Text = "Verify to Activate Registration"
+        Me.btnVerify.UseVisualStyleBackColor = False
+        '
+        'txtPassword
+        '
+        Me.txtPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPassword.Location = New System.Drawing.Point(107, 100)
+        Me.txtPassword.Name = "txtPassword"
+        Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(36)
+        Me.txtPassword.Size = New System.Drawing.Size(255, 29)
+        Me.txtPassword.TabIndex = 65
+        '
+        'txtUser
+        '
+        Me.txtUser.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUser.Location = New System.Drawing.Point(107, 59)
+        Me.txtUser.Name = "txtUser"
+        Me.txtUser.Size = New System.Drawing.Size(255, 29)
+        Me.txtUser.TabIndex = 64
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PictureBox2.Location = New System.Drawing.Point(437, 24)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(284, 247)
+        Me.PictureBox2.TabIndex = 177
+        Me.PictureBox2.TabStop = False
         '
         'Clients
         '
@@ -668,6 +747,7 @@ Partial Class Clients
         Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Name = "Clients"
         Me.Size = New System.Drawing.Size(1021, 554)
         Me.pnlMain.ResumeLayout(False)
@@ -675,6 +755,9 @@ Partial Class Clients
         Me.gbxAddEdit.ResumeLayout(False)
         Me.gbxAddEdit.PerformLayout()
         CType(Me.Picturebox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbxVerifyActivation.ResumeLayout(False)
+        Me.gbxVerifyActivation.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -732,5 +815,11 @@ Partial Class Clients
     Friend WithEvents ColumnHeader6 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ofdPic As System.Windows.Forms.OpenFileDialog
     Friend WithEvents txtpicID As System.Windows.Forms.TextBox
+    Friend WithEvents gbxVerifyActivation As System.Windows.Forms.GroupBox
+    Friend WithEvents btnCloseVerification As System.Windows.Forms.Button
+    Friend WithEvents btnVerify As System.Windows.Forms.Button
+    Friend WithEvents txtPassword As System.Windows.Forms.TextBox
+    Friend WithEvents txtUser As System.Windows.Forms.TextBox
+    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
 End Class
 

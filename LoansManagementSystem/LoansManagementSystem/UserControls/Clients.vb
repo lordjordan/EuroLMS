@@ -12,6 +12,8 @@ Imports System.IO
 Public Class Clients
     Dim active_client_id As Long = 0
     Dim picID As String
+    Dim selectBr As String
+    Dim pic As Byte()
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
     Dim db As New DBHelper(My.Settings.ConnectionString)
@@ -109,6 +111,7 @@ Public Class Clients
         End Try
     End Sub
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
+        clearAll()
         If ListView1.SelectedItems.Count > 0 Then
             txt_client.Text = ListView1.FocusedItem.Text
             Try
@@ -127,7 +130,7 @@ Public Class Clients
                     cbxEmpType.Text = dr.Item("employee_type").ToString
 
                     Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
-                    Dim pic As Byte() = dr.Item("picture")
+                    pic = dr.Item("picture")
                     imagestream = New System.IO.MemoryStream(pic)
                     Picturebox1.BackgroundImage = Nothing
                     Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
@@ -156,9 +159,10 @@ Public Class Clients
                         cbxEmpType.Text = "Probationary"
                     End If
                     'Dim str As String
+                    selectBr = dr.Item("branch_name").ToString
+                    'MsgBox(selectBr)
                     cbxCompany.SelectedIndex = cbxCompany.FindString(dr.Item("company_name").ToString)
-                    'str = dr.Item("branch_name").ToString
-                    'cbxBranch.SelectedIndex = cbxBranch.FindString(dr.Item("branch_name").ToString)
+                    cbxBranch.SelectedIndex = cbxBranch.FindString(dr.Item("branch_name").ToString)
                     'loadBranch()
 
                 End If
@@ -200,18 +204,36 @@ Public Class Clients
     End Sub
     Dim imgbyte As Byte() = Nothing
     Private Sub btn_browse_Click(sender As Object, e As EventArgs) Handles btn_browse.Click
-        If ofdPic.ShowDialog = vbOK Then
-            Dim myimage As Image = Image.FromFile(ofdPic.FileName)
-            Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+        If gbxAddEdit.Text = "Add new client" Then
+            If ofdPic.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(ofdPic.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
 
-            myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
-            imgbyte = imagestream.GetBuffer()
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                imgbyte = imagestream.GetBuffer()
 
-            imagestream = New System.IO.MemoryStream(imgbyte)
-            Picturebox1.BackgroundImage = Nothing
-            Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
-            Picturebox1.Image = Drawing.Image.FromStream(imagestream)
-            'txtFilename.Text = System.IO.Path.GetFileName(ofdPic.FileName)
+                imagestream = New System.IO.MemoryStream(imgbyte)
+                Picturebox1.BackgroundImage = Nothing
+                Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
+                Picturebox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(ofdPic.FileName)
+            End If
+            Exit Sub
+        ElseIf gbxAddEdit.Text = "Edit client" Then
+            If ofdPic.ShowDialog = vbOK Then
+                Dim myimage As Image = Image.FromFile(ofdPic.FileName)
+                Dim imagestream As System.IO.MemoryStream = New System.IO.MemoryStream
+
+                myimage.Save(imagestream, System.Drawing.Imaging.ImageFormat.Jpeg)
+                pic = imagestream.GetBuffer()
+
+                imagestream = New System.IO.MemoryStream(pic)
+                Picturebox1.BackgroundImage = Nothing
+                Picturebox1.SizeMode = PictureBoxSizeMode.Zoom
+                Picturebox1.Image = Drawing.Image.FromStream(imagestream)
+                'txtFilename.Text = System.IO.Path.GetFileName(ofdPic.FileName)
+            End If
+            Exit Sub
         End If
     End Sub
     Private Sub UpdatePicture()
@@ -224,7 +246,7 @@ Public Class Clients
 
             data.Add("client_id", txt_client.Text)
             data.Add("ppID", txtpicID.Text)
-            data.Add("picture", imgbyte)
+            data.Add("picture", pic)
             rec = db.ExecuteNonQuery("UPDATE tbl_profile_pics SET ppID=@ppID, client_id=@client_id, picture=@picture WHERE client_id=" & txt_client.Text, data)
 
             If Not rec < 1 Then
@@ -346,25 +368,42 @@ Public Class Clients
             Finally
                 db.Dispose() '<--------check this!
             End Try
-
-            MsgBox("Record saving...", MsgBoxStyle.Information)
-            showAddEdit(False)
-            LoadListView()
-            clearAll()
+            Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
+            If result = DialogResult.OK Then
+                MessageBox.Show("Saving...")
+                MsgBox("Record saving...", MsgBoxStyle.Information)
+                showAddEdit(False)
+                LoadListView()
+                clearAll()
+            ElseIf result = DialogResult.Cancel Then
+                Exit Sub
+            End If
 
             'EDIT CLIENTS INFORMATION
         ElseIf gbxAddEdit.Text = "Edit client" Then
+            If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
+                        Or txt_Contact.Text = "" Or cbxEmpType.Text = "" Or txtEmpNum.Text = "" Or txt_Credit.Text = "" Or Picturebox1.Image Is Nothing Then
+                MsgBox("Some fields are empty.", MsgBoxStyle.Exclamation, "Complete the registration")
+                Exit Sub
+            End If
+
             EditClient()
             UpdatePicture()
-            MessageBox.Show("Record updated!", "Important Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-            showAddEdit(False)
-            LoadListView()
-            clearAll()
+            Dim result As Integer = MessageBox.Show("Do you want to update this record?", "Important Message", MessageBoxButtons.OKCancel)
+            If result = DialogResult.OK Then
+                MessageBox.Show("Updating...")
+                showAddEdit(False)
+                LoadListView()
+                clearAll()
+            ElseIf result = DialogResult.Cancel Then
+                Exit Sub
+            End If
         End If
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         showAddEdit(False)
         clearAll()
+        ListView1.SelectedItems.Clear()
     End Sub
 
     Private Sub Clients_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -388,7 +427,6 @@ Public Class Clients
             If dr.HasRows Then
                 Do While dr.Read
                     cbxBranch.Items.Add(dr.Item("branch_name") & "                                                              000" & dr.Item("branch_id"))
-
                 Loop
             Else
                 MsgBox("No branch data.", vbInformation + vbOKOnly, "Error branch data.")
@@ -396,8 +434,8 @@ Public Class Clients
 
         Catch ex As Exception
             MsgBox(ex.ToString)
-        Finally
-            db.Dispose() '<--------CHECK THIS!
+            'Finally
+            '    db.Dispose() '<--------CHECK THIS!
         End Try
     End Sub
     Private Sub cbxCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxCompany.SelectedIndexChanged
@@ -482,7 +520,8 @@ Public Class Clients
     End Sub
 
     Private Sub Btn_add_req_Click(sender As Object, e As EventArgs) Handles Btn_add_req.Click
-        frmClientRequirement.ShowDialog()
+        'frmClientRequirement.ShowDialog()
+        showUSC(uscAttachments)
     End Sub
 
     Private Sub releaseObject(ByVal obj As Object)
@@ -582,8 +621,71 @@ Public Class Clients
         Me.Picturebox1.Image.Save(ms, Me.Picturebox1.Image.RawFormat)
     End Sub
 
-    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
 
+    Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+        'Dim isVERIFIED As Boolean = False
+
+        'Using db As New DBHelper(My.Settings.ConnectionString)
+        '    Dim dr As SQLite.SQLiteDataReader
+        '    'Dim cmd As SQLite.SQLiteCommand
+        '    Dim data As New Dictionary(Of String, Object)
+        '    Dim user As String = txtUser.Text
+        '    Dim pass As String = txtPassword.Text
+        '    'Dim Usertype As String = lblUtype.Text
+        '    If txtUser.Text = "" And txtPassword.Text = "" Then
+        '        MsgBox("Please provide username and password.", MsgBoxStyle.Exclamation, "Authentication Error")
+        '        toggleVerifyActivation()
+        '        Exit Sub
+
+        '    End If
+
+        '    Try
+        '        dr = db.ExecuteReader("select * from tbl_users where user_name like '%" & txtUser.Text & "%' and user_password like '%" & Encrypt(txtPassword.Text, "Keys") & "%' ")
+        '        If dr.HasRows Then
+        '            Do While dr.Read
+        '                Dim encryptPass = Encrypt(txtPassword.Text, "Keys")
+        '                Dim uname = (dr.Item("user_name").ToString)
+        '                Dim upass = (dr.Item("user_password").ToString)
+        '                'Dim utype = (CInt(dr.Item("user_type")))
+        '                'lblUtype.Text = utype
+        '                If uname = txtUser.Text And upass = encryptPass Then
+        '                    isVERIFIED = True
+
+        '                End If
+        '            Loop
+        '        Else
+        '            MessageBox.Show("Username and Password do not match..", "Authentication Failure", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        '            'Clear all fields
+        '            txtPassword.Text = ""
+        '            txtUser.Text = ""
+        '            txtUser.Focus()
+        '        End If
+        '    Catch ex As Exception
+        '        MsgBox(ex.ToString)
+        '    Finally
+        '        db.Dispose()
+        '    End Try
+
+        'End Using
+
+        'If isVERIFIED Then
+        '    Using db2 As New DBHelper(My.Settings.ConnectionString)
+        '        Try
+        '            Dim rec As Integer
+        '            Dim data2 As New Dictionary(Of String, Object)
+
+        '            data2.Add("loan_id", lvLoanList.FocusedItem.Text)
+        '            rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=1 where loan_id=@loan_id", data2)
+
+        '            MsgBox("Loan successfuly activated!", MsgBoxStyle.Information, "Activate Loan")
+        '        Catch ex As Exception
+        '            MsgBox(ex.Message, MsgBoxStyle.Critical)
+        '        Finally
+        '            db2.Dispose()
+        '        End Try
+
+        '    End Using
+        'End If
     End Sub
 End Class
 
