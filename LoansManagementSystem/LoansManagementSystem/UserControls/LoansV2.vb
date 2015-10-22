@@ -1,9 +1,13 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Drawing.Drawing2D
+
 Public Class LoansV2
     Dim active_loan_id As Long = 0
     Dim isLOADING As Boolean = False
+
+    Private lvwColumnSorter As ListViewColumnSorter
 
     Private Sub computeTotalLoan()
         If Val(txtTerms.Text) < 1 Or Val(cboInterest.Text) <= 0 Or Val(txtPrincipal.Text) < 1 Or _
@@ -456,7 +460,7 @@ Public Class LoansV2
                 '                         "@loan_remarks)", data)
 
                 dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
-                                "terms, date_start, date_end, application_status, loan_status, loan_remarks " & _
+                                "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
                                 "from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -470,8 +474,8 @@ Public Class LoansV2
                     Do While dr.Read
                         Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
                         itmx.SubItems.Add(dr.Item("name").ToString)
-                        itmx.SubItems.Add(StrToNum(dr.Item("principal").ToString))
-                        itmx.SubItems.Add(StrToNum(dr.Item("amortization").ToString))
+                        itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                        itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
                         itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
                         itmx.SubItems.Add(dr.Item("terms").ToString)
                         itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
@@ -479,6 +483,8 @@ Public Class LoansV2
                         itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
                         itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
                         itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                        itmx.SubItems.Add(dr.Item("company_name").ToString)
+                        itmx.SubItems.Add(dr.Item("branch_name").ToString)
 
 
                     Loop
@@ -681,6 +687,26 @@ Fix2:
         'DataGridView1.Columns.
     End Sub
 
+    Private Sub lvClientList_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvClientList.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
+
+        ' Perform the sort with these new sort options.
+        Me.lvClientList.Sort()
+    End Sub
+
     Private Sub lvClientList_DoubleClick(sender As Object, e As EventArgs) Handles lvClientList.DoubleClick
         btnSelectSearchClient_Click(sender, e)
     End Sub
@@ -747,6 +773,12 @@ Fix2:
     End Sub
 
     Private Sub LoansV2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Create an instance of a ListView column sorter and assign it 
+        ' to the ListView control.
+        lvwColumnSorter = New ListViewColumnSorter()
+        Me.lvLoanList.ListViewItemSorter = lvwColumnSorter
+        Me.lvClientList.ListViewItemSorter = lvwColumnSorter
+
         LoadListView()
     End Sub
 
@@ -930,5 +962,108 @@ Fix2:
 
     Private Sub btnCloseVerification_Click(sender As Object, e As EventArgs) Handles btnCloseVerification.Click
         toggleVerifyActivation()
+    End Sub
+
+    Private Sub lvLoanList_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvLoanList.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
+
+        ' Perform the sort with these new sort options.
+        Me.lvLoanList.Sort()
+    End Sub
+
+    Private Sub lvLoanList_DrawColumnHeader(sender As Object, e As DrawListViewColumnHeaderEventArgs) Handles lvLoanList.DrawColumnHeader
+        e.DrawDefault = True
+    End Sub
+
+    Private Sub lvLoanList_DrawSubItem(sender As Object, e As DrawListViewSubItemEventArgs) Handles lvLoanList.DrawSubItem
+        Dim br As New SolidBrush(Color.Transparent) 'LinearGradientBrush(New Point(0, e.Bounds.Height / 2), New Point(e.Bounds.Width, e.Bounds.Height / 2), Color.FromArgb(255, 150, 150, 150), Color.Transparent)
+
+        If e.Item.Selected Then
+            br = New SolidBrush(Color.CornflowerBlue) 'LinearGradientBrush(New Point(0, e.Bounds.Height / 2), New Point(e.Bounds.Width, e.Bounds.Height / 2), Color.FromArgb(255, 150, 150, 150), Color.Transparent)
+
+
+        End If
+
+        If (e.ColumnIndex = 9 Or e.ColumnIndex = 8) Then
+            If e.SubItem.Text = "Active" Or e.SubItem.Text = "Approved" Then
+                br = New SolidBrush(Color.LightGreen)
+            End If
+
+            If e.SubItem.Text = "Declined" Or e.SubItem.Text = "Force Stop" Then
+                br = New SolidBrush(Color.Tomato)
+            End If
+
+            If e.SubItem.Text = "Completed" Then
+                br = New SolidBrush(Color.Blue)
+            End If
+
+            If e.SubItem.Text.ToLower = "in process" Then
+                br = New SolidBrush(Color.Yellow)
+            End If
+        End If
+
+
+        e.Graphics.FillRectangle(br, e.SubItem.Bounds)
+
+        e.Graphics.DrawRectangle(Pens.Black, e.SubItem.Bounds)
+        e.DrawText()
+    End Sub
+
+    Private Sub lvLoanList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub txtSearchLoan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtSearchLoan.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            btnSearchLoan_Click(Me, e)
+        End If
+    End Sub
+
+    Private Sub txtSearchLoan_TextChanged(sender As Object, e As EventArgs) Handles txtSearchLoan.TextChanged
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+
+        If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
+            MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be delete.", MsgBoxStyle.Critical, "Unable to delete")
+            Exit Sub
+        End If
+
+        If MsgBox("Are you sure you want to delete this record?", MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2 + MsgBoxStyle.Question, "Delete loan") = MsgBoxResult.No Then Exit Sub
+
+        Using db As New DBHelper(My.Settings.ConnectionString)
+
+
+            Try
+                Dim rec As Integer
+                Dim data As New Dictionary(Of String, Object)
+                data.Add("loan_id", lvLoanList.FocusedItem.Text)
+
+                rec = db.ExecuteNonQuery("Delete from tbl_loans where loan_id=@loan_id", data)
+
+                rec = db.ExecuteNonQuery("Delete from tbl_collectibles where loan_id=@loan_id", data)
+
+                LoadListView()
+                MsgBox("Record deleted!", MsgBoxStyle.Information, "Delete loan")
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                db.Dispose()
+            End Try
+        End Using
     End Sub
 End Class
