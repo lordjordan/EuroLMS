@@ -116,6 +116,8 @@ Partial Class LoansV2
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -164,12 +166,13 @@ Partial Class LoansV2
         Me.lvLoanList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lvLoanList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader18, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader6})
-        Me.lvLoanList.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvLoanList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader18, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8})
+        Me.lvLoanList.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvLoanList.FullRowSelect = True
         Me.lvLoanList.GridLines = True
         Me.lvLoanList.Location = New System.Drawing.Point(22, 62)
         Me.lvLoanList.Name = "lvLoanList"
+        Me.lvLoanList.OwnerDraw = True
         Me.lvLoanList.Size = New System.Drawing.Size(1043, 458)
         Me.lvLoanList.TabIndex = 30
         Me.lvLoanList.UseCompatibleStateImageBehavior = False
@@ -189,7 +192,7 @@ Partial Class LoansV2
         '
         Me.ColumnHeader3.Text = "Principal"
         Me.ColumnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader3.Width = 161
+        Me.ColumnHeader3.Width = 120
         '
         'ColumnHeader4
         '
@@ -201,6 +204,7 @@ Partial Class LoansV2
         '
         Me.ColumnHeader5.Text = "Interest"
         Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader5.Width = 80
         '
         'ColumnHeader18
         '
@@ -743,6 +747,7 @@ Partial Class LoansV2
         '
         'cboApplicationStatus
         '
+        Me.cboApplicationStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboApplicationStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboApplicationStatus.FormattingEnabled = True
         Me.cboApplicationStatus.Items.AddRange(New Object() {"In process", "Approved", "Declined"})
@@ -750,7 +755,6 @@ Partial Class LoansV2
         Me.cboApplicationStatus.Name = "cboApplicationStatus"
         Me.cboApplicationStatus.Size = New System.Drawing.Size(163, 28)
         Me.cboApplicationStatus.TabIndex = 173
-        Me.cboApplicationStatus.Text = "In process"
         '
         'txtPrincipal
         '
@@ -1160,6 +1164,16 @@ Partial Class LoansV2
         Me.txtUser.Size = New System.Drawing.Size(255, 29)
         Me.txtUser.TabIndex = 64
         '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Company"
+        Me.ColumnHeader7.Width = 90
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "Branch"
+        Me.ColumnHeader8.Width = 90
+        '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1286,5 +1300,7 @@ Partial Class LoansV2
     Friend WithEvents txtUser As System.Windows.Forms.TextBox
     Friend WithEvents btnVerify As System.Windows.Forms.Button
     Friend WithEvents btnCloseVerification As System.Windows.Forms.Button
+    Friend WithEvents ColumnHeader7 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
 
 End Class

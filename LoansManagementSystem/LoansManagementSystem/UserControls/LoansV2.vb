@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Drawing.Drawing2D
+
 Public Class LoansV2
     Dim active_loan_id As Long = 0
     Dim isLOADING As Boolean = False
@@ -456,7 +458,7 @@ Public Class LoansV2
                 '                         "@loan_remarks)", data)
 
                 dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
-                                "terms, date_start, date_end, application_status, loan_status, loan_remarks " & _
+                                "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
                                 "from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -470,8 +472,8 @@ Public Class LoansV2
                     Do While dr.Read
                         Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
                         itmx.SubItems.Add(dr.Item("name").ToString)
-                        itmx.SubItems.Add(StrToNum(dr.Item("principal").ToString))
-                        itmx.SubItems.Add(StrToNum(dr.Item("amortization").ToString))
+                        itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                        itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
                         itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
                         itmx.SubItems.Add(dr.Item("terms").ToString)
                         itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
@@ -479,6 +481,8 @@ Public Class LoansV2
                         itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
                         itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
                         itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                        itmx.SubItems.Add(dr.Item("company_name").ToString)
+                        itmx.SubItems.Add(dr.Item("branch_name").ToString)
 
 
                     Loop
@@ -930,5 +934,51 @@ Fix2:
 
     Private Sub btnCloseVerification_Click(sender As Object, e As EventArgs) Handles btnCloseVerification.Click
         toggleVerifyActivation()
+    End Sub
+
+    Private Sub lvLoanList_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvLoanList.ColumnClick
+
+    End Sub
+
+    Private Sub lvLoanList_DrawColumnHeader(sender As Object, e As DrawListViewColumnHeaderEventArgs) Handles lvLoanList.DrawColumnHeader
+        e.DrawDefault = True
+    End Sub
+
+    Private Sub lvLoanList_DrawSubItem(sender As Object, e As DrawListViewSubItemEventArgs) Handles lvLoanList.DrawSubItem
+        Dim br As New SolidBrush(Color.Transparent) 'LinearGradientBrush(New Point(0, e.Bounds.Height / 2), New Point(e.Bounds.Width, e.Bounds.Height / 2), Color.FromArgb(255, 150, 150, 150), Color.Transparent)
+
+        If e.Item.Selected Then
+            br = New SolidBrush(Color.CornflowerBlue) 'LinearGradientBrush(New Point(0, e.Bounds.Height / 2), New Point(e.Bounds.Width, e.Bounds.Height / 2), Color.FromArgb(255, 150, 150, 150), Color.Transparent)
+
+
+        End If
+
+        If (e.ColumnIndex = 9 Or e.ColumnIndex = 8) Then
+            If e.SubItem.Text = "Active" Or e.SubItem.Text = "Approved" Then
+                br = New SolidBrush(Color.LightGreen)
+            End If
+
+            If e.SubItem.Text = "Declined" Or e.SubItem.Text = "Force Stop" Then
+                br = New SolidBrush(Color.Tomato)
+            End If
+
+            If e.SubItem.Text = "Completed" Then
+                br = New SolidBrush(Color.Blue)
+            End If
+
+            If e.SubItem.Text.ToLower = "in process" Then
+                br = New SolidBrush(Color.Yellow)
+            End If
+        End If
+
+
+        e.Graphics.FillRectangle(br, e.SubItem.Bounds)
+
+        e.Graphics.DrawRectangle(Pens.Black, e.SubItem.Bounds)
+        e.DrawText()
+    End Sub
+
+    Private Sub lvLoanList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.SelectedIndexChanged
+
     End Sub
 End Class
