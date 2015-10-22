@@ -51,21 +51,21 @@ Public Class frmLogin
                     lblUtype.Text = utype
                     If uname = txtUser.Text And upass = encryptPass Then
                         If utype = 0 Then
-                            MessageBox.Show("Welcome Super Admin")
+                            'MessageBox.Show("Welcome Super Admin")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Close()
                             frmMainPanel.Show()
                             Me.Hide()
 
                         ElseIf utype = 1 Then
-                            MessageBox.Show("Welcome Administrator!")
+                            'MessageBox.Show("Welcome Administrator!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Close()
                             frmMainPanel.Show()
                             Me.Hide()
 
                         ElseIf utype = 2 Then
-                            MessageBox.Show("Welcome Encoder!")
+                            'MessageBox.Show("Welcome Encoder!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Close()
                             frmMainPanel.Show()
@@ -128,19 +128,19 @@ Public Class frmLogin
                     lblUtype.Text = utype
                     If uname = txtUser.Text And upass = txtPassword.Text Then
                         If utype = 0 Then
-                            MessageBox.Show("Welcome Super Admin")
+                            'MessageBox.Show("Welcome Super Admin")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Show()
                             Me.Hide()
 
                         ElseIf utype = 1 Then
-                            MessageBox.Show("Welcome Administrator!")
+                            'MessageBox.Show("Welcome Administrator!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Show()
                             Me.Hide()
 
                         ElseIf utype = 2 Then
-                            MessageBox.Show("Welcome Encoder!")
+                            'MessageBox.Show("Welcome Encoder!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             frmMainPanel.Show()
                             Me.Hide()
@@ -170,5 +170,15 @@ Public Class frmLogin
         Finally
             db.Dispose() '<--------CHECK THIS!
         End Try
+    End Sub
+
+    Private Sub txtPassword_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtPassword.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            btnLog_Click(Me, e)
+        End If
+    End Sub
+
+    Private Sub txtPassword_TextChanged(sender As Object, e As EventArgs) Handles txtPassword.TextChanged
+
     End Sub
 End Class

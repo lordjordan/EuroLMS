@@ -94,6 +94,14 @@ Public Class LoansV2
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
         'gbxAddEdit.Visible = True
         gbxAddEdit.Text = "New Loan Application"
+        cboApplicationStatus.SelectedIndex = 0
+        cboLoanStatus.SelectedIndex = 0
+        Try
+            DataGridView1.DataSource = Nothing
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
         toggleLoanApplication(True)
         btnFind_Click(Me, e)
 

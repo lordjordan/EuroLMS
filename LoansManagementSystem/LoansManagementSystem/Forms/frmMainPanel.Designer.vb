@@ -42,7 +42,7 @@ Partial Class frmMainPanel
         Me.ClientSize = New System.Drawing.Size(860, 507)
         Me.Controls.Add(Me.pnlMain)
         Me.Name = "frmMainPanel"
-        Me.Text = "Euro Mico Lending Corp."
+        Me.Text = "Euro Micro Lending Corp."
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 

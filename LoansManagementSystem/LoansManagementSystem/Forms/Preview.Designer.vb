@@ -38,7 +38,7 @@ Partial Class PreviewImg
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(901, 469)
+        Me.PictureBox1.Size = New System.Drawing.Size(960, 528)
         Me.PictureBox1.TabIndex = 33
         Me.PictureBox1.TabStop = False
         '
@@ -49,7 +49,7 @@ Partial Class PreviewImg
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(907, 475)
+        Me.Panel1.Size = New System.Drawing.Size(966, 534)
         Me.Panel1.TabIndex = 34
         '
         'btnCancel
@@ -60,7 +60,7 @@ Partial Class PreviewImg
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.White
-        Me.btnCancel.Location = New System.Drawing.Point(787, 12)
+        Me.btnCancel.Location = New System.Drawing.Point(846, 12)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(108, 60)
         Me.btnCancel.TabIndex = 34
@@ -76,7 +76,7 @@ Partial Class PreviewImg
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(907, 475)
+        Me.ClientSize = New System.Drawing.Size(966, 534)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "PreviewImg"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

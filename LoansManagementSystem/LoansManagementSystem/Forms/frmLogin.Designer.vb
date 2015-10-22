@@ -25,7 +25,6 @@ Partial Class frmLogin
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLogin))
         Me.pnlMain = New System.Windows.Forms.Panel()
-        Me.lblUtype = New System.Windows.Forms.Label()
         Me.btnLog = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.picUser = New System.Windows.Forms.PictureBox()
@@ -33,6 +32,7 @@ Partial Class frmLogin
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.lblUtype = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.pnlMain.SuspendLayout()
@@ -56,16 +56,6 @@ Partial Class frmLogin
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1020, 409)
         Me.pnlMain.TabIndex = 63
-        '
-        'lblUtype
-        '
-        Me.lblUtype.AutoSize = True
-        Me.lblUtype.Location = New System.Drawing.Point(5, 9)
-        Me.lblUtype.Name = "lblUtype"
-        Me.lblUtype.Size = New System.Drawing.Size(39, 13)
-        Me.lblUtype.TabIndex = 69
-        Me.lblUtype.Text = "Label2"
-        Me.lblUtype.Visible = False
         '
         'btnLog
         '
@@ -139,6 +129,16 @@ Partial Class frmLogin
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(18, 29)
         Me.TextBox1.TabIndex = 61
+        '
+        'lblUtype
+        '
+        Me.lblUtype.AutoSize = True
+        Me.lblUtype.Location = New System.Drawing.Point(5, 9)
+        Me.lblUtype.Name = "lblUtype"
+        Me.lblUtype.Size = New System.Drawing.Size(39, 13)
+        Me.lblUtype.TabIndex = 69
+        Me.lblUtype.Text = "Label2"
+        Me.lblUtype.Visible = False
         '
         'PictureBox1
         '

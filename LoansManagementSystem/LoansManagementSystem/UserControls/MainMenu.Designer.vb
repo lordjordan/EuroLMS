@@ -123,27 +123,26 @@ Partial Class MainMenu
         'lblTime
         '
         Me.lblTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblTime.AutoSize = True
         Me.lblTime.BackColor = System.Drawing.Color.Transparent
         Me.lblTime.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTime.ForeColor = System.Drawing.Color.White
         Me.lblTime.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.lblTime.Location = New System.Drawing.Point(802, 467)
+        Me.lblTime.Location = New System.Drawing.Point(760, 467)
         Me.lblTime.Name = "lblTime"
-        Me.lblTime.Size = New System.Drawing.Size(213, 39)
+        Me.lblTime.Size = New System.Drawing.Size(255, 39)
         Me.lblTime.TabIndex = 24
         Me.lblTime.Text = "5:03:00 P.M."
+        Me.lblTime.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'lblDate
         '
         Me.lblDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblDate.AutoSize = True
         Me.lblDate.BackColor = System.Drawing.Color.Transparent
         Me.lblDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDate.ForeColor = System.Drawing.Color.White
-        Me.lblDate.Location = New System.Drawing.Point(658, 506)
+        Me.lblDate.Location = New System.Drawing.Point(377, 506)
         Me.lblDate.Name = "lblDate"
-        Me.lblDate.Size = New System.Drawing.Size(357, 39)
+        Me.lblDate.Size = New System.Drawing.Size(638, 39)
         Me.lblDate.TabIndex = 25
         Me.lblDate.Text = "Monday, 7 September"
         Me.lblDate.TextAlign = System.Drawing.ContentAlignment.TopRight

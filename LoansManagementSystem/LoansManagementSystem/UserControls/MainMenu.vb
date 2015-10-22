@@ -10,15 +10,18 @@
         tmrTimeDate.Enabled = False
         'lblDate.Text = Now.DayOfWeek.ToString & ", " & Now.Day.ToString & " " & Now.mo.ToString
         lblTime.Text = Format(Now, "long time") 'Now.Hour.ToString & ":" & Now.Minute.ToString
-        lblDate.Text = Format(Now, "dddd, d MMMM")
+        'lblDate.Text = Format(Now, "dddd, d MMMM")
+        lblDate.Text = Format(Now, "long date")
 
         tmrTimeDate.Enabled = True
     End Sub
 
 
     Private Sub btnCollectibles_Click(sender As Object, e As EventArgs) Handles btnCollectibles.Click
+        'uscCollectibles = New frmCollectibles
         showUSC(uscCollectibles)
 
+        'uscCollectibles.ShowData()
     End Sub
 
     Private Sub btnSystemUser_Click(sender As Object, e As EventArgs)

@@ -75,6 +75,10 @@ Partial Class frmCollectibles
         Me.btnCancelColl = New System.Windows.Forms.Button()
         Me.btnOk = New System.Windows.Forms.Button()
         Me.gbxPH = New System.Windows.Forms.GroupBox()
+        Me.txtTotalPenalties = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.txtDateEnd = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.txtCollectedAmt = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.txtTerms = New System.Windows.Forms.TextBox()
@@ -90,10 +94,6 @@ Partial Class frmCollectibles
         Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.txtDateEnd = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.txtTotalPenalties = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.pnlMain.SuspendLayout()
@@ -656,6 +656,49 @@ Partial Class frmCollectibles
         Me.gbxPH.Text = "Payment History"
         Me.gbxPH.Visible = False
         '
+        'txtTotalPenalties
+        '
+        Me.txtTotalPenalties.BackColor = System.Drawing.SystemColors.Control
+        Me.txtTotalPenalties.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalPenalties.Location = New System.Drawing.Point(105, 179)
+        Me.txtTotalPenalties.Name = "txtTotalPenalties"
+        Me.txtTotalPenalties.ReadOnly = True
+        Me.txtTotalPenalties.Size = New System.Drawing.Size(222, 26)
+        Me.txtTotalPenalties.TabIndex = 174
+        Me.txtTotalPenalties.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(6, 183)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(97, 16)
+        Me.Label15.TabIndex = 173
+        Me.Label15.Text = "Total penalties"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtDateEnd
+        '
+        Me.txtDateEnd.BackColor = System.Drawing.SystemColors.Control
+        Me.txtDateEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDateEnd.Location = New System.Drawing.Point(497, 183)
+        Me.txtDateEnd.Name = "txtDateEnd"
+        Me.txtDateEnd.ReadOnly = True
+        Me.txtDateEnd.Size = New System.Drawing.Size(129, 26)
+        Me.txtDateEnd.TabIndex = 172
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(424, 189)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(63, 16)
+        Me.Label12.TabIndex = 171
+        Me.Label12.Text = "Date end"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'txtCollectedAmt
         '
         Me.txtCollectedAmt.BackColor = System.Drawing.SystemColors.Control
@@ -806,49 +849,6 @@ Partial Class frmCollectibles
         Me.ColumnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader19.Width = 173
         '
-        'txtDateEnd
-        '
-        Me.txtDateEnd.BackColor = System.Drawing.SystemColors.Control
-        Me.txtDateEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDateEnd.Location = New System.Drawing.Point(497, 183)
-        Me.txtDateEnd.Name = "txtDateEnd"
-        Me.txtDateEnd.ReadOnly = True
-        Me.txtDateEnd.Size = New System.Drawing.Size(129, 26)
-        Me.txtDateEnd.TabIndex = 172
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(424, 189)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(63, 16)
-        Me.Label12.TabIndex = 171
-        Me.Label12.Text = "Date end"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtTotalPenalties
-        '
-        Me.txtTotalPenalties.BackColor = System.Drawing.SystemColors.Control
-        Me.txtTotalPenalties.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotalPenalties.Location = New System.Drawing.Point(105, 179)
-        Me.txtTotalPenalties.Name = "txtTotalPenalties"
-        Me.txtTotalPenalties.ReadOnly = True
-        Me.txtTotalPenalties.Size = New System.Drawing.Size(222, 26)
-        Me.txtTotalPenalties.TabIndex = 174
-        Me.txtTotalPenalties.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(6, 183)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(97, 16)
-        Me.Label15.TabIndex = 173
-        Me.Label15.Text = "Total penalties"
-        Me.Label15.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
         'ColumnHeader20
         '
         Me.ColumnHeader20.Text = "Penalized?"
@@ -866,12 +866,12 @@ Partial Class frmCollectibles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxAdvanceSearch)
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxClientCollectible)
+        Me.Controls.Add(Me.gbxPH)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)
         Me.pnlMain.ResumeLayout(False)
