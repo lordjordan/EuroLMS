@@ -797,6 +797,8 @@ Fix2:
                     txtClientID.Text = dr.Item("client_id")
                     txtName.Text = dr.Item("name")
                     txtCompany.Text = dr.Item("company_name")
+                    txtAvailableCredit.Text = 0
+                    txtCreditLimit.Text = 0
                     txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, False)
                     txtBranch.Text = dr.Item("branch_name")
                     'txtBiMonthlyAmort.Text = dr.Item("loan_id")
