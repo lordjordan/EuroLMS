@@ -1025,4 +1025,45 @@ Fix2:
     Private Sub lvLoanList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.SelectedIndexChanged
 
     End Sub
+
+    Private Sub txtSearchLoan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtSearchLoan.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            btnSearchLoan_Click(Me, e)
+        End If
+    End Sub
+
+    Private Sub txtSearchLoan_TextChanged(sender As Object, e As EventArgs) Handles txtSearchLoan.TextChanged
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+
+        If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
+            MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be delete.", MsgBoxStyle.Critical, "Unable to delete")
+            Exit Sub
+        End If
+
+        If MsgBox("Are you sure you want to delete this record?", MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2 + MsgBoxStyle.Question, "Delete loan") = MsgBoxResult.No Then Exit Sub
+
+        Using db As New DBHelper(My.Settings.ConnectionString)
+
+
+            Try
+                Dim rec As Integer
+                Dim data As New Dictionary(Of String, Object)
+                data.Add("loan_id", lvLoanList.FocusedItem.Text)
+
+                rec = db.ExecuteNonQuery("Delete from tbl_loans where loan_id=@loan_id", data)
+
+                rec = db.ExecuteNonQuery("Delete from tbl_collectibles where loan_id=@loan_id", data)
+
+                LoadListView()
+                MsgBox("Record deleted!", MsgBoxStyle.Information, "Delete loan")
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                db.Dispose()
+            End Try
+        End Using
+    End Sub
 End Class
