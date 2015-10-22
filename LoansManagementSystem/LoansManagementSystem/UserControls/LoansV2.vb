@@ -7,6 +7,8 @@ Public Class LoansV2
     Dim active_loan_id As Long = 0
     Dim isLOADING As Boolean = False
 
+    Private lvwColumnSorter As ListViewColumnSorter
+
     Private Sub computeTotalLoan()
         If Val(txtTerms.Text) < 1 Or Val(cboInterest.Text) <= 0 Or Val(txtPrincipal.Text) < 1 Or _
             Not IsNumeric(txtPrincipal.Text) Or _
@@ -751,6 +753,10 @@ Fix2:
     End Sub
 
     Private Sub LoansV2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Create an instance of a ListView column sorter and assign it 
+        ' to the ListView control.
+        lvwColumnSorter = New ListViewColumnSorter()
+        Me.lvLoanList.ListViewItemSorter = lvwColumnSorter
         LoadListView()
     End Sub
 
@@ -937,7 +943,23 @@ Fix2:
     End Sub
 
     Private Sub lvLoanList_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvLoanList.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
 
+        ' Perform the sort with these new sort options.
+        Me.lvLoanList.Sort()
     End Sub
 
     Private Sub lvLoanList_DrawColumnHeader(sender As Object, e As DrawListViewColumnHeaderEventArgs) Handles lvLoanList.DrawColumnHeader
