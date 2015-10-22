@@ -25,7 +25,7 @@ Public Class Branches
         txtBranchName.Focus()
         showAddEdit(True)
         dr = db.ExecuteReader("SELECT branch_id, company_name, branch_name,branch_contact,branch_address,payroll_master from tbl_branches as B LEFT JOIN tbl_company as C on B.company_id=C.company_id")
-        Dim maxId As Integer = 0
+
         gbxAddEdit.Text = "Add New Branches"
         showAddEdit(True)
 
@@ -34,7 +34,6 @@ Public Class Branches
         'End While
 
         txtBranchName.Focus()
-        txtBranchID.Text = maxId + 1
         cbxCompanyName.Text = ""
         txtBranchName.Text = ""
         txtBranchCon.Text = ""
@@ -98,6 +97,7 @@ Public Class Branches
                     MessageBox.Show("Record saved!", "Important Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
                     showAddEdit(False)
                     LoadListview()
+                    clearAll()
                 End If
             Catch ex As Exception
                 MsgBox(ex.ToString)
@@ -126,6 +126,7 @@ Public Class Branches
                     MessageBox.Show("Record Updated!", "Important Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
                     showAddEdit(False)
                     LoadListview()
+                    clearAll()
                 End If
             Catch ex As Exception
                 MsgBox(ex.ToString)
@@ -136,11 +137,18 @@ Public Class Branches
         End If
 
     End Sub
-    Private Sub gbxAddEdit_Enter(sender As Object, e As EventArgs) Handles gbxAddEdit.Enter
-
+    Private Sub clearAll()
+        txtBranchID.Text = ""
+        cbxCompanyName.Text = ""
+        txtBranchName.Text = ""
+        txtBranchCon.Text = ""
+        txtBranchAd.Text = ""
+        txtPayrollMaster.Text = ""
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         showAddEdit(False)
+        ListView1.SelectedItems.Clear()
+        clearAll()
     End Sub
 
     Private Sub Branches_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -177,7 +185,6 @@ Public Class Branches
         txtBranchName.Focus()
         gbxAddEdit.Text = "Edit Branch"
         If ListView1.SelectedItems.Count > 0 Then 'make sure there is a selected item to modify
-
             Try
                 dr = db.ExecuteReader("Select branch_id, company_name, branch_name,branch_contact,branch_address,payroll_master from tbl_branches as B LEFT JOIN tbl_company as C on B.company_id=C.company_id WHERE branch_id=" & ListView1.FocusedItem.Text)
 
