@@ -16,6 +16,7 @@ Public Class Attachments
         showUSC(uscMainmenu)
     End Sub
     Private Sub clearAll()
+        txtReqID.Text = ""
         txtClientID.Text = ""
         txtName.Text = ""
         txt_Remarks.Text = ""
