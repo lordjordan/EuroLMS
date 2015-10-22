@@ -687,6 +687,26 @@ Fix2:
         'DataGridView1.Columns.
     End Sub
 
+    Private Sub lvClientList_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvClientList.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
+
+        ' Perform the sort with these new sort options.
+        Me.lvClientList.Sort()
+    End Sub
+
     Private Sub lvClientList_DoubleClick(sender As Object, e As EventArgs) Handles lvClientList.DoubleClick
         btnSelectSearchClient_Click(sender, e)
     End Sub
@@ -757,6 +777,8 @@ Fix2:
         ' to the ListView control.
         lvwColumnSorter = New ListViewColumnSorter()
         Me.lvLoanList.ListViewItemSorter = lvwColumnSorter
+        Me.lvClientList.ListViewItemSorter = lvwColumnSorter
+
         LoadListView()
     End Sub
 
