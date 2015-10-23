@@ -73,7 +73,7 @@ Partial Class MainMenu
         Me.btnCollectibles.Name = "btnCollectibles"
         Me.btnCollectibles.Size = New System.Drawing.Size(287, 195)
         Me.btnCollectibles.TabIndex = 15
-        Me.btnCollectibles.Text = "Collectibles"
+        Me.btnCollectibles.Text = "Payment Central"
         Me.btnCollectibles.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         Me.btnCollectibles.UseVisualStyleBackColor = False
         '

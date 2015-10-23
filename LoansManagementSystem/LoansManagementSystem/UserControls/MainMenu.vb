@@ -30,6 +30,7 @@
 
     Private Sub btnLoans_Click(sender As Object, e As EventArgs) Handles btnLoans.Click
         showUSC(uscLoans)
+        uscLoans.LoadListView()
     End Sub
 
     Private Sub btnClients_Click(sender As Object, e As EventArgs)
