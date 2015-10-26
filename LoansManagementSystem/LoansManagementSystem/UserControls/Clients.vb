@@ -367,12 +367,18 @@ Public Class Clients
                                     NewPicture()
                                 End If
 
-                                showAddEdit(False)
-                                LoadListView()
-                                clearAll()
+                                Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
+                                If result = DialogResult.OK Then
+                                    'MessageBox.Show("Record saved", "Message", MessageBoxButtons.OK)
+                                    showAddEdit(False)
+                                    LoadListView()
+                                    clearAll()
+                                ElseIf result = DialogResult.Cancel Then
+                                    Exit Sub
+                                End If
 
                             ElseIf msgrslt = MsgBoxResult.No Then
-                                MsgBox("exit saving...")
+                                'MsgBox("Exit saving")
                                 Exit Sub
                             End If
                         End If
@@ -386,9 +392,10 @@ Public Class Clients
                         NewClient()
                         NewPicture()
                     End If
+
                     Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
                     If result = DialogResult.OK Then
-                        MsgBox("Record saving...", MsgBoxStyle.Information)
+                        'MessageBox.Show("Record saved", "Message", MessageBoxButtons.OK)
                         showAddEdit(False)
                         LoadListView()
                         clearAll()
@@ -404,6 +411,7 @@ Public Class Clients
             End Try
 
 
+
             'EDIT CLIENTS INFORMATION
         ElseIf gbxAddEdit.Text = "Edit client" Then
             If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
@@ -414,15 +422,10 @@ Public Class Clients
 
             EditClient()
             UpdatePicture()
-            Dim result As Integer = MessageBox.Show("Do you want to update this record?", "Important Message", MessageBoxButtons.OKCancel)
-            If result = DialogResult.OK Then
-                MessageBox.Show("Updating...")
-                showAddEdit(False)
-                LoadListView()
-                clearAll()
-            ElseIf result = DialogResult.Cancel Then
-                Exit Sub
-            End If
+            MessageBox.Show("Record Updated", "Message", MessageBoxButtons.OK)
+            showAddEdit(False)
+            LoadListView()
+            clearAll()
         End If
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -682,7 +685,7 @@ Public Class Clients
                 Else
                     'DISABLE A CLIENT
                     'MsgBox("Wala pang loan.")
-                    Dim msgrslt As MsgBoxResult = MsgBox("Are you sure you want to disable this client? You cannot enable this anymore.", vbQuestion + MsgBoxStyle.YesNo, "Message alert")
+                    Dim msgrslt As MsgBoxResult = MsgBox("Are you sure you want to disable this client? You cannot enable this anymore.", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2, "Message alert")
                     If msgrslt = MsgBoxResult.Yes Then
                         'MsgBox("DISABLING......")
                         disableClient()
