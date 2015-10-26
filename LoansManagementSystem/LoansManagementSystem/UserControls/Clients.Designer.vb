@@ -27,18 +27,19 @@ Partial Class Clients
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Clients))
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.btnExport = New System.Windows.Forms.Button()
         Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.Client_id = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
+        Me.Client_id = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.btnDisable = New System.Windows.Forms.Button()
         Me.btnEdit = New System.Windows.Forms.Button()
         Me.btnAddNew = New System.Windows.Forms.Button()
@@ -47,6 +48,7 @@ Partial Class Clients
         Me.Label17 = New System.Windows.Forms.Label()
         Me.txtSecurity_info = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
+        Me.Picturebox1 = New System.Windows.Forms.PictureBox()
         Me.txtEmpNum = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.cbxCompany = New System.Windows.Forms.ComboBox()
@@ -76,13 +78,12 @@ Partial Class Clients
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txt_FName = New System.Windows.Forms.TextBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.txtpicID = New System.Windows.Forms.TextBox()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ServiceController1 = New System.ServiceProcess.ServiceController()
         Me.ofdPic = New System.Windows.Forms.OpenFileDialog()
-        Me.Picturebox1 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.Picturebox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -94,6 +95,7 @@ Partial Class Clients
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.btnSearch)
         Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Controls.Add(Me.txtSearchClient)
@@ -106,6 +108,22 @@ Partial Class Clients
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1028, 504)
         Me.pnlMain.TabIndex = 50
+        '
+        'btnPrint
+        '
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrint.FlatAppearance.BorderSize = 0
+        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrint.ForeColor = System.Drawing.Color.White
+        Me.btnPrint.Location = New System.Drawing.Point(361, 427)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrint.TabIndex = 88
+        Me.btnPrint.Text = "Print"
+        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrint.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
@@ -146,7 +164,7 @@ Partial Class Clients
         Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExport.ForeColor = System.Drawing.Color.White
-        Me.btnExport.Location = New System.Drawing.Point(361, 427)
+        Me.btnExport.Location = New System.Drawing.Point(475, 427)
         Me.btnExport.Name = "btnExport"
         Me.btnExport.Size = New System.Drawing.Size(108, 60)
         Me.btnExport.TabIndex = 84
@@ -345,6 +363,18 @@ Partial Class Clients
         Me.Label21.TabIndex = 178
         Me.Label21.Text = "Security Information"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Picturebox1
+        '
+        Me.Picturebox1.BackgroundImage = CType(resources.GetObject("Picturebox1.BackgroundImage"), System.Drawing.Image)
+        Me.Picturebox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Picturebox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Picturebox1.Location = New System.Drawing.Point(442, 27)
+        Me.Picturebox1.Name = "Picturebox1"
+        Me.Picturebox1.Size = New System.Drawing.Size(274, 241)
+        Me.Picturebox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.Picturebox1.TabIndex = 51
+        Me.Picturebox1.TabStop = False
         '
         'txtEmpNum
         '
@@ -646,6 +676,15 @@ Partial Class Clients
         Me.txt_FName.Size = New System.Drawing.Size(228, 26)
         Me.txt_FName.TabIndex = 2
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PictureBox2.Location = New System.Drawing.Point(437, 24)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(284, 247)
+        Me.PictureBox2.TabIndex = 177
+        Me.PictureBox2.TabStop = False
+        '
         'txtpicID
         '
         Me.txtpicID.Enabled = False
@@ -683,27 +722,6 @@ Partial Class Clients
         'ofdPic
         '
         Me.ofdPic.FileName = "OpenFileDialog1"
-        '
-        'Picturebox1
-        '
-        Me.Picturebox1.BackgroundImage = CType(resources.GetObject("Picturebox1.BackgroundImage"), System.Drawing.Image)
-        Me.Picturebox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Picturebox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Picturebox1.Location = New System.Drawing.Point(442, 27)
-        Me.Picturebox1.Name = "Picturebox1"
-        Me.Picturebox1.Size = New System.Drawing.Size(274, 241)
-        Me.Picturebox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.Picturebox1.TabIndex = 51
-        Me.Picturebox1.TabStop = False
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.PictureBox2.Location = New System.Drawing.Point(437, 24)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(284, 247)
-        Me.PictureBox2.TabIndex = 177
-        Me.PictureBox2.TabStop = False
         '
         'Clients
         '
@@ -782,5 +800,6 @@ End Sub
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents txtStatus As System.Windows.Forms.TextBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents btnPrint As System.Windows.Forms.Button
 End Class
 
