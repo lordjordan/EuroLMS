@@ -27,18 +27,19 @@ Partial Class Clients
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Clients))
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.btnExport = New System.Windows.Forms.Button()
         Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.Client_id = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(),System.Windows.Forms.ColumnHeader)
+        Me.Client_id = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.btnDisable = New System.Windows.Forms.Button()
         Me.btnEdit = New System.Windows.Forms.Button()
         Me.btnAddNew = New System.Windows.Forms.Button()
@@ -83,17 +84,18 @@ Partial Class Clients
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ServiceController1 = New System.ServiceProcess.ServiceController()
         Me.ofdPic = New System.Windows.Forms.OpenFileDialog()
-        Me.pnlMain.SuspendLayout
-        Me.gbxAddEdit.SuspendLayout
-        CType(Me.Picturebox1,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.PictureBox2,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.SuspendLayout
+        Me.pnlMain.SuspendLayout()
+        Me.gbxAddEdit.SuspendLayout()
+        CType(Me.Picturebox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'pnlMain
         '
-        Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
-            Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.btnSearch)
         Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Controls.Add(Me.txtSearchClient)
@@ -107,22 +109,38 @@ Partial Class Clients
         Me.pnlMain.Size = New System.Drawing.Size(1028, 504)
         Me.pnlMain.TabIndex = 50
         '
+        'btnPrint
+        '
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrint.FlatAppearance.BorderSize = 0
+        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrint.ForeColor = System.Drawing.Color.White
+        Me.btnPrint.Location = New System.Drawing.Point(361, 427)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrint.TabIndex = 88
+        Me.btnPrint.Text = "Print"
+        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrint.UseVisualStyleBackColor = False
+        '
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.Gray
-        Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSearch.ForeColor = System.Drawing.Color.White
         Me.btnSearch.Location = New System.Drawing.Point(294, 17)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(61, 24)
         Me.btnSearch.TabIndex = 87
         Me.btnSearch.Text = "Search"
-        Me.btnSearch.UseVisualStyleBackColor = false
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'Label3
         '
-        Me.Label3.AutoSize = true
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(21, 21)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(51, 16)
@@ -132,7 +150,7 @@ Partial Class Clients
         '
         'txtSearchClient
         '
-        Me.txtSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txtSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSearchClient.Location = New System.Drawing.Point(78, 18)
         Me.txtSearchClient.Name = "txtSearchClient"
         Me.txtSearchClient.Size = New System.Drawing.Size(210, 22)
@@ -140,34 +158,34 @@ Partial Class Clients
         '
         'btnExport
         '
-        Me.btnExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnExport.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnExport.FlatAppearance.BorderSize = 0
         Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExport.ForeColor = System.Drawing.Color.White
-        Me.btnExport.Location = New System.Drawing.Point(361, 427)
+        Me.btnExport.Location = New System.Drawing.Point(475, 427)
         Me.btnExport.Name = "btnExport"
         Me.btnExport.Size = New System.Drawing.Size(108, 60)
         Me.btnExport.TabIndex = 84
         Me.btnExport.Text = "Export"
         Me.btnExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnExport.UseVisualStyleBackColor = false
+        Me.btnExport.UseVisualStyleBackColor = False
         '
         'ListView1
         '
-        Me.ListView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
-            Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.ListView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Client_id, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6})
-        Me.ListView1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.ListView1.FullRowSelect = true
-        Me.ListView1.GridLines = true
+        Me.ListView1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ListView1.FullRowSelect = True
+        Me.ListView1.GridLines = True
         Me.ListView1.Location = New System.Drawing.Point(19, 47)
         Me.ListView1.Name = "ListView1"
         Me.ListView1.Size = New System.Drawing.Size(982, 374)
         Me.ListView1.TabIndex = 30
-        Me.ListView1.UseCompatibleStateImageBehavior = false
+        Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.Details
         '
         'Client_id
@@ -188,7 +206,7 @@ Partial Class Clients
         'ColumnHeader3
         '
         Me.ColumnHeader3.Text = "Full Name"
-        Me.ColumnHeader3.Width = 200
+        Me.ColumnHeader3.Width = 250
         '
         'ColumnHeader4
         '
@@ -207,11 +225,11 @@ Partial Class Clients
         '
         'btnDisable
         '
-        Me.btnDisable.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnDisable.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnDisable.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnDisable.FlatAppearance.BorderSize = 0
         Me.btnDisable.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDisable.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnDisable.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDisable.ForeColor = System.Drawing.Color.White
         Me.btnDisable.Location = New System.Drawing.Point(247, 427)
         Me.btnDisable.Name = "btnDisable"
@@ -219,15 +237,15 @@ Partial Class Clients
         Me.btnDisable.TabIndex = 31
         Me.btnDisable.Text = "Disable Client"
         Me.btnDisable.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnDisable.UseVisualStyleBackColor = false
+        Me.btnDisable.UseVisualStyleBackColor = False
         '
         'btnEdit
         '
-        Me.btnEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnEdit.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnEdit.FlatAppearance.BorderSize = 0
         Me.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEdit.ForeColor = System.Drawing.Color.White
         Me.btnEdit.Location = New System.Drawing.Point(133, 427)
         Me.btnEdit.Name = "btnEdit"
@@ -235,15 +253,15 @@ Partial Class Clients
         Me.btnEdit.TabIndex = 32
         Me.btnEdit.Text = "Edit Client"
         Me.btnEdit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnEdit.UseVisualStyleBackColor = false
+        Me.btnEdit.UseVisualStyleBackColor = False
         '
         'btnAddNew
         '
-        Me.btnAddNew.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnAddNew.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnAddNew.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnAddNew.FlatAppearance.BorderSize = 0
         Me.btnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAddNew.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnAddNew.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddNew.ForeColor = System.Drawing.Color.White
         Me.btnAddNew.Location = New System.Drawing.Point(19, 427)
         Me.btnAddNew.Name = "btnAddNew"
@@ -251,7 +269,7 @@ Partial Class Clients
         Me.btnAddNew.TabIndex = 33
         Me.btnAddNew.Text = "Add Client"
         Me.btnAddNew.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnAddNew.UseVisualStyleBackColor = false
+        Me.btnAddNew.UseVisualStyleBackColor = False
         '
         'gbxAddEdit
         '
@@ -294,19 +312,19 @@ Partial Class Clients
         Me.gbxAddEdit.Controls.Add(Me.PictureBox2)
         Me.gbxAddEdit.Controls.Add(Me.txtpicID)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAddEdit.Location = New System.Drawing.Point(217, 68)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(735, 585)
         Me.gbxAddEdit.TabIndex = 49
-        Me.gbxAddEdit.TabStop = false
+        Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "Add New Client"
-        Me.gbxAddEdit.Visible = false
+        Me.gbxAddEdit.Visible = False
         '
         'txtStatus
         '
-        Me.txtStatus.Enabled = false
-        Me.txtStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txtStatus.Enabled = False
+        Me.txtStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtStatus.Location = New System.Drawing.Point(493, 471)
         Me.txtStatus.Name = "txtStatus"
         Me.txtStatus.Size = New System.Drawing.Size(52, 26)
@@ -315,8 +333,8 @@ Partial Class Clients
         '
         'Label17
         '
-        Me.Label17.AutoSize = true
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(446, 475)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(45, 16)
@@ -326,9 +344,9 @@ Partial Class Clients
         '
         'txtSecurity_info
         '
-        Me.txtSecurity_info.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txtSecurity_info.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSecurity_info.Location = New System.Drawing.Point(491, 389)
-        Me.txtSecurity_info.Multiline = true
+        Me.txtSecurity_info.Multiline = True
         Me.txtSecurity_info.Name = "txtSecurity_info"
         Me.txtSecurity_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtSecurity_info.Size = New System.Drawing.Size(228, 76)
@@ -336,8 +354,8 @@ Partial Class Clients
         '
         'Label21
         '
-        Me.Label21.AutoSize = true
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label21.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label21.Location = New System.Drawing.Point(367, 395)
         Me.Label21.Name = "Label21"
@@ -348,7 +366,7 @@ Partial Class Clients
         '
         'Picturebox1
         '
-        Me.Picturebox1.BackgroundImage = CType(resources.GetObject("Picturebox1.BackgroundImage"),System.Drawing.Image)
+        Me.Picturebox1.BackgroundImage = CType(resources.GetObject("Picturebox1.BackgroundImage"), System.Drawing.Image)
         Me.Picturebox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Picturebox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Picturebox1.Location = New System.Drawing.Point(442, 27)
@@ -356,11 +374,11 @@ Partial Class Clients
         Me.Picturebox1.Size = New System.Drawing.Size(274, 241)
         Me.Picturebox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.Picturebox1.TabIndex = 51
-        Me.Picturebox1.TabStop = false
+        Me.Picturebox1.TabStop = False
         '
         'txtEmpNum
         '
-        Me.txtEmpNum.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txtEmpNum.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEmpNum.Location = New System.Drawing.Point(491, 310)
         Me.txtEmpNum.Name = "txtEmpNum"
         Me.txtEmpNum.Size = New System.Drawing.Size(228, 26)
@@ -368,8 +386,8 @@ Partial Class Clients
         '
         'Label16
         '
-        Me.Label16.AutoSize = true
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(367, 318)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(121, 16)
@@ -380,8 +398,8 @@ Partial Class Clients
         'cbxCompany
         '
         Me.cbxCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxCompany.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.cbxCompany.FormattingEnabled = true
+        Me.cbxCompany.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxCompany.FormattingEnabled = True
         Me.cbxCompany.Location = New System.Drawing.Point(133, 72)
         Me.cbxCompany.Name = "cbxCompany"
         Me.cbxCompany.Size = New System.Drawing.Size(228, 28)
@@ -390,8 +408,8 @@ Partial Class Clients
         '
         'Label15
         '
-        Me.Label15.AutoSize = true
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(25, 78)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(106, 16)
@@ -402,8 +420,8 @@ Partial Class Clients
         'cbxEmpType
         '
         Me.cbxEmpType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxEmpType.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.cbxEmpType.FormattingEnabled = true
+        Me.cbxEmpType.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxEmpType.FormattingEnabled = True
         Me.cbxEmpType.Items.AddRange(New Object() {"Contractual", "Regular", "Probationary"})
         Me.cbxEmpType.Location = New System.Drawing.Point(491, 347)
         Me.cbxEmpType.Name = "cbxEmpType"
@@ -417,11 +435,11 @@ Partial Class Clients
         Me.btn_browse.Size = New System.Drawing.Size(104, 28)
         Me.btn_browse.TabIndex = 62
         Me.btn_browse.Text = "Browse Photo"
-        Me.btn_browse.UseVisualStyleBackColor = true
+        Me.btn_browse.UseVisualStyleBackColor = True
         '
         'DateTimePicker2
         '
-        Me.DateTimePicker2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.DateTimePicker2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DateTimePicker2.Location = New System.Drawing.Point(133, 430)
         Me.DateTimePicker2.Name = "DateTimePicker2"
         Me.DateTimePicker2.Size = New System.Drawing.Size(228, 26)
@@ -429,7 +447,7 @@ Partial Class Clients
         '
         'DateTimePicker1
         '
-        Me.DateTimePicker1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.DateTimePicker1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DateTimePicker1.Location = New System.Drawing.Point(133, 233)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(228, 26)
@@ -438,8 +456,8 @@ Partial Class Clients
         'cbxBranch
         '
         Me.cbxBranch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxBranch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.cbxBranch.FormattingEnabled = true
+        Me.cbxBranch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxBranch.FormattingEnabled = True
         Me.cbxBranch.Location = New System.Drawing.Point(133, 104)
         Me.cbxBranch.Name = "cbxBranch"
         Me.cbxBranch.Size = New System.Drawing.Size(228, 28)
@@ -447,8 +465,8 @@ Partial Class Clients
         '
         'txt_client
         '
-        Me.txt_client.Enabled = false
-        Me.txt_client.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_client.Enabled = False
+        Me.txt_client.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_client.Location = New System.Drawing.Point(133, 40)
         Me.txt_client.Name = "txt_client"
         Me.txt_client.Size = New System.Drawing.Size(228, 26)
@@ -456,8 +474,8 @@ Partial Class Clients
         '
         'Label14
         '
-        Me.Label14.AutoSize = true
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(54, 469)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(73, 16)
@@ -467,7 +485,7 @@ Partial Class Clients
         '
         'txt_Credit
         '
-        Me.txt_Credit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_Credit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Credit.Location = New System.Drawing.Point(133, 460)
         Me.txt_Credit.Name = "txt_Credit"
         Me.txt_Credit.Size = New System.Drawing.Size(228, 26)
@@ -476,8 +494,8 @@ Partial Class Clients
         '
         'Label13
         '
-        Me.Label13.AutoSize = true
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(62, 440)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(65, 16)
@@ -487,8 +505,8 @@ Partial Class Clients
         '
         'Label8
         '
-        Me.Label8.AutoSize = true
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(383, 354)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(105, 16)
@@ -498,8 +516,8 @@ Partial Class Clients
         '
         'Label11
         '
-        Me.Label11.AutoSize = true
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(28, 271)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(104, 16)
@@ -509,7 +527,7 @@ Partial Class Clients
         '
         'txt_Contact
         '
-        Me.txt_Contact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_Contact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Contact.Location = New System.Drawing.Point(133, 265)
         Me.txt_Contact.MaxLength = 11
         Me.txt_Contact.Name = "txt_Contact"
@@ -518,8 +536,8 @@ Partial Class Clients
         '
         'Label12
         '
-        Me.Label12.AutoSize = true
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(38, 111)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(90, 16)
@@ -529,8 +547,8 @@ Partial Class Clients
         '
         'Label9
         '
-        Me.Label9.AutoSize = true
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(72, 302)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(59, 16)
@@ -540,17 +558,17 @@ Partial Class Clients
         '
         'txt_address
         '
-        Me.txt_address.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_address.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_address.Location = New System.Drawing.Point(133, 296)
-        Me.txt_address.Multiline = true
+        Me.txt_address.Multiline = True
         Me.txt_address.Name = "txt_address"
         Me.txt_address.Size = New System.Drawing.Size(228, 130)
         Me.txt_address.TabIndex = 7
         '
         'Label10
         '
-        Me.Label10.AutoSize = true
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(69, 239)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(61, 16)
@@ -560,11 +578,11 @@ Partial Class Clients
         '
         'btnCancel
         '
-        Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnCancel.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnCancel.FlatAppearance.BorderSize = 0
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.White
         Me.btnCancel.Location = New System.Drawing.Point(151, 511)
         Me.btnCancel.Name = "btnCancel"
@@ -572,15 +590,15 @@ Partial Class Clients
         Me.btnCancel.TabIndex = 14
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnCancel.UseVisualStyleBackColor = false
+        Me.btnCancel.UseVisualStyleBackColor = False
         '
         'btnSave
         '
-        Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
+        Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnSave.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.btnSave.FlatAppearance.BorderSize = 0
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btnSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.White
         Me.btnSave.Location = New System.Drawing.Point(28, 509)
         Me.btnSave.Name = "btnSave"
@@ -588,12 +606,12 @@ Partial Class Clients
         Me.btnSave.TabIndex = 13
         Me.btnSave.Text = "Save"
         Me.btnSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnSave.UseVisualStyleBackColor = false
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'Label7
         '
-        Me.Label7.AutoSize = true
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(44, 175)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(89, 16)
@@ -603,7 +621,7 @@ Partial Class Clients
         '
         'txt_MName
         '
-        Me.txt_MName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_MName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_MName.Location = New System.Drawing.Point(133, 169)
         Me.txt_MName.Name = "txt_MName"
         Me.txt_MName.Size = New System.Drawing.Size(228, 26)
@@ -611,8 +629,8 @@ Partial Class Clients
         '
         'Label6
         '
-        Me.Label6.AutoSize = true
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(59, 207)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(73, 16)
@@ -622,7 +640,7 @@ Partial Class Clients
         '
         'txt_LName
         '
-        Me.txt_LName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_LName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_LName.Location = New System.Drawing.Point(133, 201)
         Me.txt_LName.Name = "txt_LName"
         Me.txt_LName.Size = New System.Drawing.Size(228, 26)
@@ -630,8 +648,8 @@ Partial Class Clients
         '
         'Label5
         '
-        Me.Label5.AutoSize = true
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(75, 44)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(57, 16)
@@ -641,8 +659,8 @@ Partial Class Clients
         '
         'Label4
         '
-        Me.Label4.AutoSize = true
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(59, 143)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(73, 16)
@@ -652,7 +670,7 @@ Partial Class Clients
         '
         'txt_FName
         '
-        Me.txt_FName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txt_FName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_FName.Location = New System.Drawing.Point(133, 137)
         Me.txt_FName.Name = "txt_FName"
         Me.txt_FName.Size = New System.Drawing.Size(228, 26)
@@ -665,21 +683,21 @@ Partial Class Clients
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(284, 247)
         Me.PictureBox2.TabIndex = 177
-        Me.PictureBox2.TabStop = false
+        Me.PictureBox2.TabStop = False
         '
         'txtpicID
         '
-        Me.txtpicID.Enabled = false
-        Me.txtpicID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.txtpicID.Enabled = False
+        Me.txtpicID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtpicID.Location = New System.Drawing.Point(460, 50)
         Me.txtpicID.Name = "txtpicID"
         Me.txtpicID.Size = New System.Drawing.Size(48, 26)
         Me.txtpicID.TabIndex = 71
-        Me.txtpicID.Visible = false
+        Me.txtpicID.Visible = False
         '
         'btnClose
         '
-        Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClose.BackColor = System.Drawing.Color.Gray
         Me.btnClose.ForeColor = System.Drawing.Color.White
         Me.btnClose.Location = New System.Drawing.Point(909, 16)
@@ -687,14 +705,14 @@ Partial Class Clients
         Me.btnClose.Size = New System.Drawing.Size(123, 39)
         Me.btnClose.TabIndex = 48
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = false
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'Label1
         '
-        Me.Label1.AutoSize = true
+        Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0,Byte),Integer), CType(CType(192,Byte),Integer), CType(CType(0,Byte),Integer))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(26, 16)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(170, 39)
@@ -707,7 +725,7 @@ Partial Class Clients
         '
         'Clients
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
@@ -782,5 +800,6 @@ End Sub
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents txtStatus As System.Windows.Forms.TextBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents btnPrint As System.Windows.Forms.Button
 End Class
 

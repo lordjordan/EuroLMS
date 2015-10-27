@@ -92,7 +92,7 @@ Public Class Clients
             End If
             data.Add("employee_no", txtEmpNum.Text)
             data.Add("credit_limit", NumToStr(txt_Credit.Text))
-            data.Add("branch_id", bID.Substring(bID.Length - 3))
+            data.Add("branch_id", bID.Substring(bID.Length - 6))
             'data.Add("picture", imgbyte)
             data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
             data.Add("security_info", txtSecurity_info.Text)
@@ -367,12 +367,18 @@ Public Class Clients
                                     NewPicture()
                                 End If
 
-                                showAddEdit(False)
-                                LoadListView()
-                                clearAll()
+                                Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
+                                If result = DialogResult.OK Then
+                                    'MessageBox.Show("Record saved", "Message", MessageBoxButtons.OK)
+                                    showAddEdit(False)
+                                    LoadListView()
+                                    clearAll()
+                                ElseIf result = DialogResult.Cancel Then
+                                    Exit Sub
+                                End If
 
                             ElseIf msgrslt = MsgBoxResult.No Then
-                                MsgBox("exit saving...")
+                                'MsgBox("Exit saving")
                                 Exit Sub
                             End If
                         End If
@@ -386,9 +392,10 @@ Public Class Clients
                         NewClient()
                         NewPicture()
                     End If
+
                     Dim result As Integer = MessageBox.Show("Do you want to save this record?", "Important Message", MessageBoxButtons.OKCancel)
                     If result = DialogResult.OK Then
-                        MsgBox("Record saving...", MsgBoxStyle.Information)
+                        'MessageBox.Show("Record saved", "Message", MessageBoxButtons.OK)
                         showAddEdit(False)
                         LoadListView()
                         clearAll()
@@ -404,6 +411,7 @@ Public Class Clients
             End Try
 
 
+
             'EDIT CLIENTS INFORMATION
         ElseIf gbxAddEdit.Text = "Edit client" Then
             If cbxCompany.Text = "" Or cbxBranch.Text = "" Or txt_FName.Text = "" Or txt_MName.Text = "" Or txt_LName.Text = "" Or txt_address.Text = "" _
@@ -414,15 +422,10 @@ Public Class Clients
 
             EditClient()
             UpdatePicture()
-            Dim result As Integer = MessageBox.Show("Do you want to update this record?", "Important Message", MessageBoxButtons.OKCancel)
-            If result = DialogResult.OK Then
-                MessageBox.Show("Updating...")
-                showAddEdit(False)
-                LoadListView()
-                clearAll()
-            ElseIf result = DialogResult.Cancel Then
-                Exit Sub
-            End If
+            MessageBox.Show("Record Updated", "Message", MessageBoxButtons.OK)
+            showAddEdit(False)
+            LoadListView()
+            clearAll()
         End If
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -443,14 +446,16 @@ Public Class Clients
 
     Private Sub loadBranch()
         cbxBranch.Items.Clear()
-        Dim cID As String
+        Dim cID, cID2() As String
         cID = cbxCompany.SelectedItem
+        cID2 = Split(cID, "$")
+        'MsgBox(cID.Substring(cID.Length - 3))
         Try
-            dr = db.ExecuteReader("Select branch_id, branch_name from tbl_branches as B left join tbl_company as C on B.company_id=C.company_id WHERE B.company_id=" & cID.Substring(cID.Length - 3))
-            'MsgBox(bID.Substring(bID.Length - 3))
+            dr = db.ExecuteReader("Select branch_id, branch_name from tbl_branches as B left join tbl_company as C on B.company_id=C.company_id WHERE B.company_id=" & cID2(1))
             If dr.HasRows Then
                 Do While dr.Read
-                    cbxBranch.Items.Add(dr.Item("branch_name") & "                                                              000" & dr.Item("branch_id"))
+                    cbxBranch.Items.Add(dr.Item("branch_name") & "                                                              $" & dr.Item("branch_id"))
+                    'MsgBox(cID2(1))
                 Loop
             Else
                 MsgBox("No branch data.", vbInformation + vbOKOnly, "Error branch data.")
@@ -471,7 +476,7 @@ Public Class Clients
 
             If dr.HasRows Then
                 Do While dr.Read
-                    cbxCompany.Items.Add(dr.Item("company_name") & "                                                             000" & dr.Item("company_id"))
+                    cbxCompany.Items.Add(dr.Item("company_name") & "                                                             $" & dr.Item("company_id"))
                 Loop
             Else
                 MsgBox("No company data.", vbInformation + vbOKOnly, "Error company data.")
@@ -568,8 +573,7 @@ Public Class Clients
             obj = Nothing
         End Try
     End Sub
-
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+    Private Sub SearchInfo()
         ListView1.Items.Clear()
         Dim data As New Dictionary(Of String, Object)
         data.Add("searchkey1", "%" + txtSearchClient.Text + "%")
@@ -581,31 +585,25 @@ Public Class Clients
 
         Try
             dr = db.ExecuteReader("select client_id, employee_no, last_name, first_name, middle_name, company_name, branch_name, address,contact_number, credit_limit " & _
-                            "from tbl_clients as A " & _
+                            "from (SELECT * FROM tbl_clients WHERE status_info = 1) as A " & _
                             "left join tbl_branches as B on A.branch_id=B.branch_id " & _
                             "left join tbl_company as C on B.company_id=C.company_id " & _
-                            "where last_name like '%" & txtSearchClient.Text & "%' or " & _
+                            "WHERE last_name like '%" & txtSearchClient.Text & "%' or " & _
                             "first_name like '%" & txtSearchClient.Text & "%' or " & _
                             "middle_name like '%" & txtSearchClient.Text & "%' or " & _
                             "company_name like '%" & txtSearchClient.Text & "%' or " & _
-                            "branch_name like '%" & txtSearchClient.Text & "%' ")
+                            "branch_name like '%" & txtSearchClient.Text & "%'")
             If dr.HasRows Then
                 Do While dr.Read
-                    'itm = Me.ListView1.Items.Add(dr.Item("client_id").ToString)
-                    'itm.SubItems.Add(dr.Item("company_name").ToString)
-                    'itm.SubItems.Add(dr.Item("branch_name").ToString)
-                    'itm.SubItems.Add(dr.Item("last_name").ToString & ", " & dr.Item("first_name").ToString & ", " & dr.Item("middle_name").ToString)
-                    'itm.SubItems.Add(dr.Item("address").ToString)
-                    'itm.SubItems.Add(dr.Item("contact_number").ToString)
-                    'itm.SubItems.Add(dr.Item("credit_limit").ToString)
-
                     Dim itmx As ListViewItem = ListView1.Items.Add(dr.Item("client_id").ToString)
                     itmx.SubItems.Add(dr.Item("company_name").ToString)
                     itmx.SubItems.Add(dr.Item("branch_name").ToString)
                     itmx.SubItems.Add(dr.Item("last_name").ToString & ", " & dr.Item("first_name").ToString & " " & dr.Item("middle_name").ToString)
                     itmx.SubItems.Add(dr.Item("address").ToString)
                     itmx.SubItems.Add(dr.Item("contact_number").ToString)
-                    itmx.SubItems.Add(dr.Item("credit_limit").ToString)
+                    Dim myNumber As Integer = dr.Item("credit_limit")
+                    itmx.SubItems.Add((myNumber * 0.01).ToString("N2"))
+                    'itmx.SubItems.Add(dr.Item("credit_limit").ToString)
 
                 Loop
             End If
@@ -614,7 +612,9 @@ Public Class Clients
         Finally
             db.Dispose() '<--------CHECK THIS!
         End Try
-
+    End Sub
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        SearchInfo()
     End Sub
 
     Private Sub btnSearch_KeyPress(sender As Object, e As KeyPressEventArgs) Handles btnSearch.KeyPress
@@ -682,7 +682,7 @@ Public Class Clients
                 Else
                     'DISABLE A CLIENT
                     'MsgBox("Wala pang loan.")
-                    Dim msgrslt As MsgBoxResult = MsgBox("Are you sure you want to disable this client? You cannot enable this anymore.", vbQuestion + MsgBoxStyle.YesNo, "Message alert")
+                    Dim msgrslt As MsgBoxResult = MsgBox("Are you sure you want to disable this client? You cannot enable this anymore.", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2, "Message alert")
                     If msgrslt = MsgBoxResult.Yes Then
                         'MsgBox("DISABLING......")
                         disableClient()
@@ -702,12 +702,15 @@ Public Class Clients
         ListView1.SelectedItems.Clear()
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
-
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Dim frm As New frmClientReports
+        frm.ShowDialog()
     End Sub
 
-    Private Sub btnVerify_Click(sender As Object, e As EventArgs)
-
+    Private Sub txtSearchClient_KeyDown(sender As Object, e As KeyEventArgs) Handles txtSearchClient.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SearchInfo()
+        End If
     End Sub
 End Class
 
