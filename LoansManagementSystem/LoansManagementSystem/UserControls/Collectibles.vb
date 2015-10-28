@@ -264,9 +264,9 @@ Public Class frmCollectibles
             query = "SELECT ctb_id,tblCol.loan_id as LoanID, MAX(due_date) as petsa, last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
                 "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt,terms, penalty_status,penalty_amt " & _
                 "FROM  (SELECT ctb_id , loan_id , due_date , payable_amt, previous_balance,collected_amt,penalty_status,penalty_amt " & _
-            "FROM tbl_collectibles  WHERE due_date <= '" & Format(Date.Now, "yyyyMMdd") & "') as tblCol " & _
-            "INNER JOIN tbl_loans ON tbl_loans.loan_id = tblCol.loan_id INNER JOIN " & _
-            "tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_status = 1 " & _
+                "FROM tbl_collectibles  WHERE due_date <= '" & Format(Date.Now, "yyyyMMdd") & "') as tblCol " & _
+                "INNER JOIN tbl_loans ON tbl_loans.loan_id = tblCol.loan_id INNER JOIN " & _
+                "tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_status = 1 " & _
                 "GROUP BY tblCol.loan_id"
             da = New SQLite.SQLiteDataAdapter(query, con)
             da.Fill(ds, "collectibles")
@@ -778,11 +778,11 @@ Public Class frmCollectibles
 
     End Sub
 
-    
-    
 
 
-   
+
+
+
 
 
     Private Sub lvCollectibles_DoubleClick(sender As Object, e As EventArgs) Handles lvCollectibles.DoubleClick
@@ -806,7 +806,7 @@ Public Class frmCollectibles
                 If dr.HasRows Then
 
                     Do While dr.Read
-                      
+
                         itm = lvDuedates.Items.Add(StrToDate(dr.Item("due_date").ToString)) 'casted
                         itm.SubItems.Add(dr.Item("penalty_amt").ToString.Insert(6, "."))
                         itm.SubItems.Add(dr.Item("ctb_id").ToString)
@@ -929,7 +929,7 @@ Public Class frmCollectibles
                     Exit Sub
                 End If
             End If
-            
+
 
             dr = db.ExecuteReader("SELECT MAX(due_date) as petsa FROM tbl_collectibles WHERE  loan_id= " & _
                                  lvCollectibles.FocusedItem.Text)
@@ -1040,7 +1040,7 @@ Public Class frmCollectibles
         End If
     End Sub
 
-    
+
     Private Function checkPenalty(principal As Double, dueDate As Date)
         Dim amount As Integer
         If dueDate < CDate(Format(Date.Now, "MM/dd/yyyyy")) Then
@@ -1059,7 +1059,6 @@ Public Class frmCollectibles
     Private Sub Process_Click(sender As Object, e As EventArgs) Handles Process.Click
         'version 2
         'Try
-
 
         If MsgBox("Are you sure you want to process the collectibles?", vbExclamation + vbYesNo, "Proceed?") = MsgBoxResult.Yes Then
             Dim overallAmount As Double
@@ -1248,7 +1247,7 @@ Public Class frmCollectibles
                             data.Clear()
                         End If
                     Next
-                  
+
                     ds.Clear()
                     previousBalance = 0
                     query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
@@ -1801,7 +1800,7 @@ Public Class frmCollectibles
                         If Not lvPH.Items(ctr).SubItems(2).Text.Contains(".") Then
                             lvPH.Items(ctr).SubItems(2).Text &= ".00"
                         End If
-                        
+
                         collectedAmount += lvPH.Items(ctr).SubItems(2).Text
 
                         If colorChanger = True Then
@@ -1878,7 +1877,7 @@ Public Class frmCollectibles
         db.Dispose()
     End Sub
 
- 
+
 
     Private Sub tsmInputAmount_Click(sender As Object, e As EventArgs) Handles tsmInputAmount.Click
         If lvCollectibles.SelectedItems.Count > 0 Then
@@ -1898,7 +1897,7 @@ Public Class frmCollectibles
     End Sub
 
 
- 
+
     Private Sub btnEnterPay_Click(sender As Object, e As EventArgs) Handles btnEnterPay.Click
         If lvCollectibles.SelectedItems.Count > 0 Then
             lvCollectibles_DoubleClick(sender, e)
@@ -1907,17 +1906,17 @@ Public Class frmCollectibles
         End If
     End Sub
 
-  
 
-   
- 
-    
+
+
+
+
 
     Private Sub cbxCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxCompany.SelectedIndexChanged
 
     End Sub
 
-    
+
 
     Private Sub cbxBranch_Click(sender As Object, e As EventArgs) Handles cbxBranch.Click
         cbxBranch.Items.Clear()
@@ -1940,14 +1939,14 @@ Public Class frmCollectibles
         db.Dispose()
     End Sub
 
-    
+
     Private Sub cbxBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxBranch.SelectedIndexChanged
 
     End Sub
 
 
-   
-   
+
+
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         Try
             If cbxCompany.Text = "" Then
@@ -2167,7 +2166,7 @@ Public Class frmCollectibles
             End If
 
             showAdvanceSearch(False)
-            
+
 
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Critical)
@@ -2176,14 +2175,14 @@ Public Class frmCollectibles
         End Try
     End Sub
 
-   
+
     Private Sub cbxCompany_TextChanged(sender As Object, e As EventArgs) Handles cbxCompany.TextChanged
         cbxBranch.Items.Clear()
     End Sub
 
     Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
         'with excel
-        
+
     End Sub
 End Class
 Class ListViewItemComparer

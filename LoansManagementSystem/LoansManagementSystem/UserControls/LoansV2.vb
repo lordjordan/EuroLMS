@@ -795,8 +795,9 @@ Fix2:
             active_loan_id = lvLoanList.FocusedItem.Text.Trim
             loadEditForm(active_loan_id)
 
-        Catch ex As Exception
-            MsgBox(ex.ToString)
+        Catch ex As NullReferenceException
+
+            MsgBox("Please select a record to edit.", MsgBoxStyle.Critical, "Edit error")
         End Try
     End Sub
 
@@ -811,7 +812,7 @@ Fix2:
                 data.Add("loan_id", loan_id)
 
                 dr = db.ExecuteReader("select loan_id, L.client_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
-                                "terms, date_start, date_end, application_status, loan_status, " & _
+                                "terms, date_start, date_end, application_status, loan_status, credit_limit, " & _
                                 "Co.company_name, B.branch_name, loan_remarks " & _
                                 "from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
@@ -830,8 +831,8 @@ Fix2:
                     txtName.Text = dr.Item("name")
                     txtCompany.Text = dr.Item("company_name")
                     txtAvailableCredit.Text = 0
-                    txtCreditLimit.Text = 0
-                    txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, False)
+                    txtCreditLimit.Text = StrToNum(dr.Item("credit_limit"), 2, True)
+                    txtPrincipal.Text = StrToNum(dr.Item("principal"), 2, True)
                     txtBranch.Text = dr.Item("branch_name")
                     'txtBiMonthlyAmort.Text = dr.Item("loan_id")
                     txtLoanRemarks.Text = dr.Item("loan_remarks")
@@ -1039,7 +1040,7 @@ Fix2:
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
 
         If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
-            MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be delete.", MsgBoxStyle.Critical, "Unable to delete")
+            MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be deleted.", MsgBoxStyle.Critical, "Unable to delete")
             Exit Sub
         End If
 
