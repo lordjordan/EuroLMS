@@ -727,10 +727,10 @@ Partial Class Clients
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
         Me.Name = "Clients"
         Me.Size = New System.Drawing.Size(1056, 673)
         Me.pnlMain.ResumeLayout(false)

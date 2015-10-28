@@ -5,7 +5,7 @@
     Public bilangNGhulog, daysNgmonth As Integer
     Public dateStart, dateEnd, dueDate As DateTime
 
-    
+
     Dim a, b, c, splitter() As String
     Dim itm As ListViewItem
     '### Change the "Data Source" path to point to our own LMS Database
@@ -35,7 +35,7 @@
     End Sub
 
     Private Sub frmManagePenalties_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        
+
         Try
             lvDuedate.Items.Clear()
             lblLoanID.Text = uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text
@@ -97,7 +97,7 @@
                                         , "Removing date penalty of " & lvDuedate.FocusedItem.Text _
                                         , MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 Case Windows.Forms.DialogResult.Yes
-                    lvDuedate.FocusedItem.SubItems(2).Text = "Removed"    
+                    lvDuedate.FocusedItem.SubItems(2).Text = "Removed"
             End Select
         Else
             MsgBox("Please select a Date", vbExclamation + vbOKOnly, "No date selected")
@@ -130,7 +130,7 @@
         If Not lvDuedate.FocusedItem.SubItems(1).Text.Contains(".") Then
             lvDuedate.FocusedItem.SubItems(1).Text &= ".00"
         End If
-        
+
         showEditAmount(False)
     End Sub
 
@@ -148,7 +148,7 @@
         'ang concept pag kinulang sa kalagitnaan adjust sa huling may bayad ? I hope makuha ko 
         'tignan si payment? YES
         Dim totalInPayment, payableAmt As Double
-        dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text)
+        dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " AND payment_status= 0")
         If dr.HasRows Then
             If dr.Item("TotalAmount").ToString <> "" Then
                 conV = dr.Item("TotalAmount").ToString
@@ -194,7 +194,7 @@
             'time to allocate the total payment
             If ds.Tables("collectibles").Rows(x - 1).Item("penalty_status").ToString = 1 Then
                 payableAmt = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString().Insert(6, ".")) + _
-                    CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt"))
+                    CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString().Insert(6, "."))
                 If totalInPayment >= payableAmt Then
                     totalInPayment = totalInPayment - payableAmt
                     conV = payableAmt
@@ -229,10 +229,10 @@
                         splitter(0) = splitter(0).Insert(0, "0")
                     Loop
                     data.Add("collected_amt", splitter(0) & splitter(1))
-                    data.Add("previous_balance", "00000000")
+                    data.Add("previoSus_balance", "00000000")
                     rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
                                              "WHERE ctb_id=" & ds.Tables("collectibles").Rows(x - 1).Item("ctb_id").ToString, data)
-
+                    totalInPayment = 0
                 End If
                 data.Clear()
             Else
@@ -274,7 +274,7 @@
                     data.Add("previous_balance", "00000000")
                     rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
                                              "WHERE ctb_id=" & ds.Tables("collectibles").Rows(x - 1).Item("ctb_id").ToString, data)
-
+                    totalInPayment = 0
                 End If
                 data.Clear()
             End If
@@ -284,8 +284,7 @@
         ds.Clear()
         previousBalance = 0
         query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
-            uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " AND due_date <= '" & _
-            Format(CDate(uscCollectibles.lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "'"
+            uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " ORDER BY due_date ASC"
         da = New SQLite.SQLiteDataAdapter(query, con)
         da.Fill(ds, "collectibles")
         For x = 1 To ds.Tables("collectibles").Rows.Count Step 1
@@ -365,7 +364,6 @@
             Next
         End If
         uscCollectibles.btnCancelColl.Enabled = False
-
         uscCollectibles.gbxClientCollectible.BringToFront()
         MsgBox("Records of penalties are updated!", MsgBoxStyle.Information, "Sucessfully updated!")
         Exit Sub  'END of VERSION 2
@@ -619,7 +617,7 @@
             Exit Sub
         End If
     End Sub
-   
+
     Private Function checkPenalty(principal As Double, dueDate As Date)
         Dim amount As Integer
 
