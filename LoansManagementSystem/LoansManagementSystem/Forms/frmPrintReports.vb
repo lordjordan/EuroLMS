@@ -11,6 +11,7 @@ Public Class frmPrintReports
     Dim rptClient As New ClientReportJournal
     Dim rptCompany As New CompanyReport
     Dim rptBranch As New BranchReport
+    Dim rptLoan As New LoanReport
     'Dim db As New DBHelper(My.Settings.ConnectionString)
     'Dim dr As SQLite.SQLiteDataReader
     'Dim rec As Integer
@@ -142,7 +143,7 @@ Public Class frmPrintReports
                                 "or company_name like '%" & uscLoans.txtSearchLoan.Text & "%'"
 
             da = New SQLite.SQLiteDataAdapter(query, con)
-            da.Fill(ds, "Branch")
+            da.Fill(ds, "Loan")
             If ds.Tables.Count <> 0 Then
                 'Creating xml file
                 ds.WriteXml("XML\Loan.xml")
@@ -150,15 +151,15 @@ Public Class frmPrintReports
             End If
 
             'Report for Branch
-            Dim dsBranch As New DataSet
-            dsBranch = New DSreports
-            Dim dsBranchTemp As New DataSet
-            dsBranchTemp = New DataSet()
-            dsBranchTemp.ReadXml("XML\Loan.xml")
-            dsBranch.Merge(dsBranchTemp.Tables(0))
-            rptBranch = New BranchReport
-            rptBranch.SetDataSource(dsBranch)
-            crvBranchJournal.ReportSource = rptBranch
+            Dim dsLoan As New DataSet
+            dsLoan = New DSreports
+            Dim dsLoanTemp As New DataSet
+            dsLoanTemp = New DataSet()
+            dsLoanTemp.ReadXml("XML\Loan.xml")
+            dsLoan.Merge(dsLoan.Tables(0))
+            rptLoan = New LoanReport
+            rptLoan.SetDataSource(dsLoan)
+            crvLoanJournal.ReportSource = rptLoan
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

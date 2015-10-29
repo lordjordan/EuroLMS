@@ -101,11 +101,16 @@ Partial Class frmCollectibles
         Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.gbxPrint = New System.Windows.Forms.GroupBox()
+        Me.crvPaymentCentralReport = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnPrintCR = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.CMS.SuspendLayout()
         Me.gbxAdvanceSearch.SuspendLayout()
         Me.gbxClientCollectible.SuspendLayout()
         Me.gbxPH.SuspendLayout()
+        Me.gbxPrint.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -211,6 +216,7 @@ Partial Class frmCollectibles
         Me.btnExport.Text = "Export"
         Me.btnExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnExport.UseVisualStyleBackColor = False
+        Me.btnExport.Visible = False
         '
         'Label9
         '
@@ -277,7 +283,7 @@ Partial Class frmCollectibles
         Me.btnPrint.Name = "btnPrint"
         Me.btnPrint.Size = New System.Drawing.Size(108, 60)
         Me.btnPrint.TabIndex = 77
-        Me.btnPrint.Text = "Print"
+        Me.btnPrint.Text = "Print..."
         Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnPrint.UseVisualStyleBackColor = False
         '
@@ -304,10 +310,10 @@ Partial Class frmCollectibles
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lvCollectibles.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader1, Me.ColumnHeader10, Me.ColumnHeader13, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader2, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader14, Me.ColumnHeader16})
         Me.lvCollectibles.ContextMenuStrip = Me.CMS
-        Me.lvCollectibles.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvCollectibles.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvCollectibles.FullRowSelect = True
         Me.lvCollectibles.GridLines = True
-        Me.lvCollectibles.Location = New System.Drawing.Point(9, 120)
+        Me.lvCollectibles.Location = New System.Drawing.Point(9, 96)
         Me.lvCollectibles.Name = "lvCollectibles"
         Me.lvCollectibles.Size = New System.Drawing.Size(1031, 383)
         Me.lvCollectibles.TabIndex = 30
@@ -374,7 +380,7 @@ Partial Class frmCollectibles
         'ColumnHeader7
         '
         Me.ColumnHeader7.Text = "Outstanding Balance"
-        Me.ColumnHeader7.Width = 130
+        Me.ColumnHeader7.Width = 0
         '
         'ColumnHeader14
         '
@@ -551,7 +557,7 @@ Partial Class frmCollectibles
         '
         Me.lvDuedates.CheckBoxes = True
         Me.lvDuedates.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader15})
-        Me.lvDuedates.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvDuedates.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvDuedates.FullRowSelect = True
         Me.lvDuedates.GridLines = True
         Me.lvDuedates.Location = New System.Drawing.Point(31, 196)
@@ -881,7 +887,7 @@ Partial Class frmCollectibles
         'lvPH
         '
         Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20})
-        Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPH.FullRowSelect = True
         Me.lvPH.GridLines = True
         Me.lvPH.Location = New System.Drawing.Point(8, 220)
@@ -917,6 +923,70 @@ Partial Class frmCollectibles
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'gbxPrint
+        '
+        Me.gbxPrint.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbxPrint.BackColor = System.Drawing.Color.LightGray
+        Me.gbxPrint.Controls.Add(Me.crvPaymentCentralReport)
+        Me.gbxPrint.Controls.Add(Me.Button2)
+        Me.gbxPrint.Controls.Add(Me.btnPrintCR)
+        Me.gbxPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxPrint.Location = New System.Drawing.Point(0, 83)
+        Me.gbxPrint.Name = "gbxPrint"
+        Me.gbxPrint.Size = New System.Drawing.Size(1079, 623)
+        Me.gbxPrint.TabIndex = 74
+        Me.gbxPrint.TabStop = False
+        Me.gbxPrint.Text = "Print"
+        Me.gbxPrint.Visible = False
+        '
+        'crvPaymentCentralReport
+        '
+        Me.crvPaymentCentralReport.ActiveViewIndex = -1
+        Me.crvPaymentCentralReport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.crvPaymentCentralReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvPaymentCentralReport.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvPaymentCentralReport.Location = New System.Drawing.Point(14, 34)
+        Me.crvPaymentCentralReport.Name = "crvPaymentCentralReport"
+        Me.crvPaymentCentralReport.Size = New System.Drawing.Size(1052, 509)
+        Me.crvPaymentCentralReport.TabIndex = 80
+        Me.crvPaymentCentralReport.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
+        'Button2
+        '
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Button2.FlatAppearance.BorderSize = 0
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Location = New System.Drawing.Point(128, 549)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(108, 60)
+        Me.Button2.TabIndex = 79
+        Me.Button2.Text = "Cancel"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'btnPrintCR
+        '
+        Me.btnPrintCR.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrintCR.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrintCR.FlatAppearance.BorderSize = 0
+        Me.btnPrintCR.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrintCR.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintCR.ForeColor = System.Drawing.Color.White
+        Me.btnPrintCR.Location = New System.Drawing.Point(14, 549)
+        Me.btnPrintCR.Name = "btnPrintCR"
+        Me.btnPrintCR.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrintCR.TabIndex = 78
+        Me.btnPrintCR.Text = "Print"
+        Me.btnPrintCR.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrintCR.UseVisualStyleBackColor = False
+        '
         'frmCollectibles
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -928,6 +998,7 @@ Partial Class frmCollectibles
         Me.Controls.Add(Me.gbxClientCollectible)
         Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxPrint)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)
         Me.pnlMain.ResumeLayout(False)
@@ -939,6 +1010,7 @@ Partial Class frmCollectibles
         Me.gbxClientCollectible.PerformLayout()
         Me.gbxPH.ResumeLayout(False)
         Me.gbxPH.PerformLayout()
+        Me.gbxPrint.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1021,5 +1093,9 @@ Partial Class frmCollectibles
     Friend WithEvents lblInfoSearch As System.Windows.Forms.Label
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents gbxPrint As System.Windows.Forms.GroupBox
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents btnPrintCR As System.Windows.Forms.Button
+    Friend WithEvents crvPaymentCentralReport As CrystalDecisions.Windows.Forms.CrystalReportViewer
 
 End Class

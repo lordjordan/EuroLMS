@@ -157,11 +157,11 @@ Partial Class LoansV2
         Me.pnlMain.Controls.Add(Me.btnDelete)
         Me.pnlMain.Controls.Add(Me.btnReStructure)
         Me.pnlMain.Controls.Add(Me.btnForceStop)
-        Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Controls.Add(Me.txtSearchLoan)
         Me.pnlMain.Controls.Add(Me.btnActivateLoan)
         Me.pnlMain.Controls.Add(Me.btnEdit)
         Me.pnlMain.Controls.Add(Me.btnAddNew)
+        Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Location = New System.Drawing.Point(18, 62)
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1079, 610)

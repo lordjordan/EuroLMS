@@ -8,7 +8,7 @@
     Public uscBranches As New Branches
     Public uscLoans As New LoansV2
     Public uscCompanies As New Company
-    Public uscExtra As New Loan_Calculator
+    Public uscExtra As New Loan_CalculatorV2
     Public uscPaymentHistory As New PaymentHistory
 
 

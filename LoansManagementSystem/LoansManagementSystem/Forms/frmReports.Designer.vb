@@ -38,6 +38,7 @@ Partial Class frmReports
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -52,10 +53,10 @@ Partial Class frmReports
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabControl1.Location = New System.Drawing.Point(12, 47)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 57)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(895, 417)
+        Me.TabControl1.Size = New System.Drawing.Size(895, 366)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -69,7 +70,7 @@ Partial Class frmReports
         Me.TabPage1.Location = New System.Drawing.Point(4, 32)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(887, 381)
+        Me.TabPage1.Size = New System.Drawing.Size(887, 330)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Master List"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -84,7 +85,7 @@ Partial Class frmReports
         Me.crvMasterListReport.Cursor = System.Windows.Forms.Cursors.Default
         Me.crvMasterListReport.Location = New System.Drawing.Point(0, 51)
         Me.crvMasterListReport.Name = "crvMasterListReport"
-        Me.crvMasterListReport.Size = New System.Drawing.Size(887, 314)
+        Me.crvMasterListReport.Size = New System.Drawing.Size(887, 273)
         Me.crvMasterListReport.TabIndex = 1
         Me.crvMasterListReport.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
@@ -147,7 +148,7 @@ Partial Class frmReports
         Me.TabPage2.Location = New System.Drawing.Point(4, 32)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(887, 381)
+        Me.TabPage2.Size = New System.Drawing.Size(887, 330)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Existing Loans"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -155,6 +156,9 @@ Partial Class frmReports
         'CrystalReportViewer2
         '
         Me.CrystalReportViewer2.ActiveViewIndex = -1
+        Me.CrystalReportViewer2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CrystalReportViewer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.CrystalReportViewer2.Cursor = System.Windows.Forms.Cursors.Default
         Me.CrystalReportViewer2.Location = New System.Drawing.Point(0, 57)
@@ -215,18 +219,31 @@ Partial Class frmReports
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClose.BackColor = System.Drawing.Color.Gray
         Me.btnClose.ForeColor = System.Drawing.Color.White
-        Me.btnClose.Location = New System.Drawing.Point(780, 18)
+        Me.btnClose.Location = New System.Drawing.Point(780, 33)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(123, 39)
         Me.btnClose.TabIndex = 49
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
+        'Button2
+        '
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.Color.Gray
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Location = New System.Drawing.Point(651, 33)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(123, 39)
+        Me.Button2.TabIndex = 50
+        Me.Button2.Text = "Print"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
         'frmReports
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(919, 476)
+        Me.ClientSize = New System.Drawing.Size(919, 488)
+        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -257,4 +274,5 @@ Partial Class frmReports
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents btnClose As System.Windows.Forms.Button
+    Friend WithEvents Button2 As System.Windows.Forms.Button
 End Class

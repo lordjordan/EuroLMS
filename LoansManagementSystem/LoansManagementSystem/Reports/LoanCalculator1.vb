@@ -18,7 +18,7 @@ Imports System
 Imports System.ComponentModel
 
 
-Public Class LoanReportJournal
+Public Class LoanCalculator
     Inherits ReportClass
     
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class LoanReportJournal
     
     Public Overrides Property ResourceName() As String
         Get
-            Return "LoanReportJournal.rpt"
+            Return "LoanCalculator.rpt"
         End Get
         Set
             'Do nothing
@@ -45,7 +45,7 @@ Public Class LoanReportJournal
     
     Public Overrides Property FullResourceName() As String
         Get
-            Return "LoansManagementSystem.LoanReportJournal.rpt"
+            Return "LoansManagementSystem.LoanCalculator.rpt"
         End Get
         Set
             'Do nothing
@@ -94,7 +94,7 @@ Public Class LoanReportJournal
 End Class
 
 <System.Drawing.ToolboxBitmapAttribute(GetType(CrystalDecisions.[Shared].ExportOptions), "report.bmp")>  _
-Public Class CachedLoanReportJournal
+Public Class CachedLoanCalculator
     Inherits Component
     Implements ICachedReport
     
@@ -136,7 +136,7 @@ Public Class CachedLoanReportJournal
     End Property
     
     Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As LoanReportJournal = New LoanReportJournal()
+        Dim rpt As LoanCalculator = New LoanCalculator()
         rpt.Site = Me.Site
         Return rpt
     End Function

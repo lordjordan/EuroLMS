@@ -12,10 +12,6 @@ Public Class frmReports
     Dim rptClient As New ClientReport
     Dim rptBranch As New BranchReport
     Dim rptCompany As New CompanyReport
-
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Me.Close()
-    End Sub
     Private Sub BranchReport()
         crvMasterListReport.ReportSource = Nothing
         crvMasterListReport.Refresh()
@@ -163,5 +159,13 @@ Public Class frmReports
             'ProcessReport()
         ElseIf TabControl1.SelectedTab Is TabPage2 Then
         End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        crvMasterListReport.PrintReport()
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
     End Sub
 End Class
