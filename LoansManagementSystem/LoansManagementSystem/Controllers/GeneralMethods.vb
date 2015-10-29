@@ -9,11 +9,11 @@
 
     Public Function StrToNum(str As String, Optional decimalplace As Byte = 2, Optional withComma As Boolean = True) As String
         str = str.Substring(0, str.Length - decimalplace) & "." & str.Substring(str.Length - decimalplace)
-        'If withComma Then
-        '    Return FormatNumber(Val(str), 2)
-        'Else
-        Return Val(str)
-        'End If
+        If withComma Then
+            Return FormatNumber(Val(str), 2)
+        Else
+            Return Val(str)
+        End If
     End Function
 
     Public Function StrToDate(str As String) As Date

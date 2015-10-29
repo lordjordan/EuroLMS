@@ -100,6 +100,5 @@ Public Class frmReports
             'ProcessReport()
         ElseIf TabControl1.SelectedTab Is TabPage2 Then
         End If
-
     End Sub
 End Class

@@ -26,6 +26,8 @@ Partial Class frmCollectibles
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.lblInfoSearch = New System.Windows.Forms.Label()
+        Me.btnEnterPay = New System.Windows.Forms.Button()
         Me.btnPH = New System.Windows.Forms.Button()
         Me.btnExport = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -55,12 +57,12 @@ Partial Class frmCollectibles
         Me.tsmManagePenalties = New System.Windows.Forms.ToolStripMenuItem()
         Me.gbxAdvanceSearch = New System.Windows.Forms.GroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+        Me.cbxCompany = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Cancel = New System.Windows.Forms.Button()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.cmbArea = New System.Windows.Forms.ComboBox()
         Me.btnCancel = New System.Windows.Forms.Button()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cbxBranch = New System.Windows.Forms.ComboBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
         Me.gbxClientCollectible = New System.Windows.Forms.GroupBox()
         Me.lblPayableAmount = New System.Windows.Forms.Label()
         Me.lvDuedates = New System.Windows.Forms.ListView()
@@ -75,6 +77,8 @@ Partial Class frmCollectibles
         Me.btnCancelColl = New System.Windows.Forms.Button()
         Me.btnOk = New System.Windows.Forms.Button()
         Me.gbxPH = New System.Windows.Forms.GroupBox()
+        Me.txtDateStart = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.txtTotalPenalties = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtDateEnd = New System.Windows.Forms.TextBox()
@@ -95,7 +99,8 @@ Partial Class frmCollectibles
         Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.pnlMain.SuspendLayout()
         Me.CMS.SuspendLayout()
         Me.gbxAdvanceSearch.SuspendLayout()
@@ -111,9 +116,9 @@ Partial Class frmCollectibles
         Me.Label1.ForeColor = System.Drawing.Color.OrangeRed
         Me.Label1.Location = New System.Drawing.Point(25, 20)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(298, 39)
+        Me.Label1.Size = New System.Drawing.Size(276, 39)
         Me.Label1.TabIndex = 14
-        Me.Label1.Text = "List of Collectibles"
+        Me.Label1.Text = "Payment Central"
         '
         'btnClose
         '
@@ -132,6 +137,8 @@ Partial Class frmCollectibles
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.lblInfoSearch)
+        Me.pnlMain.Controls.Add(Me.btnEnterPay)
         Me.pnlMain.Controls.Add(Me.btnPH)
         Me.pnlMain.Controls.Add(Me.btnExport)
         Me.pnlMain.Controls.Add(Me.Label9)
@@ -147,6 +154,32 @@ Partial Class frmCollectibles
         Me.pnlMain.Size = New System.Drawing.Size(1053, 599)
         Me.pnlMain.TabIndex = 48
         '
+        'lblInfoSearch
+        '
+        Me.lblInfoSearch.AutoSize = True
+        Me.lblInfoSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInfoSearch.Location = New System.Drawing.Point(108, 78)
+        Me.lblInfoSearch.Name = "lblInfoSearch"
+        Me.lblInfoSearch.Size = New System.Drawing.Size(20, 15)
+        Me.lblInfoSearch.TabIndex = 86
+        Me.lblInfoSearch.Text = "All"
+        '
+        'btnEnterPay
+        '
+        Me.btnEnterPay.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnEnterPay.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnEnterPay.FlatAppearance.BorderSize = 0
+        Me.btnEnterPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnEnterPay.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEnterPay.ForeColor = System.Drawing.Color.White
+        Me.btnEnterPay.Location = New System.Drawing.Point(9, 518)
+        Me.btnEnterPay.Name = "btnEnterPay"
+        Me.btnEnterPay.Size = New System.Drawing.Size(108, 60)
+        Me.btnEnterPay.TabIndex = 85
+        Me.btnEnterPay.Text = "Enter payment"
+        Me.btnEnterPay.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnEnterPay.UseVisualStyleBackColor = False
+        '
         'btnPH
         '
         Me.btnPH.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -155,7 +188,7 @@ Partial Class frmCollectibles
         Me.btnPH.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPH.ForeColor = System.Drawing.Color.White
-        Me.btnPH.Location = New System.Drawing.Point(237, 509)
+        Me.btnPH.Location = New System.Drawing.Point(237, 518)
         Me.btnPH.Name = "btnPH"
         Me.btnPH.Size = New System.Drawing.Size(108, 60)
         Me.btnPH.TabIndex = 84
@@ -171,7 +204,7 @@ Partial Class frmCollectibles
         Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExport.ForeColor = System.Drawing.Color.White
-        Me.btnExport.Location = New System.Drawing.Point(351, 509)
+        Me.btnExport.Location = New System.Drawing.Point(351, 518)
         Me.btnExport.Name = "btnExport"
         Me.btnExport.Size = New System.Drawing.Size(108, 60)
         Me.btnExport.TabIndex = 83
@@ -183,7 +216,7 @@ Partial Class frmCollectibles
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(60, 66)
+        Me.Label9.Location = New System.Drawing.Point(60, 78)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(51, 15)
         Me.Label9.TabIndex = 82
@@ -193,7 +226,7 @@ Partial Class frmCollectibles
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel1.Location = New System.Drawing.Point(60, 45)
+        Me.LinkLabel1.Location = New System.Drawing.Point(60, 57)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(95, 15)
         Me.LinkLabel1.TabIndex = 81
@@ -206,7 +239,7 @@ Partial Class frmCollectibles
         Me.btnSearchLoan.FlatAppearance.BorderSize = 0
         Me.btnSearchLoan.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSearchLoan.ForeColor = System.Drawing.Color.White
-        Me.btnSearchLoan.Location = New System.Drawing.Point(279, 10)
+        Me.btnSearchLoan.Location = New System.Drawing.Point(279, 22)
         Me.btnSearchLoan.Name = "btnSearchLoan"
         Me.btnSearchLoan.Size = New System.Drawing.Size(66, 23)
         Me.btnSearchLoan.TabIndex = 80
@@ -217,7 +250,7 @@ Partial Class frmCollectibles
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(6, 14)
+        Me.Label7.Location = New System.Drawing.Point(6, 26)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(51, 16)
         Me.Label7.TabIndex = 79
@@ -227,7 +260,7 @@ Partial Class frmCollectibles
         'txtSearchLoan
         '
         Me.txtSearchLoan.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSearchLoan.Location = New System.Drawing.Point(63, 11)
+        Me.txtSearchLoan.Location = New System.Drawing.Point(63, 23)
         Me.txtSearchLoan.Name = "txtSearchLoan"
         Me.txtSearchLoan.Size = New System.Drawing.Size(210, 22)
         Me.txtSearchLoan.TabIndex = 78
@@ -240,7 +273,7 @@ Partial Class frmCollectibles
         Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPrint.ForeColor = System.Drawing.Color.White
-        Me.btnPrint.Location = New System.Drawing.Point(123, 509)
+        Me.btnPrint.Location = New System.Drawing.Point(123, 518)
         Me.btnPrint.Name = "btnPrint"
         Me.btnPrint.Size = New System.Drawing.Size(108, 60)
         Me.btnPrint.TabIndex = 77
@@ -250,13 +283,13 @@ Partial Class frmCollectibles
         '
         'Process
         '
-        Me.Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Process.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Process.FlatAppearance.BorderSize = 0
         Me.Process.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Process.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Process.ForeColor = System.Drawing.Color.White
-        Me.Process.Location = New System.Drawing.Point(9, 509)
+        Me.Process.Location = New System.Drawing.Point(932, 518)
         Me.Process.Name = "Process"
         Me.Process.Size = New System.Drawing.Size(108, 60)
         Me.Process.TabIndex = 76
@@ -383,16 +416,16 @@ Partial Class frmCollectibles
         Me.gbxAdvanceSearch.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.gbxAdvanceSearch.BackColor = System.Drawing.Color.LightGray
         Me.gbxAdvanceSearch.Controls.Add(Me.Label13)
-        Me.gbxAdvanceSearch.Controls.Add(Me.ComboBox3)
+        Me.gbxAdvanceSearch.Controls.Add(Me.cbxCompany)
         Me.gbxAdvanceSearch.Controls.Add(Me.Label3)
-        Me.gbxAdvanceSearch.Controls.Add(Me.Cancel)
-        Me.gbxAdvanceSearch.Controls.Add(Me.Label6)
-        Me.gbxAdvanceSearch.Controls.Add(Me.cmbArea)
         Me.gbxAdvanceSearch.Controls.Add(Me.btnCancel)
+        Me.gbxAdvanceSearch.Controls.Add(Me.Label6)
+        Me.gbxAdvanceSearch.Controls.Add(Me.cbxBranch)
+        Me.gbxAdvanceSearch.Controls.Add(Me.btnSearch)
         Me.gbxAdvanceSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAdvanceSearch.Location = New System.Drawing.Point(430, 83)
         Me.gbxAdvanceSearch.Name = "gbxAdvanceSearch"
-        Me.gbxAdvanceSearch.Size = New System.Drawing.Size(277, 243)
+        Me.gbxAdvanceSearch.Size = New System.Drawing.Size(277, 249)
         Me.gbxAdvanceSearch.TabIndex = 72
         Me.gbxAdvanceSearch.TabStop = False
         Me.gbxAdvanceSearch.Text = "Advanced Search"
@@ -408,13 +441,14 @@ Partial Class frmCollectibles
         Me.Label13.TabIndex = 130
         Me.Label13.Text = "Company"
         '
-        'ComboBox3
+        'cbxCompany
         '
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(30, 86)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(176, 28)
-        Me.ComboBox3.TabIndex = 129
+        Me.cbxCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxCompany.FormattingEnabled = True
+        Me.cbxCompany.Location = New System.Drawing.Point(30, 86)
+        Me.cbxCompany.Name = "cbxCompany"
+        Me.cbxCompany.Size = New System.Drawing.Size(176, 28)
+        Me.cbxCompany.TabIndex = 129
         '
         'Label3
         '
@@ -428,21 +462,21 @@ Partial Class frmCollectibles
         Me.Label3.Text = "Filter by:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'Cancel
+        'btnCancel
         '
-        Me.Cancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Cancel.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Cancel.FlatAppearance.BorderSize = 0
-        Me.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Cancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Cancel.ForeColor = System.Drawing.Color.White
-        Me.Cancel.Location = New System.Drawing.Point(144, 177)
-        Me.Cancel.Name = "Cancel"
-        Me.Cancel.Size = New System.Drawing.Size(108, 60)
-        Me.Cancel.TabIndex = 69
-        Me.Cancel.Text = "Cancel"
-        Me.Cancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Cancel.UseVisualStyleBackColor = False
+        Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnCancel.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnCancel.FlatAppearance.BorderSize = 0
+        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancel.ForeColor = System.Drawing.Color.White
+        Me.btnCancel.Location = New System.Drawing.Point(144, 183)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(108, 60)
+        Me.btnCancel.TabIndex = 69
+        Me.btnCancel.Text = "Cancel"
+        Me.btnCancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnCancel.UseVisualStyleBackColor = False
         '
         'Label6
         '
@@ -454,29 +488,30 @@ Partial Class frmCollectibles
         Me.Label6.TabIndex = 67
         Me.Label6.Text = "Branch"
         '
-        'cmbArea
+        'cbxBranch
         '
-        Me.cmbArea.FormattingEnabled = True
-        Me.cmbArea.Location = New System.Drawing.Point(30, 142)
-        Me.cmbArea.Name = "cmbArea"
-        Me.cmbArea.Size = New System.Drawing.Size(176, 28)
-        Me.cmbArea.TabIndex = 66
+        Me.cbxBranch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxBranch.FormattingEnabled = True
+        Me.cbxBranch.Location = New System.Drawing.Point(30, 142)
+        Me.cbxBranch.Name = "cbxBranch"
+        Me.cbxBranch.Size = New System.Drawing.Size(176, 28)
+        Me.cbxBranch.TabIndex = 66
         '
-        'btnCancel
+        'btnSearch
         '
-        Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnCancel.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnCancel.FlatAppearance.BorderSize = 0
-        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCancel.ForeColor = System.Drawing.Color.White
-        Me.btnCancel.Location = New System.Drawing.Point(30, 177)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(108, 60)
-        Me.btnCancel.TabIndex = 58
-        Me.btnCancel.Text = "Search"
-        Me.btnCancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnCancel.UseVisualStyleBackColor = False
+        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSearch.FlatAppearance.BorderSize = 0
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.Color.White
+        Me.btnSearch.Location = New System.Drawing.Point(30, 183)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(108, 60)
+        Me.btnSearch.TabIndex = 58
+        Me.btnSearch.Text = "Search"
+        Me.btnSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'gbxClientCollectible
         '
@@ -631,6 +666,8 @@ Partial Class frmCollectibles
         '
         Me.gbxPH.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.gbxPH.BackColor = System.Drawing.Color.LightGray
+        Me.gbxPH.Controls.Add(Me.txtDateStart)
+        Me.gbxPH.Controls.Add(Me.Label16)
         Me.gbxPH.Controls.Add(Me.txtTotalPenalties)
         Me.gbxPH.Controls.Add(Me.Label15)
         Me.gbxPH.Controls.Add(Me.txtDateEnd)
@@ -655,6 +692,27 @@ Partial Class frmCollectibles
         Me.gbxPH.TabStop = False
         Me.gbxPH.Text = "Payment History"
         Me.gbxPH.Visible = False
+        '
+        'txtDateStart
+        '
+        Me.txtDateStart.BackColor = System.Drawing.SystemColors.Control
+        Me.txtDateStart.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDateStart.Location = New System.Drawing.Point(497, 148)
+        Me.txtDateStart.Name = "txtDateStart"
+        Me.txtDateStart.ReadOnly = True
+        Me.txtDateStart.Size = New System.Drawing.Size(129, 26)
+        Me.txtDateStart.TabIndex = 176
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(424, 153)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(67, 16)
+        Me.Label16.TabIndex = 175
+        Me.Label16.Text = "Date Start"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'txtTotalPenalties
         '
@@ -725,7 +783,7 @@ Partial Class frmCollectibles
         '
         Me.txtTerms.BackColor = System.Drawing.SystemColors.Control
         Me.txtTerms.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTerms.Location = New System.Drawing.Point(497, 152)
+        Me.txtTerms.Location = New System.Drawing.Point(497, 114)
         Me.txtTerms.Name = "txtTerms"
         Me.txtTerms.ReadOnly = True
         Me.txtTerms.Size = New System.Drawing.Size(87, 26)
@@ -735,7 +793,7 @@ Partial Class frmCollectibles
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(424, 158)
+        Me.Label5.Location = New System.Drawing.Point(424, 121)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(47, 16)
         Me.Label5.TabIndex = 165
@@ -771,7 +829,7 @@ Partial Class frmCollectibles
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(5, 118)
+        Me.Label4.Location = New System.Drawing.Point(7, 118)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(58, 16)
         Me.Label4.TabIndex = 85
@@ -802,7 +860,7 @@ Partial Class frmCollectibles
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(5, 56)
+        Me.Label8.Location = New System.Drawing.Point(7, 56)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(55, 16)
         Me.Label8.TabIndex = 82
@@ -813,7 +871,7 @@ Partial Class frmCollectibles
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(5, 88)
+        Me.Label2.Location = New System.Drawing.Point(7, 88)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 16)
         Me.Label2.TabIndex = 80
@@ -822,7 +880,7 @@ Partial Class frmCollectibles
         '
         'lvPH
         '
-        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21})
+        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20})
         Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPH.FullRowSelect = True
         Me.lvPH.GridLines = True
@@ -855,11 +913,9 @@ Partial Class frmCollectibles
         Me.ColumnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ColumnHeader20.Width = 81
         '
-        'ColumnHeader21
+        'OpenFileDialog1
         '
-        Me.ColumnHeader21.Text = "Penalty amount"
-        Me.ColumnHeader21.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader21.Width = 138
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
         'frmCollectibles
         '
@@ -892,10 +948,10 @@ Partial Class frmCollectibles
     Friend WithEvents pnlMain As System.Windows.Forms.Panel
     Friend WithEvents lvCollectibles As System.Windows.Forms.ListView
     Friend WithEvents gbxAdvanceSearch As System.Windows.Forms.GroupBox
-    Friend WithEvents Cancel As System.Windows.Forms.Button
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents cmbArea As System.Windows.Forms.ComboBox
     Friend WithEvents btnCancel As System.Windows.Forms.Button
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents cbxBranch As System.Windows.Forms.ComboBox
+    Friend WithEvents btnSearch As System.Windows.Forms.Button
     Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader4 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader5 As System.Windows.Forms.ColumnHeader
@@ -922,7 +978,7 @@ Partial Class frmCollectibles
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel1 As System.Windows.Forms.LinkLabel
     Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox3 As System.Windows.Forms.ComboBox
+    Friend WithEvents cbxCompany As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents lvDuedates As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
@@ -959,6 +1015,11 @@ Partial Class frmCollectibles
     Friend WithEvents txtTotalPenalties As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents ColumnHeader20 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader21 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents txtDateStart As System.Windows.Forms.TextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents btnEnterPay As System.Windows.Forms.Button
+    Friend WithEvents lblInfoSearch As System.Windows.Forms.Label
+    Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
 
 End Class
