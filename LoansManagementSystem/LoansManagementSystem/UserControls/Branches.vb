@@ -261,4 +261,11 @@ Public Class Branches
             End If
         End If
     End Sub
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Dim frm As New frmClientReports
+        frm.TabControl1.SelectedTab = frm.TabControl1.TabPages(2)
+        frm.lblHeader.Text = "Branch Report"
+        frm.ShowDialog()
+    End Sub
 End Class

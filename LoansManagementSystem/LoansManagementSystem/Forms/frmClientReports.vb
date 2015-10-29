@@ -15,8 +15,12 @@ Public Class frmClientReports
     'Dim rec As Integer
     'Dim data As New Dictionary(Of String, Object)
 
+    'Private Sub ClientReport(Optional ByVal xEmpCode As String = "")
+    Private Sub LoanReport()
 
-    Private Sub ClientReport(Optional ByVal xEmpCode As String = "")
+    End Sub
+
+    Private Sub ClientReport()
         Try
             con.ConnectionString = My.Settings.ConnectionString
 
@@ -34,6 +38,13 @@ Public Class frmClientReports
             da = New SQLite.SQLiteDataAdapter(query, con)
             da.Fill(ds, "Client")
             'da.Fill(ds)
+            Dim dt As DataTable
+            Dim dr As DataRow
+            dt = ds.Tables(0)
+            For Each dr In dt.Rows
+                Dim myNumber As Integer = dr("credit_limit")
+                Dim cLimit As Integer = (myNumber * 0.01).ToString("N2")
+            Next dr
             If ds.Tables.Count <> 0 Then
                 'Creating xml file
                 ds.WriteXml("XML\Client.xml")
@@ -47,10 +58,22 @@ Public Class frmClientReports
     Private Sub ProcessReport(Optional ByVal xEmpCode As String = "")
         Try
             'Generate XML
-            If Len(xEmpCode) <> 0 Then
-                ClientReport(xEmpCode)
-            Else
+            'If Len(xEmpCode) <> 0 Then
+            '    ClientReport(xEmpCode)
+            'Else
+            '    ClientReport()
+            'End If
+
+            If TabControl1.SelectedTab Is TabPage1 Then
                 ClientReport()
+            ElseIf TabControl1.SelectedTab Is TabPage2 Then
+                
+            ElseIf TabControl1.SelectedTab Is TabPage3 Then
+                
+            ElseIf TabControl1.SelectedTab Is TabPage3 Then
+
+            ElseIf TabControl1.SelectedTab Is TabPage4 Then
+
             End If
 
             'Report for Client
@@ -63,9 +86,6 @@ Public Class frmClientReports
             dsClient.Merge(dsClientTemp.Tables(0))
             rptClient = New ClientReportJournal
             rptClient.SetDataSource(dsClient.Tables(0))
-            'rptClient.SetParameterValue("Company_Name", Company_Name)
-            'rptClient.SetParameterValue("Company_Address", Company_Address)
-            'rptClient.SetParameterValue("Company_Telephone", Company_Telephone)
             crvClientJournal.ReportSource = rptClient
 
         Catch ex As Exception
@@ -77,6 +97,39 @@ Public Class frmClientReports
     End Sub
 
     Private Sub frmReports_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ProcessReport()
+        'ProcessReport()
+        If TabControl1.SelectedTab Is TabPage1 Then
+            ProcessReport()
+            lblHeader.Text = "Client Report"
+        ElseIf TabControl1.SelectedTab Is TabPage2 Then
+            'ProcessCompanyReport()
+            lblHeader.Text = "Company Report"
+            'MsgBox("tab2 is selected")
+        ElseIf TabControl1.SelectedTab Is TabPage3 Then
+            'ProcessBranchReport()
+            lblHeader.Text = "Branch Report"
+            'MsgBox("tab3 is selected")
+        ElseIf TabControl1.SelectedTab Is TabPage3 Then
+            lblHeader.Text = "Loans Report"
+        ElseIf TabControl1.SelectedTab Is TabPage4 Then
+            lblHeader.Text = "Collectibles Report"
+        End If
+    End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+        'If TabControl1.SelectedTab Is TabPage1 Then
+        '    ProcessReport()
+        '    lblHeader.Text = "Client Report"
+        'ElseIf TabControl1.SelectedTab Is TabPage2 Then
+        '    'ProcessCompanyReport()
+        '    lblHeader.Text = "Company Report"
+        '    'MsgBox("tab2 is selected")
+        'ElseIf TabControl1.SelectedTab Is TabPage3 Then
+        '    'ProcessBranchReport()
+        '    lblHeader.Text = "Branch Report"
+        '    'MsgBox("tab3 is selected")
+        'ElseIf TabControl1.SelectedTab Is TabPage3 Then
+        '    lblHeader.Text = "Loans Report"
+        'End If
     End Sub
 End Class

@@ -261,4 +261,13 @@ Public Class Company
             End If
         End If
     End Sub
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Dim frm As New frmClientReports
+        frm.TabControl1.SelectedTab = frm.TabControl1.TabPages(1)
+        frm.lblHeader.Text = "Company Report"
+        frm.ShowDialog()
+        'frm.TabControl1.SelectedIndex = 1
+
+    End Sub
 End Class
