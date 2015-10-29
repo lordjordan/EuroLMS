@@ -308,9 +308,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\frmPrintReports.resx">
-      <DependentUpon>frmPrintReports.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmClientRequirement.resx">
       <DependentUpon>frmClientRequirement.vb</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmManagePenalties.resx">
       <DependentUpon>frmManagePenalties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmPrintReports.resx">
+      <DependentUpon>frmPrintReports.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmReports.resx">
       <DependentUpon>frmReports.vb</DependentUpon>
