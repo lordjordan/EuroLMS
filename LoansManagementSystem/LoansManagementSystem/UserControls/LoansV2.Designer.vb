@@ -25,6 +25,7 @@ Partial Class LoansV2
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoansV2))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.lvLoanList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -120,7 +121,6 @@ Partial Class LoansV2
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
-        Me.btnPrint = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -157,15 +157,31 @@ Partial Class LoansV2
         Me.pnlMain.Controls.Add(Me.btnDelete)
         Me.pnlMain.Controls.Add(Me.btnReStructure)
         Me.pnlMain.Controls.Add(Me.btnForceStop)
-        Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Controls.Add(Me.txtSearchLoan)
         Me.pnlMain.Controls.Add(Me.btnActivateLoan)
         Me.pnlMain.Controls.Add(Me.btnEdit)
         Me.pnlMain.Controls.Add(Me.btnAddNew)
+        Me.pnlMain.Controls.Add(Me.Label3)
         Me.pnlMain.Location = New System.Drawing.Point(18, 62)
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1079, 610)
         Me.pnlMain.TabIndex = 53
+        '
+        'btnPrint
+        '
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrint.FlatAppearance.BorderSize = 0
+        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrint.ForeColor = System.Drawing.Color.White
+        Me.btnPrint.Location = New System.Drawing.Point(706, 529)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrint.TabIndex = 60
+        Me.btnPrint.Text = "Print"
+        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrint.UseVisualStyleBackColor = False
         '
         'lvLoanList
         '
@@ -1212,31 +1228,15 @@ Partial Class LoansV2
         Me.txtUser.Size = New System.Drawing.Size(255, 29)
         Me.txtUser.TabIndex = 64
         '
-        'btnPrint
-        '
-        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnPrint.FlatAppearance.BorderSize = 0
-        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrint.ForeColor = System.Drawing.Color.White
-        Me.btnPrint.Location = New System.Drawing.Point(706, 529)
-        Me.btnPrint.Name = "btnPrint"
-        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
-        Me.btnPrint.TabIndex = 60
-        Me.btnPrint.Text = "Print"
-        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnPrint.UseVisualStyleBackColor = False
-        '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)

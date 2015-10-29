@@ -27,7 +27,7 @@ Public Class LoansV2
         Dim TotalInterest As Double = 0
         Dim principal As Long, interest_rate As Double, terms As Integer
 
-        principal = Val(txtPrincipal.Text)
+        principal = Val(txtPrincipal.Text.Trim.Replace(",", ""))
         interest_rate = Val(cboInterest.Text) / 100
         terms = Val(txtTerms.Text)
         TotalInterest = (principal * interest_rate * terms)
