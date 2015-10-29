@@ -261,4 +261,12 @@ Public Class Company
             End If
         End If
     End Sub
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Dim frm As New frmPrintReports
+        frm.TabControl1.SelectedTab = frm.TabControl1.TabPages(1)
+        frm.lblHeader.Text = "Company Report"
+        frm.lblHeader.ForeColor = Color.Tomato
+        frm.ShowDialog()
+    End Sub
 End Class

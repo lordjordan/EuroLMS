@@ -703,7 +703,10 @@ Public Class Clients
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
-        Dim frm As New frmClientReports
+        Dim frm As New frmPrintReports
+        frm.TabControl1.SelectedTab = frm.TabControl1.TabPages(0)
+        frm.lblHeader.Text = "Client Report"
+        frm.lblHeader.ForeColor = Color.FromArgb(0, 192, 0)
         frm.ShowDialog()
     End Sub
 

@@ -40,6 +40,8 @@ Partial Class LoansV2
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.btnSearchLoan = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnReStructure = New System.Windows.Forms.Button()
         Me.btnForceStop = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtSearchLoan = New System.Windows.Forms.TextBox()
@@ -118,8 +120,7 @@ Partial Class LoansV2
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
-        Me.btnReStructure = New System.Windows.Forms.Button()
-        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -150,6 +151,7 @@ Partial Class LoansV2
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.lvLoanList)
         Me.pnlMain.Controls.Add(Me.btnSearchLoan)
         Me.pnlMain.Controls.Add(Me.btnDelete)
@@ -263,6 +265,38 @@ Partial Class LoansV2
         Me.btnSearchLoan.TabIndex = 59
         Me.btnSearchLoan.Text = "Search"
         Me.btnSearchLoan.UseVisualStyleBackColor = False
+        '
+        'btnDelete
+        '
+        Me.btnDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnDelete.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnDelete.FlatAppearance.BorderSize = 0
+        Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(592, 529)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(108, 60)
+        Me.btnDelete.TabIndex = 38
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnReStructure
+        '
+        Me.btnReStructure.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnReStructure.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnReStructure.FlatAppearance.BorderSize = 0
+        Me.btnReStructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnReStructure.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReStructure.ForeColor = System.Drawing.Color.White
+        Me.btnReStructure.Location = New System.Drawing.Point(478, 529)
+        Me.btnReStructure.Name = "btnReStructure"
+        Me.btnReStructure.Size = New System.Drawing.Size(108, 60)
+        Me.btnReStructure.TabIndex = 38
+        Me.btnReStructure.Text = "Re-structure"
+        Me.btnReStructure.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnReStructure.UseVisualStyleBackColor = False
         '
         'btnForceStop
         '
@@ -378,7 +412,7 @@ Partial Class LoansV2
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAddEdit.Location = New System.Drawing.Point(194, 8)
         Me.gbxAddEdit.Name = "gbxAddEdit"
-        Me.gbxAddEdit.Size = New System.Drawing.Size(762, 650)
+        Me.gbxAddEdit.Size = New System.Drawing.Size(762, 661)
         Me.gbxAddEdit.TabIndex = 56
         Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "New Loan Application"
@@ -417,7 +451,7 @@ Partial Class LoansV2
         Me.gbxShowClient.ForeColor = System.Drawing.SystemColors.ControlText
         Me.gbxShowClient.Location = New System.Drawing.Point(6, 220)
         Me.gbxShowClient.Name = "gbxShowClient"
-        Me.gbxShowClient.Size = New System.Drawing.Size(750, 426)
+        Me.gbxShowClient.Size = New System.Drawing.Size(750, 433)
         Me.gbxShowClient.TabIndex = 159
         Me.gbxShowClient.TabStop = False
         Me.gbxShowClient.Text = "Select a Client"
@@ -539,8 +573,7 @@ Partial Class LoansV2
         '
         'gbxClientData
         '
-        Me.gbxClientData.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.gbxClientData.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxClientData.Controls.Add(Me.txtName)
         Me.gbxClientData.Controls.Add(Me.txtAvailableCredit)
         Me.gbxClientData.Controls.Add(Me.txtBranch)
@@ -557,7 +590,7 @@ Partial Class LoansV2
         Me.gbxClientData.Controls.Add(Me.Label4)
         Me.gbxClientData.Location = New System.Drawing.Point(11, 28)
         Me.gbxClientData.Name = "gbxClientData"
-        Me.gbxClientData.Size = New System.Drawing.Size(738, 175)
+        Me.gbxClientData.Size = New System.Drawing.Size(738, 186)
         Me.gbxClientData.TabIndex = 173
         Me.gbxClientData.TabStop = False
         '
@@ -697,7 +730,7 @@ Partial Class LoansV2
         Me.lblEmployeeNumber.AutoSize = True
         Me.lblEmployeeNumber.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEmployeeNumber.ForeColor = System.Drawing.Color.MediumBlue
-        Me.lblEmployeeNumber.Location = New System.Drawing.Point(437, 47)
+        Me.lblEmployeeNumber.Location = New System.Drawing.Point(437, 52)
         Me.lblEmployeeNumber.Name = "lblEmployeeNumber"
         Me.lblEmployeeNumber.Size = New System.Drawing.Size(136, 16)
         Me.lblEmployeeNumber.TabIndex = 127
@@ -718,8 +751,7 @@ Partial Class LoansV2
         '
         'gbxLoanData1
         '
-        Me.gbxLoanData1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.gbxLoanData1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxLoanData1.Controls.Add(Me.DataGridView1)
         Me.gbxLoanData1.Controls.Add(Me.cboLoanStatus)
         Me.gbxLoanData1.Controls.Add(Me.cboApplicationStatus)
@@ -739,7 +771,7 @@ Partial Class LoansV2
         Me.gbxLoanData1.Controls.Add(Me.Label9)
         Me.gbxLoanData1.Location = New System.Drawing.Point(11, 209)
         Me.gbxLoanData1.Name = "gbxLoanData1"
-        Me.gbxLoanData1.Size = New System.Drawing.Size(738, 261)
+        Me.gbxLoanData1.Size = New System.Drawing.Size(738, 272)
         Me.gbxLoanData1.TabIndex = 173
         Me.gbxLoanData1.TabStop = False
         '
@@ -932,8 +964,7 @@ Partial Class LoansV2
         '
         'gbxLoanData2
         '
-        Me.gbxLoanData2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.gbxLoanData2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxLoanData2.Controls.Add(Me.txtMonthlyInterest)
         Me.gbxLoanData2.Controls.Add(Me.txtTotalLoanAmount)
         Me.gbxLoanData2.Controls.Add(Me.txtTotalInterest)
@@ -944,7 +975,7 @@ Partial Class LoansV2
         Me.gbxLoanData2.Controls.Add(Me.Label20)
         Me.gbxLoanData2.Location = New System.Drawing.Point(11, 473)
         Me.gbxLoanData2.Name = "gbxLoanData2"
-        Me.gbxLoanData2.Size = New System.Drawing.Size(738, 71)
+        Me.gbxLoanData2.Size = New System.Drawing.Size(738, 82)
         Me.gbxLoanData2.TabIndex = 173
         Me.gbxLoanData2.TabStop = False
         '
@@ -1047,7 +1078,7 @@ Partial Class LoansV2
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(11, 581)
+        Me.btnSave.Location = New System.Drawing.Point(11, 592)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(108, 60)
         Me.btnSave.TabIndex = 125
@@ -1063,7 +1094,7 @@ Partial Class LoansV2
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.White
-        Me.btnCancel.Location = New System.Drawing.Point(125, 581)
+        Me.btnCancel.Location = New System.Drawing.Point(125, 592)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(108, 60)
         Me.btnCancel.TabIndex = 123
@@ -1073,14 +1104,13 @@ Partial Class LoansV2
         '
         'GroupBox1
         '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.Controls.Add(Me.Button1)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Label23)
         Me.GroupBox1.Location = New System.Drawing.Point(451, 561)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(298, 87)
+        Me.GroupBox1.Size = New System.Drawing.Size(298, 98)
         Me.GroupBox1.TabIndex = 173
         Me.GroupBox1.TabStop = False
         '
@@ -1182,47 +1212,31 @@ Partial Class LoansV2
         Me.txtUser.Size = New System.Drawing.Size(255, 29)
         Me.txtUser.TabIndex = 64
         '
-        'btnReStructure
+        'btnPrint
         '
-        Me.btnReStructure.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnReStructure.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnReStructure.FlatAppearance.BorderSize = 0
-        Me.btnReStructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnReStructure.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnReStructure.ForeColor = System.Drawing.Color.White
-        Me.btnReStructure.Location = New System.Drawing.Point(478, 529)
-        Me.btnReStructure.Name = "btnReStructure"
-        Me.btnReStructure.Size = New System.Drawing.Size(108, 60)
-        Me.btnReStructure.TabIndex = 38
-        Me.btnReStructure.Text = "Re-structure"
-        Me.btnReStructure.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnReStructure.UseVisualStyleBackColor = False
-        '
-        'btnDelete
-        '
-        Me.btnDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnDelete.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnDelete.FlatAppearance.BorderSize = 0
-        Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDelete.ForeColor = System.Drawing.Color.White
-        Me.btnDelete.Location = New System.Drawing.Point(592, 529)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(108, 60)
-        Me.btnDelete.TabIndex = 38
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnDelete.UseVisualStyleBackColor = False
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrint.FlatAppearance.BorderSize = 0
+        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrint.ForeColor = System.Drawing.Color.White
+        Me.btnPrint.Location = New System.Drawing.Point(706, 529)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrint.TabIndex = 60
+        Me.btnPrint.Text = "Print"
+        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrint.UseVisualStyleBackColor = False
         '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)
@@ -1344,5 +1358,6 @@ Partial Class LoansV2
     Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents btnReStructure As System.Windows.Forms.Button
+    Friend WithEvents btnPrint As System.Windows.Forms.Button
 
 End Class
