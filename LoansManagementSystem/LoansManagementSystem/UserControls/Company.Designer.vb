@@ -53,6 +53,7 @@ Partial Class Company
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtCompanyName = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         Me.SuspendLayout()
@@ -400,14 +401,30 @@ Partial Class Company
         Me.Label1.TabIndex = 53
         Me.Label1.Text = "Company"
         '
+        'btnPrint
+        '
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrint.FlatAppearance.BorderSize = 0
+        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrint.ForeColor = System.Drawing.Color.White
+        Me.btnPrint.Location = New System.Drawing.Point(242, 346)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrint.TabIndex = 90
+        Me.btnPrint.Text = "Print"
+        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrint.UseVisualStyleBackColor = False
+        '
         'Company
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
         Me.Name = "Company"
         Me.Size = New System.Drawing.Size(919, 546)
         Me.pnlMain.ResumeLayout(False)

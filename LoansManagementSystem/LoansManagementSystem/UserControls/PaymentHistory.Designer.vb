@@ -24,29 +24,15 @@ Partial Class PaymentHistory
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
-        Me.gbxShowClient = New System.Windows.Forms.GroupBox()
-        Me.btnClientBack = New System.Windows.Forms.Button()
-        Me.lvClientList = New System.Windows.Forms.ListView()
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.btnSelectSearchClient = New System.Windows.Forms.Button()
-        Me.btnSearchClient = New System.Windows.Forms.Button()
-        Me.txtSearchLoan = New System.Windows.Forms.TextBox()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.btnClose = New System.Windows.Forms.Button()
-        Me.lvPH = New System.Windows.Forms.ListView()
-        Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.radVoid = New System.Windows.Forms.RadioButton()
+        Me.radNorm = New System.Windows.Forms.RadioButton()
+        Me.radAll = New System.Windows.Forms.RadioButton()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtDateStart = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.btn_void = New System.Windows.Forms.Button()
         Me.txtTotalPenalties = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.txtDateEnd = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.txtPrincipalAmt = New System.Windows.Forms.TextBox()
@@ -64,6 +50,27 @@ Partial Class PaymentHistory
         Me.txtname = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.lvPH = New System.Windows.Forms.ListView()
+        Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.gbxShowClient = New System.Windows.Forms.GroupBox()
+        Me.btnClientBack = New System.Windows.Forms.Button()
+        Me.lvClientList = New System.Windows.Forms.ListView()
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.btnSelectSearchClient = New System.Windows.Forms.Button()
+        Me.btnSearchClient = New System.Windows.Forms.Button()
+        Me.txtSearchLoan = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxShowClient.SuspendLayout()
         Me.SuspendLayout()
@@ -85,8 +92,15 @@ Partial Class PaymentHistory
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.radVoid)
+        Me.pnlMain.Controls.Add(Me.radNorm)
+        Me.pnlMain.Controls.Add(Me.radAll)
+        Me.pnlMain.Controls.Add(Me.Label9)
+        Me.pnlMain.Controls.Add(Me.Label7)
+        Me.pnlMain.Controls.Add(Me.txtDateStart)
+        Me.pnlMain.Controls.Add(Me.Label3)
+        Me.pnlMain.Controls.Add(Me.btn_void)
         Me.pnlMain.Controls.Add(Me.txtTotalPenalties)
-        Me.pnlMain.Controls.Add(Me.Label15)
         Me.pnlMain.Controls.Add(Me.txtDateEnd)
         Me.pnlMain.Controls.Add(Me.Label12)
         Me.pnlMain.Controls.Add(Me.txtPrincipalAmt)
@@ -110,6 +124,342 @@ Partial Class PaymentHistory
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(772, 599)
         Me.pnlMain.TabIndex = 49
+        '
+        'radVoid
+        '
+        Me.radVoid.AutoSize = True
+        Me.radVoid.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.radVoid.Location = New System.Drawing.Point(186, 195)
+        Me.radVoid.Name = "radVoid"
+        Me.radVoid.Size = New System.Drawing.Size(70, 20)
+        Me.radVoid.TabIndex = 224
+        Me.radVoid.Text = "Voided"
+        Me.radVoid.UseVisualStyleBackColor = True
+        '
+        'radNorm
+        '
+        Me.radNorm.AutoSize = True
+        Me.radNorm.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.radNorm.Location = New System.Drawing.Point(110, 195)
+        Me.radNorm.Name = "radNorm"
+        Me.radNorm.Size = New System.Drawing.Size(70, 20)
+        Me.radNorm.TabIndex = 223
+        Me.radNorm.Text = "Normal"
+        Me.radNorm.UseVisualStyleBackColor = True
+        '
+        'radAll
+        '
+        Me.radAll.AutoSize = True
+        Me.radAll.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.radAll.Location = New System.Drawing.Point(60, 195)
+        Me.radAll.Name = "radAll"
+        Me.radAll.Size = New System.Drawing.Size(41, 20)
+        Me.radAll.TabIndex = 222
+        Me.radAll.TabStop = True
+        Me.radAll.Text = "All"
+        Me.radAll.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(14, 197)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(40, 16)
+        Me.Label9.TabIndex = 221
+        Me.Label9.Text = "View:"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(17, 148)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(98, 16)
+        Me.Label7.TabIndex = 220
+        Me.Label7.Text = "Total Penalties"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtDateStart
+        '
+        Me.txtDateStart.BackColor = System.Drawing.SystemColors.Control
+        Me.txtDateStart.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDateStart.Location = New System.Drawing.Point(495, 110)
+        Me.txtDateStart.Name = "txtDateStart"
+        Me.txtDateStart.ReadOnly = True
+        Me.txtDateStart.Size = New System.Drawing.Size(205, 26)
+        Me.txtDateStart.TabIndex = 219
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(400, 116)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(65, 16)
+        Me.Label3.TabIndex = 218
+        Me.Label3.Text = "Date start"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'btn_void
+        '
+        Me.btn_void.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btn_void.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btn_void.FlatAppearance.BorderSize = 0
+        Me.btn_void.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_void.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_void.ForeColor = System.Drawing.Color.White
+        Me.btn_void.Location = New System.Drawing.Point(17, 524)
+        Me.btn_void.Name = "btn_void"
+        Me.btn_void.Size = New System.Drawing.Size(108, 60)
+        Me.btn_void.TabIndex = 217
+        Me.btn_void.Text = "Void payment"
+        Me.btn_void.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btn_void.UseVisualStyleBackColor = False
+        '
+        'txtTotalPenalties
+        '
+        Me.txtTotalPenalties.BackColor = System.Drawing.SystemColors.Control
+        Me.txtTotalPenalties.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalPenalties.Location = New System.Drawing.Point(123, 142)
+        Me.txtTotalPenalties.Name = "txtTotalPenalties"
+        Me.txtTotalPenalties.ReadOnly = True
+        Me.txtTotalPenalties.Size = New System.Drawing.Size(235, 26)
+        Me.txtTotalPenalties.TabIndex = 216
+        Me.txtTotalPenalties.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtDateEnd
+        '
+        Me.txtDateEnd.BackColor = System.Drawing.SystemColors.Control
+        Me.txtDateEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDateEnd.Location = New System.Drawing.Point(495, 142)
+        Me.txtDateEnd.Name = "txtDateEnd"
+        Me.txtDateEnd.ReadOnly = True
+        Me.txtDateEnd.Size = New System.Drawing.Size(205, 26)
+        Me.txtDateEnd.TabIndex = 214
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(400, 148)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(63, 16)
+        Me.Label12.TabIndex = 213
+        Me.Label12.Text = "Date end"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtPrincipalAmt
+        '
+        Me.txtPrincipalAmt.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrincipalAmt.Location = New System.Drawing.Point(495, 14)
+        Me.txtPrincipalAmt.MaxLength = 4
+        Me.txtPrincipalAmt.Name = "txtPrincipalAmt"
+        Me.txtPrincipalAmt.ReadOnly = True
+        Me.txtPrincipalAmt.Size = New System.Drawing.Size(205, 26)
+        Me.txtPrincipalAmt.TabIndex = 212
+        Me.txtPrincipalAmt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtTotalLoanAmount
+        '
+        Me.txtTotalLoanAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalLoanAmount.Location = New System.Drawing.Point(495, 46)
+        Me.txtTotalLoanAmount.MaxLength = 4
+        Me.txtTotalLoanAmount.Name = "txtTotalLoanAmount"
+        Me.txtTotalLoanAmount.ReadOnly = True
+        Me.txtTotalLoanAmount.Size = New System.Drawing.Size(205, 26)
+        Me.txtTotalLoanAmount.TabIndex = 211
+        Me.txtTotalLoanAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label6.Location = New System.Drawing.Point(400, 52)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(73, 16)
+        Me.Label6.TabIndex = 210
+        Me.Label6.Text = "Gross Amt."
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label19.Location = New System.Drawing.Point(400, 20)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(89, 16)
+        Me.Label19.TabIndex = 209
+        Me.Label19.Text = "Principal Amt."
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'btnViewLoan
+        '
+        Me.btnViewLoan.BackColor = System.Drawing.Color.Gray
+        Me.btnViewLoan.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnViewLoan.ForeColor = System.Drawing.Color.White
+        Me.btnViewLoan.Location = New System.Drawing.Point(267, 16)
+        Me.btnViewLoan.Name = "btnViewLoan"
+        Me.btnViewLoan.Size = New System.Drawing.Size(91, 24)
+        Me.btnViewLoan.TabIndex = 208
+        Me.btnViewLoan.Text = "View loans"
+        Me.btnViewLoan.UseVisualStyleBackColor = False
+        '
+        'txtCollectedAmt
+        '
+        Me.txtCollectedAmt.BackColor = System.Drawing.SystemColors.Control
+        Me.txtCollectedAmt.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCollectedAmt.Location = New System.Drawing.Point(123, 110)
+        Me.txtCollectedAmt.Name = "txtCollectedAmt"
+        Me.txtCollectedAmt.ReadOnly = True
+        Me.txtCollectedAmt.Size = New System.Drawing.Size(235, 26)
+        Me.txtCollectedAmt.TabIndex = 207
+        Me.txtCollectedAmt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(17, 114)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(93, 16)
+        Me.Label14.TabIndex = 206
+        Me.Label14.Text = "Collected amt."
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtTerms
+        '
+        Me.txtTerms.BackColor = System.Drawing.SystemColors.Control
+        Me.txtTerms.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTerms.Location = New System.Drawing.Point(495, 78)
+        Me.txtTerms.Name = "txtTerms"
+        Me.txtTerms.ReadOnly = True
+        Me.txtTerms.Size = New System.Drawing.Size(87, 26)
+        Me.txtTerms.TabIndex = 205
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(400, 82)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(47, 16)
+        Me.Label5.TabIndex = 204
+        Me.Label5.Text = "Terms"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtBalance
+        '
+        Me.txtBalance.BackColor = System.Drawing.SystemColors.Control
+        Me.txtBalance.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtBalance.Location = New System.Drawing.Point(123, 78)
+        Me.txtBalance.Name = "txtBalance"
+        Me.txtBalance.ReadOnly = True
+        Me.txtBalance.Size = New System.Drawing.Size(235, 26)
+        Me.txtBalance.TabIndex = 203
+        Me.txtBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(16, 82)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(58, 16)
+        Me.Label4.TabIndex = 202
+        Me.Label4.Text = "Balance"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'txtLoanid
+        '
+        Me.txtLoanid.BackColor = System.Drawing.SystemColors.Control
+        Me.txtLoanid.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtLoanid.Location = New System.Drawing.Point(123, 14)
+        Me.txtLoanid.Name = "txtLoanid"
+        Me.txtLoanid.ReadOnly = True
+        Me.txtLoanid.Size = New System.Drawing.Size(138, 26)
+        Me.txtLoanid.TabIndex = 201
+        '
+        'txtname
+        '
+        Me.txtname.BackColor = System.Drawing.SystemColors.Control
+        Me.txtname.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtname.Location = New System.Drawing.Point(123, 46)
+        Me.txtname.Name = "txtname"
+        Me.txtname.ReadOnly = True
+        Me.txtname.Size = New System.Drawing.Size(235, 26)
+        Me.txtname.TabIndex = 200
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(15, 20)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(55, 16)
+        Me.Label8.TabIndex = 199
+        Me.Label8.Text = "Loan I.d"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(15, 52)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(45, 16)
+        Me.Label2.TabIndex = 198
+        Me.Label2.Text = "Name"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'lvPH
+        '
+        Me.lvPH.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader1, Me.ColumnHeader9})
+        Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvPH.FullRowSelect = True
+        Me.lvPH.GridLines = True
+        Me.lvPH.Location = New System.Drawing.Point(11, 216)
+        Me.lvPH.Name = "lvPH"
+        Me.lvPH.Size = New System.Drawing.Size(750, 280)
+        Me.lvPH.TabIndex = 196
+        Me.lvPH.UseCompatibleStateImageBehavior = False
+        Me.lvPH.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader17
+        '
+        Me.ColumnHeader17.Text = "Payment I.D"
+        Me.ColumnHeader17.Width = 81
+        '
+        'ColumnHeader18
+        '
+        Me.ColumnHeader18.Text = "Date process"
+        Me.ColumnHeader18.Width = 137
+        '
+        'ColumnHeader19
+        '
+        Me.ColumnHeader19.Text = "Amount Collected"
+        Me.ColumnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader19.Width = 195
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.DisplayIndex = 4
+        Me.ColumnHeader1.Text = "Penalized?"
+        Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ColumnHeader1.Width = 93
+        '
+        'ColumnHeader9
+        '
+        Me.ColumnHeader9.DisplayIndex = 3
+        Me.ColumnHeader9.Text = "Voided?"
+        Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ColumnHeader9.Width = 93
         '
         'gbxShowClient
         '
@@ -253,258 +603,6 @@ Partial Class PaymentHistory
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
-        'lvPH
-        '
-        Me.lvPH.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader1, Me.ColumnHeader2})
-        Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lvPH.FullRowSelect = True
-        Me.lvPH.GridLines = True
-        Me.lvPH.Location = New System.Drawing.Point(18, 174)
-        Me.lvPH.Name = "lvPH"
-        Me.lvPH.Size = New System.Drawing.Size(737, 406)
-        Me.lvPH.TabIndex = 196
-        Me.lvPH.UseCompatibleStateImageBehavior = False
-        Me.lvPH.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader17
-        '
-        Me.ColumnHeader17.Text = "Payment I.D"
-        Me.ColumnHeader17.Width = 81
-        '
-        'ColumnHeader18
-        '
-        Me.ColumnHeader18.Text = "Date process"
-        Me.ColumnHeader18.Width = 192
-        '
-        'ColumnHeader19
-        '
-        Me.ColumnHeader19.Text = "Amount Collected"
-        Me.ColumnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader19.Width = 195
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "Penalized?"
-        Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ColumnHeader1.Width = 94
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "Penalty amount"
-        Me.ColumnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader2.Width = 130
-        '
-        'txtTotalPenalties
-        '
-        Me.txtTotalPenalties.BackColor = System.Drawing.SystemColors.Control
-        Me.txtTotalPenalties.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotalPenalties.Location = New System.Drawing.Point(123, 142)
-        Me.txtTotalPenalties.Name = "txtTotalPenalties"
-        Me.txtTotalPenalties.ReadOnly = True
-        Me.txtTotalPenalties.Size = New System.Drawing.Size(235, 26)
-        Me.txtTotalPenalties.TabIndex = 216
-        Me.txtTotalPenalties.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(19, 148)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(97, 16)
-        Me.Label15.TabIndex = 215
-        Me.Label15.Text = "Total penalties"
-        Me.Label15.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtDateEnd
-        '
-        Me.txtDateEnd.BackColor = System.Drawing.SystemColors.Control
-        Me.txtDateEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDateEnd.Location = New System.Drawing.Point(495, 142)
-        Me.txtDateEnd.Name = "txtDateEnd"
-        Me.txtDateEnd.ReadOnly = True
-        Me.txtDateEnd.Size = New System.Drawing.Size(205, 26)
-        Me.txtDateEnd.TabIndex = 214
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(400, 148)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(63, 16)
-        Me.Label12.TabIndex = 213
-        Me.Label12.Text = "Date end"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtPrincipalAmt
-        '
-        Me.txtPrincipalAmt.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPrincipalAmt.Location = New System.Drawing.Point(495, 46)
-        Me.txtPrincipalAmt.MaxLength = 4
-        Me.txtPrincipalAmt.Name = "txtPrincipalAmt"
-        Me.txtPrincipalAmt.ReadOnly = True
-        Me.txtPrincipalAmt.Size = New System.Drawing.Size(205, 26)
-        Me.txtPrincipalAmt.TabIndex = 212
-        Me.txtPrincipalAmt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'txtTotalLoanAmount
-        '
-        Me.txtTotalLoanAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotalLoanAmount.Location = New System.Drawing.Point(495, 78)
-        Me.txtTotalLoanAmount.MaxLength = 4
-        Me.txtTotalLoanAmount.Name = "txtTotalLoanAmount"
-        Me.txtTotalLoanAmount.ReadOnly = True
-        Me.txtTotalLoanAmount.Size = New System.Drawing.Size(205, 26)
-        Me.txtTotalLoanAmount.TabIndex = 211
-        Me.txtTotalLoanAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label6.Location = New System.Drawing.Point(400, 84)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 16)
-        Me.Label6.TabIndex = 210
-        Me.Label6.Text = "Gross Amt."
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label19.Location = New System.Drawing.Point(400, 52)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(89, 16)
-        Me.Label19.TabIndex = 209
-        Me.Label19.Text = "Principal Amt."
-        Me.Label19.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'btnViewLoan
-        '
-        Me.btnViewLoan.BackColor = System.Drawing.Color.Gray
-        Me.btnViewLoan.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnViewLoan.ForeColor = System.Drawing.Color.White
-        Me.btnViewLoan.Location = New System.Drawing.Point(267, 16)
-        Me.btnViewLoan.Name = "btnViewLoan"
-        Me.btnViewLoan.Size = New System.Drawing.Size(91, 24)
-        Me.btnViewLoan.TabIndex = 208
-        Me.btnViewLoan.Text = "View loans"
-        Me.btnViewLoan.UseVisualStyleBackColor = False
-        '
-        'txtCollectedAmt
-        '
-        Me.txtCollectedAmt.BackColor = System.Drawing.SystemColors.Control
-        Me.txtCollectedAmt.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCollectedAmt.Location = New System.Drawing.Point(123, 110)
-        Me.txtCollectedAmt.Name = "txtCollectedAmt"
-        Me.txtCollectedAmt.ReadOnly = True
-        Me.txtCollectedAmt.Size = New System.Drawing.Size(235, 26)
-        Me.txtCollectedAmt.TabIndex = 207
-        Me.txtCollectedAmt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(17, 114)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(93, 16)
-        Me.Label14.TabIndex = 206
-        Me.Label14.Text = "Collected amt."
-        Me.Label14.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtTerms
-        '
-        Me.txtTerms.BackColor = System.Drawing.SystemColors.Control
-        Me.txtTerms.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTerms.Location = New System.Drawing.Point(495, 110)
-        Me.txtTerms.Name = "txtTerms"
-        Me.txtTerms.ReadOnly = True
-        Me.txtTerms.Size = New System.Drawing.Size(87, 26)
-        Me.txtTerms.TabIndex = 205
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(400, 114)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(47, 16)
-        Me.Label5.TabIndex = 204
-        Me.Label5.Text = "Terms"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtBalance
-        '
-        Me.txtBalance.BackColor = System.Drawing.SystemColors.Control
-        Me.txtBalance.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBalance.Location = New System.Drawing.Point(123, 78)
-        Me.txtBalance.Name = "txtBalance"
-        Me.txtBalance.ReadOnly = True
-        Me.txtBalance.Size = New System.Drawing.Size(235, 26)
-        Me.txtBalance.TabIndex = 203
-        Me.txtBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(16, 82)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(58, 16)
-        Me.Label4.TabIndex = 202
-        Me.Label4.Text = "Balance"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtLoanid
-        '
-        Me.txtLoanid.BackColor = System.Drawing.SystemColors.Control
-        Me.txtLoanid.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtLoanid.Location = New System.Drawing.Point(123, 14)
-        Me.txtLoanid.Name = "txtLoanid"
-        Me.txtLoanid.ReadOnly = True
-        Me.txtLoanid.Size = New System.Drawing.Size(138, 26)
-        Me.txtLoanid.TabIndex = 201
-        '
-        'txtname
-        '
-        Me.txtname.BackColor = System.Drawing.SystemColors.Control
-        Me.txtname.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtname.Location = New System.Drawing.Point(123, 46)
-        Me.txtname.Name = "txtname"
-        Me.txtname.ReadOnly = True
-        Me.txtname.Size = New System.Drawing.Size(235, 26)
-        Me.txtname.TabIndex = 200
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(15, 20)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(55, 16)
-        Me.Label8.TabIndex = 199
-        Me.Label8.Text = "Loan I.d"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(15, 52)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 16)
-        Me.Label2.TabIndex = 198
-        Me.Label2.Text = "Name"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
         'PaymentHistory
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -546,9 +644,7 @@ Partial Class PaymentHistory
     Friend WithEvents ColumnHeader18 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader19 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents txtTotalPenalties As System.Windows.Forms.TextBox
-    Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txtDateEnd As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents txtPrincipalAmt As System.Windows.Forms.TextBox
@@ -566,5 +662,14 @@ Partial Class PaymentHistory
     Friend WithEvents txtname As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents btn_void As System.Windows.Forms.Button
+    Friend WithEvents txtDateStart As System.Windows.Forms.TextBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents radVoid As System.Windows.Forms.RadioButton
+    Friend WithEvents radNorm As System.Windows.Forms.RadioButton
+    Friend WithEvents radAll As System.Windows.Forms.RadioButton
+    Friend WithEvents Label9 As System.Windows.Forms.Label
 
 End Class
