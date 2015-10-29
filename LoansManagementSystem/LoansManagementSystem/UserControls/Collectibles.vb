@@ -12,7 +12,7 @@ Public Class frmCollectibles
     Dim penalty, previous_bal, penalty1 As Double
     Dim splitter(), concats, tagakuhaNgID, getMaxDate, bID(), cID() As String
     Dim itm As ListViewItem
-    Dim colorChanger As Boolean
+
 
     '### Change the "Data Source" path to point to our own LMS Database
     Dim db As New DBHelper(My.Settings.ConnectionString)
@@ -49,7 +49,11 @@ Public Class frmCollectibles
         uscCollectibles = New frmCollectibles
     End Sub
 
-
+    Private Sub showPrintAttack(mode As Boolean)
+        gbxPrint.BringToFront()
+        gbxPrint.Visible = mode
+        pnlMain.Enabled = Not mode
+    End Sub
     Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         showAdvanceSearch(False)
         'gbxAdvanceSearch.Visible = False
@@ -57,7 +61,7 @@ Public Class frmCollectibles
 
     Private Sub btnSearchLoan_Click(sender As Object, e As EventArgs) Handles btnSearchLoan.Click
         lblInfoSearch.Text = "All"
-        colorChanger = False
+
         lvCollectibles.Items.Clear()
         con.ConnectionString = My.Settings.ConnectionString
         Try
@@ -246,6 +250,9 @@ Public Class frmCollectibles
                 Next
 
             Next
+            If lvCollectibles.Items.Count = 0 Then
+                MsgBox("No collectibles found", vbInformation + vbOKOnly, "E.M.C inc.")
+            End If
             ds.Clear()
             con.Close()
 
@@ -256,14 +263,18 @@ Public Class frmCollectibles
         End Try
     End Sub
     Public Sub ShowData()
-        colorChanger = False
+
         lvCollectibles.Items.Clear()
         con.ConnectionString = My.Settings.ConnectionString
         'version 2
         Try
+
+
+
+
             query = "SELECT ctb_id,tblCol.loan_id as LoanID, MAX(due_date) as petsa, last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
                 "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt,terms, penalty_status,penalty_amt " & _
-                "FROM  (SELECT ctb_id , loan_id , due_date , payable_amt, previous_balance,collected_amt,penalty_status,penalty_amt " & _
+                "FROM  (SELECT ctb_id , loan_id, due_date, payable_amt, previous_balance,collected_amt,penalty_status,penalty_amt " & _
                 "FROM tbl_collectibles  WHERE due_date <= '" & Format(Date.Now, "yyyyMMdd") & "') as tblCol " & _
                 "INNER JOIN tbl_loans ON tbl_loans.loan_id = tblCol.loan_id INNER JOIN " & _
                 "tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_status = 1 " & _
@@ -500,6 +511,12 @@ Public Class frmCollectibles
 
             Next
             ds.Clear()
+            con.Close()
+            'pag pa umpisa pa lang  ang date nya (si "FRESH") eto ang gawin upang lumabassss ang katassss ng utang.
+
+            query = "SELECT min(date_start) as petsa, from tbl_loans WHERE payment_status = 1"
+
+
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Critical)
         Finally
@@ -547,13 +564,7 @@ Public Class frmCollectibles
         '            itm.SubItems.Add("")    'oustanding balance next process
         '            itm.SubItems.Add("")    'ctb_id's penalty
         '            itm.SubItems.Add(dr.Item("ctb_id").ToString)    'ctb_id specific
-        '            If colorChanger = True Then
-        '                itm.BackColor = Color.LemonChiffon
-        '                colorChanger = False
-        '            Else
-        '                itm.BackColor = Color.LightCyan
-        '                colorChanger = True
-        '            End If
+       
 
         '        Loop
 
@@ -688,13 +699,7 @@ Public Class frmCollectibles
         itm.SubItems.Add("")    'oustanding balance next process
         itm.SubItems.Add("")    'ctb_id's penalty
         itm.SubItems.Add(dr.Item("ctb_id").ToString)    'ctb_id specific
-        If colorChanger = True Then
-            itm.BackColor = Color.LemonChiffon
-            colorChanger = False
-        Else
-            itm.BackColor = Color.LightCyan
-            colorChanger = True
-        End If
+        
     End Sub
     Private Sub populateCurrentMe(num As Integer)
         itm = lvCollectibles.Items.Add(ds.Tables("collectibles").Rows(num - 1).Item("loanID").ToString)
@@ -721,13 +726,7 @@ Public Class frmCollectibles
         itm.SubItems.Add("")    'oustanding balance next process
         itm.SubItems.Add("")    'ctb_id's penalty
         itm.SubItems.Add(ds.Tables("collectibles").Rows(num - 1).Item("ctb_id").ToString)    'ctb_id specific
-        If colorChanger = True Then
-            itm.BackColor = Color.LemonChiffon
-            colorChanger = False
-        Else
-            itm.BackColor = Color.LightCyan
-            colorChanger = True
-        End If
+       
     End Sub
 
     Private Sub frmCollectibles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -787,7 +786,7 @@ Public Class frmCollectibles
 
     Private Sub lvCollectibles_DoubleClick(sender As Object, e As EventArgs) Handles lvCollectibles.DoubleClick
         Try
-            colorChanger = False
+
             gbxClientCollectible.Text = "Client payment     (Loan I.D: " & lvCollectibles.FocusedItem.Text & ")"
             lvDuedates.Items.Clear()
             txtAmount.Focus()
@@ -810,13 +809,7 @@ Public Class frmCollectibles
                         itm = lvDuedates.Items.Add(StrToDate(dr.Item("due_date").ToString)) 'casted
                         itm.SubItems.Add(dr.Item("penalty_amt").ToString.Insert(6, "."))
                         itm.SubItems.Add(dr.Item("ctb_id").ToString)
-                        If colorChanger = True Then
-                            itm.BackColor = Color.LemonChiffon
-                            colorChanger = False
-                        Else
-                            itm.BackColor = Color.LightCyan
-                            colorChanger = True
-                        End If
+                       
                     Loop
                     For x = 1 To lvDuedates.Items.Count
                         lvDuedates.Items(x - 1).SubItems(1).Text = CDbl(lvDuedates.Items(x - 1).SubItems(1).Text)
@@ -1301,12 +1294,11 @@ Public Class frmCollectibles
                     query = "SELECT collected_amt, payable_amt, ctb_id FROM tbl_collectibles WHERE due_date >  '" & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "'"
                     da = New SQLite.SQLiteDataAdapter(query, con)
                     da.Fill(ds, "collectibles")
-
                     If ds.Tables("collectibles").Rows.Count <> 0 Then
                         For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
                             If CDbl(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString.Insert(6, ".")) = _
                                CDbl(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString.Insert(6, ".")) Then
-                                rec = db.ExecuteNonQuery("UPDATE tbl_loans SET penalty_status = 2 WHERE ctb_id =" & _
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE ctb_id =" & _
                                                          ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
                             End If
                         Next
@@ -1320,19 +1312,19 @@ Public Class frmCollectibles
                     'store the ID
 
                     'data.Add("collected_amt",) computationS
-                    dr = db.ExecuteReader("SELECT MIN(due_date) as petsa, min(ctb_id) as low,payable_amt collected_amt, previous_balance, penalty_amt,penalty_status  FROM tbl_collectibles WHERE due_date > '" & _
+                    dr = db.ExecuteReader("SELECT MIN(due_date) as petsa, min(ctb_id) as low,payable_amt, collected_amt, previous_balance, penalty_amt,penalty_status  FROM tbl_collectibles WHERE due_date > '" & _
                                          Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND loan_id= " & _
                                          lvCollectibles.Items(x - 1).Text)
 
                     If dr.HasRows Then
                         If dr.Item("petsa").ToString <> "" Then
                             If dr.Item("penalty_status").ToString = 1 Then
-                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) <> CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
+                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
                                         + CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")) + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
                                 End If
                             Else
-                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) <> CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
+                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
                                          + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
                                     rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
                                 End If
@@ -1744,7 +1736,7 @@ Public Class frmCollectibles
     Private Sub btnPH_Click(sender As Object, e As EventArgs) Handles btnPH.Click
         Try
             penalty = 0
-            colorChanger = False
+
             collectedAmount = 0
             lvPH.Items.Clear()
             If lvCollectibles.SelectedItems.Count > 0 Then
@@ -1803,13 +1795,7 @@ Public Class frmCollectibles
 
                         collectedAmount += lvPH.Items(ctr).SubItems(2).Text
 
-                        If colorChanger = True Then
-                            itm.BackColor = Color.LemonChiffon
-                            colorChanger = False
-                        Else
-                            itm.BackColor = Color.LightCyan
-                            colorChanger = True
-                        End If
+                        
                         ctr += 1
 
                     Loop
@@ -1953,7 +1939,6 @@ Public Class frmCollectibles
                 MsgBox("Please choose at least company to filter", MsgBoxStyle.Exclamation + vbOKOnly, "Blank fields")
                 Exit Sub
             Else
-                colorChanger = False
                 lvCollectibles.Items.Clear()
                 con.ConnectionString = My.Settings.ConnectionString
                 cID = Split(cbxCompany.Text, "#")
@@ -2183,6 +2168,69 @@ Public Class frmCollectibles
     Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
         'with excel
 
+    End Sub
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+
+        Dim row As DataRow = Nothing
+        Dim DS As New DataSet
+        Dim rptPaymentCentral As New PaymentCentral
+        'ADD A TABLE TO THE DATASET
+        DS.Tables.Add("ListViewData")
+        'ADD THE COLUMNS TO THE TABLE
+        With DS.Tables(0).Columns
+            .Add("loan_ID")
+            .Add("Due_date")
+            .Add("Name")
+            .Add("Payable_amount")
+            .Add("Collected_amount")
+            .Add("Inputted_amount")
+            .Add("Penalty_amount")
+            .Add("Previous_balance")
+            .Add("Principal_amount")
+            .Add("Interest")
+
+        End With
+
+        'LOOP THE LISTVIEW AND ADD A ROW TO THE TABLE FOR EACH LISTVIEWITEM
+        For x = 1 To lvCollectibles.Items.Count
+            row = DS.Tables(0).NewRow
+            row(0) = lvCollectibles.Items(x - 1).Text
+            row(1) = lvCollectibles.Items(x - 1).SubItems(1).Text
+            row(2) = lvCollectibles.Items(x - 1).SubItems(2).Text
+            row(3) = lvCollectibles.Items(x - 1).SubItems(3).Text
+            row(4) = lvCollectibles.Items(x - 1).SubItems(4).Text
+            row(5) = lvCollectibles.Items(x - 1).SubItems(5).Text
+            row(6) = lvCollectibles.Items(x - 1).SubItems(6).Text
+            row(7) = lvCollectibles.Items(x - 1).SubItems(7).Text
+            row(8) = lvCollectibles.Items(x - 1).SubItems(8).Text
+            row(9) = lvCollectibles.Items(x - 1).SubItems(9).Text
+            DS.Tables(0).Rows.Add(row)
+
+        Next
+        DS.WriteXml("XML\ListViewData.xml")
+
+        Dim dsListViewData As New DataSet
+        dsListViewData = New DSreports
+        Dim dsListViewDataTemp As New DataSet
+        dsListViewDataTemp = New DataSet()
+        showPrintAttack(True)
+        dsListViewDataTemp.ReadXml("XML\ListViewData.xml")
+        dsListViewData.Merge(dsListViewDataTemp.Tables(0))
+        rptPaymentCentral = New PaymentCentral
+        rptPaymentCentral.SetDataSource(dsListViewData)
+        crvPaymentCentralReport.ReportSource = rptPaymentCentral
+
+
+    End Sub
+
+    
+    Private Sub btnPrintCR_Click(sender As Object, e As EventArgs) Handles btnPrintCR.Click
+        crvPaymentCentralReport.PrintReport()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        showPrintAttack(False)
     End Sub
 End Class
 Class ListViewItemComparer
