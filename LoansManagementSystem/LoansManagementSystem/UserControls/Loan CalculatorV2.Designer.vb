@@ -384,9 +384,9 @@ Partial Class Loan_CalculatorV2
         Me.gbxPreview.BackColor = System.Drawing.SystemColors.ControlDark
         Me.gbxPreview.Controls.Add(Me.bntClose)
         Me.gbxPreview.Controls.Add(Me.crvLoanCalculator)
-        Me.gbxPreview.Location = New System.Drawing.Point(0, 54)
+        Me.gbxPreview.Location = New System.Drawing.Point(-1, 4)
         Me.gbxPreview.Name = "gbxPreview"
-        Me.gbxPreview.Size = New System.Drawing.Size(955, 449)
+        Me.gbxPreview.Size = New System.Drawing.Size(955, 561)
         Me.gbxPreview.TabIndex = 264
         Me.gbxPreview.TabStop = False
         Me.gbxPreview.Visible = False
@@ -417,18 +417,18 @@ Partial Class Loan_CalculatorV2
         Me.crvLoanCalculator.Cursor = System.Windows.Forms.Cursors.Default
         Me.crvLoanCalculator.Location = New System.Drawing.Point(0, 83)
         Me.crvLoanCalculator.Name = "crvLoanCalculator"
-        Me.crvLoanCalculator.Size = New System.Drawing.Size(955, 366)
+        Me.crvLoanCalculator.Size = New System.Drawing.Size(955, 478)
         Me.crvLoanCalculator.TabIndex = 181
         '
         'Loan_CalculatorV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.gbxPreview)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Name = "Loan_CalculatorV2"
-        Me.Size = New System.Drawing.Size(955, 503)
+        Me.Size = New System.Drawing.Size(955, 615)
         Me.gbxAddEdit.ResumeLayout(False)
         Me.gbxAddEdit.PerformLayout()
         Me.gpPrintOption.ResumeLayout(False)
