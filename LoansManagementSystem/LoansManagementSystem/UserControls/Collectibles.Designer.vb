@@ -98,7 +98,7 @@ Partial Class frmCollectibles
         Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.gbxPrint = New System.Windows.Forms.GroupBox()
@@ -886,7 +886,7 @@ Partial Class frmCollectibles
         '
         'lvPH
         '
-        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20})
+        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader21})
         Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPH.FullRowSelect = True
         Me.lvPH.GridLines = True
@@ -900,7 +900,7 @@ Partial Class frmCollectibles
         'ColumnHeader17
         '
         Me.ColumnHeader17.Text = "Payment I.D"
-        Me.ColumnHeader17.Width = 81
+        Me.ColumnHeader17.Width = 114
         '
         'ColumnHeader18
         '
@@ -913,11 +913,11 @@ Partial Class frmCollectibles
         Me.ColumnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader19.Width = 173
         '
-        'ColumnHeader20
+        'ColumnHeader21
         '
-        Me.ColumnHeader20.Text = "Penalized?"
-        Me.ColumnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ColumnHeader20.Width = 81
+        Me.ColumnHeader21.Text = ""
+        Me.ColumnHeader21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ColumnHeader21.Width = 125
         '
         'OpenFileDialog1
         '
@@ -992,11 +992,11 @@ Partial Class frmCollectibles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
+        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
-        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxPrint)
         Me.Name = "frmCollectibles"
@@ -1086,7 +1086,6 @@ Partial Class frmCollectibles
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents txtTotalPenalties As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents ColumnHeader20 As System.Windows.Forms.ColumnHeader
     Friend WithEvents txtDateStart As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents btnEnterPay As System.Windows.Forms.Button
@@ -1097,5 +1096,6 @@ Partial Class frmCollectibles
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents btnPrintCR As System.Windows.Forms.Button
     Friend WithEvents crvPaymentCentralReport As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Friend WithEvents ColumnHeader21 As System.Windows.Forms.ColumnHeader
 
 End Class
