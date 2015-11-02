@@ -4,7 +4,7 @@
     Dim dr As SQLite.SQLiteDataReader
     Dim rec As Integer
     Dim data As New Dictionary(Of String, Object)
-    Dim colorChanger As Boolean
+
 
     Public principal, monthlyRate, totalPaymentBiMonth, collectedAmount, rembal As Double
     Public biMonInterest As Decimal
@@ -60,7 +60,7 @@
     Private Sub btnSearchClient_Click(sender As Object, e As EventArgs) Handles btnSearchClient.Click
         Try
             lvClientList.Items.Clear()
-            colorChanger = False
+
             dr = db.ExecuteReader("SELECT employee_no ,tbl_clients.client_id as clientid, tblLoans.loan_id as loanid, " & _
                                   "last_name || ', ' || first_name || ' ' || middle_name as name, " & _
                                   "principal, company_name, branch_name FROM (SELECT * FROM tbl_loans WHERE loan_status <> 0 ) as tblLoans " & _
@@ -89,13 +89,7 @@
 
                     itm.SubItems.Add(dr.Item("company_name").ToString)
                     itm.SubItems.Add(dr.Item("branch_name").ToString)
-                    If colorChanger = True Then
-                        itm.BackColor = Color.LemonChiffon
-                        colorChanger = False
-                    Else
-                        itm.BackColor = Color.LightCyan
-                        colorChanger = True
-                    End If
+                  
                     ctr += 1
                 Loop
             Else
@@ -127,7 +121,7 @@
     Private Sub btnSelectSearchClient_Click(sender As Object, e As EventArgs) Handles btnSelectSearchClient.Click
         Try
             lvPH.Items.Clear()
-            colorChanger = False
+
             collectedAmount = 0
             penalty = 0
             If lvClientList.SelectedItems.Count > 0 Then
@@ -149,10 +143,10 @@
                 End If
 
                 dr = db.ExecuteReader("Select tbl_loans.loan_id as loanid, payment_id, last_name || ', ' || first_name || ' ' || middle_name as name, " & _
-                                      "date_stamp , amount,penalty_amt, penalty_status, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
+                                      "date_stamp , amount,penalty_amt,payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
                                       "INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
                                       "INNER JOIN tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_id = " & _
-                                      lvClientList.FocusedItem.SubItems(2).Text)
+                                      lvClientList.FocusedItem.SubItems(2).Text & " AND payment_status = 0 ORDER BY date_stamp ASC")
                 ctr = 0
                 Do While dr.Read
 
@@ -163,28 +157,15 @@
                         lvPH.Items(ctr).SubItems(2).Text &= ".00"
                     End If
 
-                    If dr.Item("penalty_status").ToString = 1 Then
-                        itm.SubItems.Add("YES")
-
-                    Else
-                        itm.SubItems.Add("NO")
-
-                    End If
                     If dr.Item("payment_status").ToString = 1 Then
-                        itm.SubItems.Add("YES")
+                        itm.SubItems.Add("VOIDED")
 
                     Else
-                        itm.SubItems.Add("NO")
+                        itm.SubItems.Add(" ")
                         collectedAmount += lvPH.Items(ctr).SubItems(2).Text
                     End If
 
-                    If colorChanger = True Then
-                        itm.BackColor = Color.LemonChiffon
-                        colorChanger = False
-                    Else
-                        itm.BackColor = Color.LightCyan
-                        colorChanger = True
-                    End If
+                   
                     ctr += 1
                 Loop
                 txtLoanid.Text = lvClientList.FocusedItem.SubItems(2).Text
@@ -464,7 +445,7 @@
         If radAll.Checked = True Then
             If txtLoanid.Text <> "" Then
                 dr = db.ExecuteReader("Select tbl_loans.loan_id as loanid, payment_id, last_name || ', ' || first_name || ' ' || middle_name as name, " & _
-                                     "date_stamp , amount,penalty_amt, penalty_status, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
+                                     "date_stamp , amount, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
                                      "INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
                                      "INNER JOIN tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_id = " & _
                                      txtLoanid.Text)
@@ -478,28 +459,15 @@
                             lvPH.Items(ctr).SubItems(2).Text &= ".00"
                         End If
 
-                        If dr.Item("penalty_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
-                            itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
-                        Else
-                            itm.SubItems.Add("NO")
-                            itm.SubItems.Add("0.00")
-                        End If
+                       
                         If dr.Item("payment_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
+                            itm.SubItems.Add("VOIDED")
 
                         Else
-                            itm.SubItems.Add("NO")
+                            itm.SubItems.Add(" ")
                             collectedAmount += lvPH.Items(ctr).SubItems(2).Text
                         End If
 
-                        If colorChanger = True Then
-                            itm.BackColor = Color.LemonChiffon
-                            colorChanger = False
-                        Else
-                            itm.BackColor = Color.LightCyan
-                            colorChanger = True
-                        End If
                         ctr += 1
                     Loop
                 Else
@@ -516,7 +484,7 @@
         If radNorm.Checked = True Then
             If txtLoanid.Text <> "" Then
                 dr = db.ExecuteReader("Select tbl_loans.loan_id as loanid, payment_id, last_name || ', ' || first_name || ' ' || middle_name as name, " & _
-                                     "date_stamp , amount,penalty_amt, penalty_status, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
+                                     "date_stamp , amount, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
                                      "INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
                                      "INNER JOIN tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_id = " & _
                                      txtLoanid.Text & " AND payment_status= 0 ")
@@ -530,29 +498,14 @@
                         If Not lvPH.Items(ctr).SubItems(2).Text.Contains(".") Then
                             lvPH.Items(ctr).SubItems(2).Text &= ".00"
                         End If
-
-                        If dr.Item("penalty_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
-                            itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
-                        Else
-                            itm.SubItems.Add("NO")
-                            itm.SubItems.Add("0.00")
-                        End If
                         If dr.Item("payment_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
+                            itm.SubItems.Add("VOIDED")
 
                         Else
-                            itm.SubItems.Add("NO")
+                            itm.SubItems.Add("")
                             collectedAmount += lvPH.Items(ctr).SubItems(2).Text
                         End If
 
-                        If colorChanger = True Then
-                            itm.BackColor = Color.LemonChiffon
-                            colorChanger = False
-                        Else
-                            itm.BackColor = Color.LightCyan
-                            colorChanger = True
-                        End If
                         ctr += 1
                     Loop
                 Else
@@ -569,7 +522,7 @@
         If radVoid.Checked = True Then
             If txtLoanid.Text <> "" Then
                 dr = db.ExecuteReader("Select tbl_loans.loan_id as loanid, payment_id, last_name || ', ' || first_name || ' ' || middle_name as name, " & _
-                                     "date_stamp , amount,penalty_amt, penalty_status, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
+                                     "date_stamp , amount, payment_status FROM tbl_payments INNER JOIN tbl_collectibles ON tbl_payments.ctb_id =tbl_collectibles.ctb_id " & _
                                      "INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
                                      "INNER JOIN tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_loans.loan_id = " & _
                                      txtLoanid.Text & " AND payment_status= 1")
@@ -584,28 +537,14 @@
                             lvPH.Items(ctr).SubItems(2).Text &= ".00"
                         End If
 
-                        If dr.Item("penalty_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
-                            itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
-                        Else
-                            itm.SubItems.Add("NO")
-                            itm.SubItems.Add("0.00")
-                        End If
                         If dr.Item("payment_status").ToString = 1 Then
-                            itm.SubItems.Add("YES")
+                            itm.SubItems.Add("VOIDED")
 
                         Else
-                            itm.SubItems.Add("NO")
+                            itm.SubItems.Add("")
                             collectedAmount += lvPH.Items(ctr).SubItems(2).Text
                         End If
 
-                        If colorChanger = True Then
-                            itm.BackColor = Color.LemonChiffon
-                            colorChanger = False
-                        Else
-                            itm.BackColor = Color.LightCyan
-                            colorChanger = True
-                        End If
                         ctr += 1
                     Loop
                 Else
@@ -615,5 +554,9 @@
             
 
         End If
+    End Sub
+
+    Private Sub lvClientList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvClientList.SelectedIndexChanged
+
     End Sub
 End Class

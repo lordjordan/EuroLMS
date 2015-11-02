@@ -54,7 +54,6 @@ Partial Class PaymentHistory
         Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.gbxShowClient = New System.Windows.Forms.GroupBox()
         Me.btnClientBack = New System.Windows.Forms.Button()
@@ -210,7 +209,7 @@ Partial Class PaymentHistory
         Me.btn_void.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btn_void.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_void.ForeColor = System.Drawing.Color.White
-        Me.btn_void.Location = New System.Drawing.Point(17, 524)
+        Me.btn_void.Location = New System.Drawing.Point(11, 524)
         Me.btn_void.Name = "btn_void"
         Me.btn_void.Size = New System.Drawing.Size(108, 60)
         Me.btn_void.TabIndex = 217
@@ -420,13 +419,13 @@ Partial Class PaymentHistory
         Me.lvPH.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader1, Me.ColumnHeader9})
+        Me.lvPH.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader9})
         Me.lvPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPH.FullRowSelect = True
         Me.lvPH.GridLines = True
         Me.lvPH.Location = New System.Drawing.Point(11, 216)
         Me.lvPH.Name = "lvPH"
-        Me.lvPH.Size = New System.Drawing.Size(750, 280)
+        Me.lvPH.Size = New System.Drawing.Size(750, 302)
         Me.lvPH.TabIndex = 196
         Me.lvPH.UseCompatibleStateImageBehavior = False
         Me.lvPH.View = System.Windows.Forms.View.Details
@@ -447,17 +446,9 @@ Partial Class PaymentHistory
         Me.ColumnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader19.Width = 195
         '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.DisplayIndex = 4
-        Me.ColumnHeader1.Text = "Penalized?"
-        Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ColumnHeader1.Width = 93
-        '
         'ColumnHeader9
         '
-        Me.ColumnHeader9.DisplayIndex = 3
-        Me.ColumnHeader9.Text = "Voided?"
+        Me.ColumnHeader9.Text = ""
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ColumnHeader9.Width = 93
         '
@@ -608,9 +599,9 @@ Partial Class PaymentHistory
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxShowClient)
         Me.Name = "PaymentHistory"
         Me.Size = New System.Drawing.Size(779, 706)
@@ -643,7 +634,6 @@ Partial Class PaymentHistory
     Friend WithEvents ColumnHeader17 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader18 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader19 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents txtTotalPenalties As System.Windows.Forms.TextBox
     Friend WithEvents txtDateEnd As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
