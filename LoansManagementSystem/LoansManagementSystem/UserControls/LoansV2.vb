@@ -165,6 +165,12 @@ Public Class LoansV2
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        ComputeAvailableCredit(txtClientID.Text)
+        If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+
+            MsgBox("Principal is exceed to available credit" & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+            Exit Sub
+        End If
         If validateInputs() = False Then Exit Sub
 
         If gbxAddEdit.Text = "New Loan Application" Then
@@ -328,6 +334,7 @@ Public Class LoansV2
         ''        Next
     End Sub
     Private Sub saveNewForm()
+        
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
@@ -602,74 +609,80 @@ Public Class LoansV2
         'txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
         'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
         'get the credit limit
-        dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
-        If dr.HasRows Then
-            creditLimit = dr.Item(0).ToString.Insert(6, ".")
-        End If
-        'Get all the active loans of the client.
-        dr = db.ExecuteReader("SELECT loan_id, principal, interest_percentage, terms FROM tbl_loans INNER JOIN tbl_clients" & _
-                              " ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_clients.client_id =" & txtClientID.Text & _
-                              " AND loan_status = 1")
-        If dr.HasRows Then
+        Try
+            dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
+            If dr.HasRows Then
+                creditLimit = dr.Item(0).ToString.Insert(6, ".")
+            End If
+            'Get all the active loans of the client.
+            dr = db.ExecuteReader("SELECT loan_id, principal, interest_percentage, terms FROM tbl_loans INNER JOIN tbl_clients" & _
+                                  " ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_clients.client_id =" & txtClientID.Text & _
+                                  " AND loan_status = 1")
+            If dr.HasRows Then
 
-            Do While dr.Read
-                principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
-                monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
-                biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
-                interest = principal * biMonInterest
-                totalPaymentBimonth = monthlyRate + interest
-                totalUtangWInterest = totalPaymentBimonth * (CInt(dr.Item("terms").ToString) * 2)
-                principal = 0
-                monthlyRate = 0
-                biMonInterest = 0
-                interest = 0
-                totalPaymentBimonth = 0
-            Loop
-        End If
-        dr = db.ExecuteReader("SELECT sum(amount) amt from tbl_payments INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
-                              "WHERE payment_status = 0 AND client_id= " & txtClientID.Text & " AND loan_status= 1")
-        If dr.HasRows Then
-
-            If dr.Item("amt").ToString <> "" Then
-                conV = dr.Item("amt").ToString
-
-                Do Until conV.Length = 8
-                    conV = conV.Insert(0, "0")
+                Do While dr.Read
+                    principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
+                    monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
+                    biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
+                    interest = principal * biMonInterest
+                    totalPaymentBimonth = monthlyRate + interest
+                    totalUtangWInterest = totalPaymentBimonth * (CInt(dr.Item("terms").ToString) * 2)
+                    principal = 0
+                    monthlyRate = 0
+                    biMonInterest = 0
+                    interest = 0
+                    totalPaymentBimonth = 0
                 Loop
-                overAllPayment = CDbl(conV.Insert(6, "."))
             End If
+            dr = db.ExecuteReader("SELECT sum(amount) amt from tbl_payments INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
+                                  "WHERE payment_status = 0 AND client_id= " & txtClientID.Text & " AND loan_status= 1")
+            If dr.HasRows Then
 
-        End If
-        dr = db.ExecuteReader("SELECT sum(penalty_amt) as amt, penalty_status FROM tbl_collectibles INNER JOIN tbl_loans ON tbl_collectibles.loan_id" & _
-                              " = tbl_loans.loan_id  WHERE client_id=" & txtClientID.Text & " AND loan_status = 1 AND penalty_status = 1")
+                If dr.Item("amt").ToString <> "" Then
+                    conV = dr.Item("amt").ToString
 
-        If dr.HasRows Then
-            If dr.Item("amt").ToString <> "" Then
-                conV = dr.Item("amt").ToString
+                    Do Until conV.Length = 8
+                        conV = conV.Insert(0, "0")
+                    Loop
+                    overAllPayment = CDbl(conV.Insert(6, "."))
+                End If
 
-                Do Until conV.Length = 8
-                    conV = conV.Insert(0, "0")
-                Loop
-                overAllPayment = CDbl(conV.Insert(6, "."))
-
-            Else
-                overAllPenaltyStats = 0
             End If
-        End If
-        'conditiones.
-        rembal = totalUtangWInterest - (overAllPayment - overAllPenaltyStats)
-        If rembal > creditLimit Then
-            Return "0.00"
-        ElseIf rembal <= creditLimit Then
+            dr = db.ExecuteReader("SELECT sum(penalty_amt) as amt, penalty_status FROM tbl_collectibles INNER JOIN tbl_loans ON tbl_collectibles.loan_id" & _
+                                  " = tbl_loans.loan_id  WHERE client_id=" & txtClientID.Text & " AND loan_status = 1 AND penalty_status = 1")
 
-            conV = CStr(creditLimit - rembal)
+            If dr.HasRows Then
+                If dr.Item("amt").ToString <> "" Then
+                    conV = dr.Item("amt").ToString
 
-            If Not CStr(creditLimit - rembal).Contains(".") Then
-                conV &= ".00"
+                    Do Until conV.Length = 8
+                        conV = conV.Insert(0, "0")
+                    Loop
+                    overAllPayment = CDbl(conV.Insert(6, "."))
+
+                Else
+                    overAllPenaltyStats = 0
+                End If
             End If
-            Return conV
-        End If
+            'conditiones.
+            rembal = totalUtangWInterest - (overAllPayment - overAllPenaltyStats)
+            If rembal > creditLimit Then
+                Return "0.00"
+            ElseIf rembal <= creditLimit Then
 
+                conV = CStr(creditLimit - rembal)
+
+                If Not CStr(creditLimit - rembal).Contains(".") Then
+                    conV &= ".00"
+                End If
+                Return conV
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            db.Dispose()
+
+        End Try
     End Function
 
     Private Function evadeWeekends(petsa As Date) As Date
@@ -889,6 +902,7 @@ Fix2:
     End Sub
 
     Private Sub loadEditForm(loan_id As Long)
+
         Using db As New DBHelper(My.Settings.ConnectionString)
 
             'Dim rec As Integer
@@ -932,7 +946,7 @@ Fix2:
                     txtTerms.Text = dr.Item("terms")
 
                 End If
-
+                txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally

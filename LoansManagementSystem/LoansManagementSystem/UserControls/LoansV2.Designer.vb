@@ -44,11 +44,11 @@ Partial Class LoansV2
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.btnReStructure = New System.Windows.Forms.Button()
         Me.btnForceStop = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.txtSearchLoan = New System.Windows.Forms.TextBox()
         Me.btnActivateLoan = New System.Windows.Forms.Button()
         Me.btnEdit = New System.Windows.Forms.Button()
         Me.btnAddNew = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
@@ -330,17 +330,6 @@ Partial Class LoansV2
         Me.btnForceStop.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnForceStop.UseVisualStyleBackColor = False
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(19, 19)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(51, 16)
-        Me.Label3.TabIndex = 35
-        Me.Label3.Text = "Search"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
         'txtSearchLoan
         '
         Me.txtSearchLoan.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -397,6 +386,17 @@ Partial Class LoansV2
         Me.btnAddNew.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnAddNew.UseVisualStyleBackColor = False
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(19, 19)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(51, 16)
+        Me.Label3.TabIndex = 35
+        Me.Label3.Text = "Search"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -417,13 +417,13 @@ Partial Class LoansV2
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
         Me.gbxAddEdit.Controls.Add(Me.PictureBox2)
         Me.gbxAddEdit.Controls.Add(Me.PictureBox1)
-        Me.gbxAddEdit.Controls.Add(Me.gbxShowClient)
         Me.gbxAddEdit.Controls.Add(Me.gbxClientData)
         Me.gbxAddEdit.Controls.Add(Me.gbxLoanData1)
         Me.gbxAddEdit.Controls.Add(Me.gbxLoanData2)
         Me.gbxAddEdit.Controls.Add(Me.btnSave)
         Me.gbxAddEdit.Controls.Add(Me.btnCancel)
         Me.gbxAddEdit.Controls.Add(Me.GroupBox1)
+        Me.gbxAddEdit.Controls.Add(Me.gbxShowClient)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAddEdit.Location = New System.Drawing.Point(194, 8)
