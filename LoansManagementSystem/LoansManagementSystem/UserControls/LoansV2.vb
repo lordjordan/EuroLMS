@@ -566,23 +566,110 @@ Public Class LoansV2
     End Sub
 
     Private Sub btnSelectSearchClient_Click(sender As Object, e As EventArgs) Handles btnSelectSearchClient.Click
-        Try
-            txtClientID.Text = lvClientList.SelectedItems.Item(0).Text
-            txtName.Text = lvClientList.SelectedItems.Item(0).SubItems(1).Text
-            txtCompany.Text = lvClientList.SelectedItems.Item(0).SubItems(2).Text
-            txtBranch.Text = lvClientList.SelectedItems.Item(0).SubItems(3).Text
-            lblEmployeeNumber.Text = lvClientList.SelectedItems.Item(0).SubItems(4).Text
-            txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
-            txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
-            toggleClientSearch()
-
-        Catch ex As Exception
-            MsgBox("Please select a valid client first. You can filter or search client data through the 'search box' and then click the 'search button'", MsgBoxStyle.Exclamation)
-        End Try
+        'Try
+        txtClientID.Text = lvClientList.SelectedItems.Item(0).Text
+        txtName.Text = lvClientList.SelectedItems.Item(0).SubItems(1).Text
+        txtCompany.Text = lvClientList.SelectedItems.Item(0).SubItems(2).Text
+        txtBranch.Text = lvClientList.SelectedItems.Item(0).SubItems(3).Text
+        lblEmployeeNumber.Text = lvClientList.SelectedItems.Item(0).SubItems(4).Text
+        txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
+        txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+        
+        toggleClientSearch()
+        'Catch ex As Exception
+        '    MsgBox("Please select a valid client first. You can filter or search client data through the 'search box' and then click the 'search button'", MsgBoxStyle.Exclamation)
+        'End Try
     End Sub
 
     Private Function ComputeAvailableCredit(ClientID As String) As String
-        Return txtCreditLimit.Text
+        'codes for available credit (isasama ko pa ba mga penalized o hiwalay na yun????)oo nga pala penalties pa.....
+        Dim db As New DBHelper(My.Settings.ConnectionString)
+        Dim dr As SQLite.SQLiteDataReader
+        Dim data As New Dictionary(Of String, Object)
+        Dim totalUtangWInterest, overAllPayment, creditLimit, principal, monthlyRate, biMonInterest, interest _
+            , totalPaymentBimonth, rembal, overAllPenaltyStats As Double
+        Dim conV As String
+
+        'principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
+        'monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
+        'biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
+        'interest = principal * biMonInterest
+        'totalPaymentBiMonth = monthlyRate + interest
+        'rembal = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
+        'txtPrincipalAmt.Text = principal
+        'txtTerms.Text = dr.Item("terms").ToString
+        'txtTotalLoanAmount.Text = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
+        'txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
+        'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
+        'get the credit limit
+        dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
+        If dr.HasRows Then
+            creditLimit = dr.Item(0).ToString.Insert(6, ".")
+        End If
+        'Get all the active loans of the client.
+        dr = db.ExecuteReader("SELECT loan_id, principal, interest_percentage, terms FROM tbl_loans INNER JOIN tbl_clients" & _
+                              " ON tbl_loans.client_id = tbl_clients.client_id WHERE tbl_clients.client_id =" & txtClientID.Text & _
+                              " AND loan_status = 1")
+        If dr.HasRows Then
+
+            Do While dr.Read
+                principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
+                monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
+                biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
+                interest = principal * biMonInterest
+                totalPaymentBimonth = monthlyRate + interest
+                totalUtangWInterest = totalPaymentBimonth * (CInt(dr.Item("terms").ToString) * 2)
+                principal = 0
+                monthlyRate = 0
+                biMonInterest = 0
+                interest = 0
+                totalPaymentBimonth = 0
+            Loop
+        End If
+        dr = db.ExecuteReader("SELECT sum(amount) amt from tbl_payments INNER JOIN tbl_loans ON tbl_payments.loan_id = tbl_loans.loan_id " & _
+                              "WHERE payment_status = 0 AND client_id= " & txtClientID.Text & " AND loan_status= 1")
+        If dr.HasRows Then
+
+            If dr.Item("amt").ToString <> "" Then
+                conV = dr.Item("amt").ToString
+
+                Do Until conV.Length = 8
+                    conV = conV.Insert(0, "0")
+                Loop
+                overAllPayment = CDbl(conV.Insert(6, "."))
+            End If
+
+        End If
+        dr = db.ExecuteReader("SELECT sum(penalty_amt) as amt, penalty_status FROM tbl_collectibles INNER JOIN tbl_loans ON tbl_collectibles.loan_id" & _
+                              " = tbl_loans.loan_id  WHERE client_id=" & txtClientID.Text & " AND loan_status = 1 AND penalty_status = 1")
+
+        If dr.HasRows Then
+            If dr.Item("amt").ToString <> "" Then
+                conV = dr.Item("amt").ToString
+
+                Do Until conV.Length = 8
+                    conV = conV.Insert(0, "0")
+                Loop
+                overAllPayment = CDbl(conV.Insert(6, "."))
+
+            Else
+                overAllPenaltyStats = 0
+            End If
+        End If
+        'conditiones.
+        rembal = totalUtangWInterest - (overAllPayment - overAllPenaltyStats)
+        If rembal > creditLimit Then
+            Return "0.00"
+        ElseIf rembal <= creditLimit Then
+
+            conV = CStr(creditLimit - rembal)
+
+            If Not CStr(creditLimit - rembal).Contains(".") Then
+                conV &= ".00"
+            End If
+            Return conV
+        End If
+
     End Function
 
     Private Function evadeWeekends(petsa As Date) As Date
@@ -1024,7 +1111,6 @@ Fix2:
     End Sub
 
     Private Sub lvLoanList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.SelectedIndexChanged
-
     End Sub
 
     Private Sub txtSearchLoan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtSearchLoan.KeyPress
