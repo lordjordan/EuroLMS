@@ -53,24 +53,17 @@ Public Class frmLogin
                         If utype = 0 Then
                             'MessageBox.Show("Welcome Super Admin")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            frmMainPanel.Close()
-                            frmMainPanel.Show()
-                            Me.Hide()
+                           
 
                         ElseIf utype = 1 Then
                             'MessageBox.Show("Welcome Administrator!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            frmMainPanel.Close()
-                            frmMainPanel.Show()
-                            Me.Hide()
+                           
 
                         ElseIf utype = 2 Then
                             'MessageBox.Show("Welcome Encoder!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            frmMainPanel.Close()
-                            frmMainPanel.Show()
-                            Me.Hide()
-
+                            
                         End If
 
                         'ElseIf txtPassword.Text = "" And uname = txtUser.Text Then
@@ -95,6 +88,10 @@ Public Class frmLogin
             MsgBox(ex.ToString)
         Finally
             db.Dispose() '<--------CHECK THIS!
+            frmMainPanel.Close()
+            frmMainPanel.Show()
+            Me.Hide()
+
         End Try
     End Sub
 
