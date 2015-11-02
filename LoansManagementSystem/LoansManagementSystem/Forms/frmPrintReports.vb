@@ -132,8 +132,7 @@ Public Class frmPrintReports
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
-                                "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
-                                "from tbl_loans L " & _
+                                "terms, date_start, date_end, company_name, branch_name from tbl_loans L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
                                 "left join tbl_company Co on B.company_id = Co.company_id " & _
@@ -149,16 +148,17 @@ Public Class frmPrintReports
                 ds.WriteXml("XML\Loan.xml")
                 'MsgBox("Creating xml file done.")
             End If
+            'Dim rptLJ As New LoanReportJournal
 
-            'Report for Branch
-            Dim dsLoan As New DataSet
-            dsLoan = New DSreports
-            Dim dsLoanTemp As New DataSet
-            dsLoanTemp = New DataSet()
-            dsLoanTemp.ReadXml("XML\Loan.xml")
-            dsLoan.Merge(dsLoan.Tables(0))
+            'Report for Loans
+            Dim dsLoans As New DataSet
+            dsLoans = New DSreports
+            Dim dsLoansTemp As New DataSet
+            dsLoansTemp = New DataSet()
+            dsLoansTemp.ReadXml("XML\Loan.xml")
+            dsLoans.Merge(dsLoansTemp.Tables(0))
             rptLoan = New LoanReport
-            rptLoan.SetDataSource(dsLoan)
+            rptLoan.SetDataSource(dsLoans)
             crvLoanJournal.ReportSource = rptLoan
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -169,18 +169,19 @@ Public Class frmPrintReports
             'IF TABPAGE1 IS SELECTED
             If TabControl1.SelectedTab Is TabPage1 Then
                 ClientReport()
-
+                ds.Tables.Clear()
                 'IF TABPAGE2 IS SELECTED
             ElseIf TabControl1.SelectedTab Is TabPage2 Then
                 CompanyReport()
-
+                ds.Tables.Clear()
                 'IF TABPAGE3 IS SELECTED
             ElseIf TabControl1.SelectedTab Is TabPage3 Then
                 BranchReport()
-
+                ds.Tables.Clear()
                 'IF TABPAGE4 IS SELECTED
             ElseIf TabControl1.SelectedTab Is TabPage4 Then
                 LoanReport()
+                ds.Tables.Clear()
 
                 'IF TABPAGE5 IS SELECTED
             ElseIf TabControl1.SelectedTab Is TabPage5 Then

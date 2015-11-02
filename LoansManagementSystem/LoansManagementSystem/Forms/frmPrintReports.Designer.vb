@@ -26,23 +26,23 @@ Partial Class frmPrintReports
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.crvClientJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.lblHeader = New System.Windows.Forms.Label()
-        Me.btnClose = New System.Windows.Forms.Button()
         Me.crvCompanyJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.crvBranchJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-        Me.crvLoanJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.crvCollectibleJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblHeader = New System.Windows.Forms.Label()
+        Me.btnClose = New System.Windows.Forms.Button()
+        Me.crvLoanJournal = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.Panel1.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -98,6 +98,40 @@ Partial Class frmPrintReports
         Me.TabPage2.Text = "Companies"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'crvCompanyJournal
+        '
+        Me.crvCompanyJournal.ActiveViewIndex = -1
+        Me.crvCompanyJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvCompanyJournal.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvCompanyJournal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.crvCompanyJournal.Location = New System.Drawing.Point(3, 3)
+        Me.crvCompanyJournal.Name = "crvCompanyJournal"
+        Me.crvCompanyJournal.Size = New System.Drawing.Size(871, 361)
+        Me.crvCompanyJournal.TabIndex = 1
+        Me.crvCompanyJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.crvBranchJournal)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 30)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Size = New System.Drawing.Size(877, 367)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Branches"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'crvBranchJournal
+        '
+        Me.crvBranchJournal.ActiveViewIndex = -1
+        Me.crvBranchJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvBranchJournal.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvBranchJournal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.crvBranchJournal.Location = New System.Drawing.Point(0, 0)
+        Me.crvBranchJournal.Name = "crvBranchJournal"
+        Me.crvBranchJournal.Size = New System.Drawing.Size(877, 367)
+        Me.crvBranchJournal.TabIndex = 2
+        Me.crvBranchJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.crvLoanJournal)
@@ -118,6 +152,18 @@ Partial Class frmPrintReports
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Collectibles"
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'crvCollectibleJournal
+        '
+        Me.crvCollectibleJournal.ActiveViewIndex = -1
+        Me.crvCollectibleJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvCollectibleJournal.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvCollectibleJournal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.crvCollectibleJournal.Location = New System.Drawing.Point(3, 3)
+        Me.crvCollectibleJournal.Name = "crvCollectibleJournal"
+        Me.crvCollectibleJournal.Size = New System.Drawing.Size(871, 361)
+        Me.crvCollectibleJournal.TabIndex = 2
+        Me.crvCollectibleJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
         'Panel1
         '
@@ -153,63 +199,20 @@ Partial Class frmPrintReports
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
-        'crvCompanyJournal
-        '
-        Me.crvCompanyJournal.ActiveViewIndex = -1
-        Me.crvCompanyJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.crvCompanyJournal.Cursor = System.Windows.Forms.Cursors.Default
-        Me.crvCompanyJournal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.crvCompanyJournal.Location = New System.Drawing.Point(3, 3)
-        Me.crvCompanyJournal.Name = "crvCompanyJournal"
-        Me.crvCompanyJournal.Size = New System.Drawing.Size(871, 361)
-        Me.crvCompanyJournal.TabIndex = 1
-        Me.crvCompanyJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.crvBranchJournal)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 30)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(877, 367)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Branches"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'crvBranchJournal
-        '
-        Me.crvBranchJournal.ActiveViewIndex = -1
-        Me.crvBranchJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.crvBranchJournal.Cursor = System.Windows.Forms.Cursors.Default
-        Me.crvBranchJournal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.crvBranchJournal.Location = New System.Drawing.Point(0, 0)
-        Me.crvBranchJournal.Name = "crvBranchJournal"
-        Me.crvBranchJournal.Size = New System.Drawing.Size(877, 367)
-        Me.crvBranchJournal.TabIndex = 2
-        Me.crvBranchJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
-        '
         'crvLoanJournal
         '
         Me.crvLoanJournal.ActiveViewIndex = -1
+        Me.crvLoanJournal.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.crvLoanJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.crvLoanJournal.Cursor = System.Windows.Forms.Cursors.Default
-        Me.crvLoanJournal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.crvLoanJournal.Location = New System.Drawing.Point(0, 0)
+        Me.crvLoanJournal.DisplayToolbar = False
+        Me.crvLoanJournal.Location = New System.Drawing.Point(3, 3)
         Me.crvLoanJournal.Name = "crvLoanJournal"
-        Me.crvLoanJournal.Size = New System.Drawing.Size(877, 367)
-        Me.crvLoanJournal.TabIndex = 2
+        Me.crvLoanJournal.Size = New System.Drawing.Size(871, 358)
+        Me.crvLoanJournal.TabIndex = 11
         Me.crvLoanJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
-        '
-        'crvCollectibleJournal
-        '
-        Me.crvCollectibleJournal.ActiveViewIndex = -1
-        Me.crvCollectibleJournal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.crvCollectibleJournal.Cursor = System.Windows.Forms.Cursors.Default
-        Me.crvCollectibleJournal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.crvCollectibleJournal.Location = New System.Drawing.Point(3, 3)
-        Me.crvCollectibleJournal.Name = "crvCollectibleJournal"
-        Me.crvCollectibleJournal.Size = New System.Drawing.Size(871, 361)
-        Me.crvCollectibleJournal.TabIndex = 2
-        Me.crvCollectibleJournal.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
         'frmPrintReports
         '
@@ -226,11 +229,11 @@ Partial Class frmPrintReports
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage5.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.TabPage3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -246,6 +249,6 @@ Partial Class frmPrintReports
     Friend WithEvents crvCompanyJournal As CrystalDecisions.Windows.Forms.CrystalReportViewer
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
     Friend WithEvents crvBranchJournal As CrystalDecisions.Windows.Forms.CrystalReportViewer
-    Friend WithEvents crvLoanJournal As CrystalDecisions.Windows.Forms.CrystalReportViewer
     Friend WithEvents crvCollectibleJournal As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Friend WithEvents crvLoanJournal As CrystalDecisions.Windows.Forms.CrystalReportViewer
 End Class
