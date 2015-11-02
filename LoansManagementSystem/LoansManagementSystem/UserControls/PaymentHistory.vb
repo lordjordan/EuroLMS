@@ -253,10 +253,11 @@
 
         If lvPH.SelectedItems.Count <> 0 Then
             'voiding
-            If lvPH.FocusedItem.SubItems(4).Text = "YES" Then
+            If lvPH.FocusedItem.SubItems(3).Text = "VOIDED" Then
                 MsgBox("This payment is already voided.", vbExclamation + vbOKOnly, "Invalid")
             Else
                 If MsgBox("Are you sure you want to void this payment?", vbInformation + vbYesNo, "Voiding...") = MsgBoxResult.Yes Then
+                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles set collected_amt = '00000000' WHERE loan_id = " & txtLoanid.Text)
                     rec = db.ExecuteNonQuery("UPDATE tbl_payments set payment_status = 1 WHERE payment_id = " & lvPH.FocusedItem.Text)
                     'adjustment technique
                     Dim totalInPayment, payableAmt As Double
@@ -264,6 +265,7 @@
                     If dr.HasRows Then
                         If dr.Item("TotalAmount").ToString <> "" Then
                             conV = dr.Item("TotalAmount").ToString
+
 
                             Do Until conV.Length = 8
                                 conV = conV.Insert(0, "0")
@@ -360,7 +362,7 @@
                                 data.Add("previous_balance", "00000000")
                                 rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
                                                          "WHERE ctb_id=" & ds.Tables("collectibles").Rows(x - 1).Item("ctb_id").ToString, data)
-
+                                totalInPayment = 0
                             End If
                             data.Clear()
                         End If
@@ -421,10 +423,12 @@
                         For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
                             If CDbl(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString.Insert(6, ".")) <> _
                                CDbl(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString.Insert(6, ".")) Then
-                                rec = db.ExecuteNonQuery("UPDATE tbl_loans SET penalty_status = 0 WHERE ctb_id =" & _
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 0 WHERE ctb_id =" & _
                                                          ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
                             End If
                         Next
+                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 1 WHERE loan_id =" & _
+                                                         txtLoanid.Text)
                     End If
                     ds.Clear()
                     con.Close()
