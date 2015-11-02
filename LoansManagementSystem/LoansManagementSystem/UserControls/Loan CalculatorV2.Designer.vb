@@ -24,6 +24,8 @@ Partial Class Loan_CalculatorV2
     Private Sub InitializeComponent()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtAsses = New System.Windows.Forms.TextBox()
         Me.gpPrintOption = New System.Windows.Forms.GroupBox()
         Me.cboPrintOption = New System.Windows.Forms.ComboBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -52,6 +54,7 @@ Partial Class Loan_CalculatorV2
         Me.bntClose = New System.Windows.Forms.Button()
         Me.crvLoanCalculator = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.gbxAddEdit.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.gpPrintOption.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxLoanData2.SuspendLayout()
@@ -74,6 +77,7 @@ Partial Class Loan_CalculatorV2
         '
         Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
+        Me.gbxAddEdit.Controls.Add(Me.GroupBox1)
         Me.gbxAddEdit.Controls.Add(Me.gpPrintOption)
         Me.gbxAddEdit.Controls.Add(Me.DataGridView1)
         Me.gbxAddEdit.Controls.Add(Me.txtPrincipal)
@@ -97,6 +101,24 @@ Partial Class Loan_CalculatorV2
         Me.gbxAddEdit.TabIndex = 57
         Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "Calculate Loan"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.txtAsses)
+        Me.GroupBox1.Location = New System.Drawing.Point(406, 329)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(325, 66)
+        Me.GroupBox1.TabIndex = 265
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Assessed by"
+        '
+        'txtAsses
+        '
+        Me.txtAsses.Location = New System.Drawing.Point(15, 27)
+        Me.txtAsses.Multiline = True
+        Me.txtAsses.Name = "txtAsses"
+        Me.txtAsses.Size = New System.Drawing.Size(304, 33)
+        Me.txtAsses.TabIndex = 0
         '
         'gpPrintOption
         '
@@ -384,9 +406,9 @@ Partial Class Loan_CalculatorV2
         Me.gbxPreview.BackColor = System.Drawing.SystemColors.ControlDark
         Me.gbxPreview.Controls.Add(Me.bntClose)
         Me.gbxPreview.Controls.Add(Me.crvLoanCalculator)
-        Me.gbxPreview.Location = New System.Drawing.Point(-1, 4)
+        Me.gbxPreview.Location = New System.Drawing.Point(0, 54)
         Me.gbxPreview.Name = "gbxPreview"
-        Me.gbxPreview.Size = New System.Drawing.Size(955, 561)
+        Me.gbxPreview.Size = New System.Drawing.Size(955, 449)
         Me.gbxPreview.TabIndex = 264
         Me.gbxPreview.TabStop = False
         Me.gbxPreview.Visible = False
@@ -417,20 +439,23 @@ Partial Class Loan_CalculatorV2
         Me.crvLoanCalculator.Cursor = System.Windows.Forms.Cursors.Default
         Me.crvLoanCalculator.Location = New System.Drawing.Point(0, 83)
         Me.crvLoanCalculator.Name = "crvLoanCalculator"
-        Me.crvLoanCalculator.Size = New System.Drawing.Size(955, 478)
+        Me.crvLoanCalculator.Size = New System.Drawing.Size(955, 366)
         Me.crvLoanCalculator.TabIndex = 181
+        Me.crvLoanCalculator.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
         'Loan_CalculatorV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.gbxPreview)
         Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.gbxPreview)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Name = "Loan_CalculatorV2"
-        Me.Size = New System.Drawing.Size(955, 615)
+        Me.Size = New System.Drawing.Size(955, 503)
         Me.gbxAddEdit.ResumeLayout(False)
         Me.gbxAddEdit.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.gpPrintOption.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxLoanData2.ResumeLayout(False)
@@ -444,8 +469,6 @@ Partial Class Loan_CalculatorV2
     Friend WithEvents gbxAddEdit As System.Windows.Forms.GroupBox
     Friend WithEvents btnOk As System.Windows.Forms.Button
     Friend WithEvents btnGenerate As System.Windows.Forms.Button
-    Friend WithEvents gpPrintOption As System.Windows.Forms.GroupBox
-    Friend WithEvents cboPrintOption As System.Windows.Forms.ComboBox
     Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
     Friend WithEvents txtPrincipal As System.Windows.Forms.TextBox
     Friend WithEvents gbxLoanData2 As System.Windows.Forms.GroupBox
@@ -469,5 +492,9 @@ Partial Class Loan_CalculatorV2
     Friend WithEvents gbxPreview As System.Windows.Forms.GroupBox
     Friend WithEvents crvLoanCalculator As CrystalDecisions.Windows.Forms.CrystalReportViewer
     Friend WithEvents bntClose As System.Windows.Forms.Button
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents txtAsses As System.Windows.Forms.TextBox
+    Friend WithEvents gpPrintOption As System.Windows.Forms.GroupBox
+    Friend WithEvents cboPrintOption As System.Windows.Forms.ComboBox
 
 End Class
