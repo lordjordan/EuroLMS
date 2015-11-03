@@ -1165,6 +1165,7 @@ Public Class frmCollectibles
             'process mode
             If lvCollectibles.Items.Count <> 0 Then
                 For x = 1 To lvCollectibles.Items.Count Step 1 'every items in listview
+
                     'pagsamahin ang collected amount at inputted amount
                     If lvCollectibles.Items(x - 1).SubItems(5).Text = "" Or lvCollectibles.Items(x - 1).SubItems(5).Text = "0.00" Then
                         Continue For
@@ -1197,7 +1198,7 @@ Public Class frmCollectibles
                                              & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & _
                                              "' AND loan_id= " & lvCollectibles.Items(x - 1).SubItems(0).Text, data)
                     data.Clear()
-                    
+
                     'data set ulit para sa adjustment note: tbl_collectibles ay nag babago bago ng data.....
 
 
@@ -1239,13 +1240,12 @@ Public Class frmCollectibles
 
                         End If
                     End If
-
+                    ''
                     con.ConnectionString = My.Settings.ConnectionString
                     query = "SELECT ctb_id, due_date, penalty_status, payable_amt , collected_amt, previous_balance, penalty_amt FROM tbl_collectibles WHERE" & _
                                           " loan_id = " & lvCollectibles.Items(x - 1).Text & " ORDER by due_date ASC"
                     da = New SQLite.SQLiteDataAdapter(query, con)
                     da.Fill(ds, "collectibles")
-                    'MsgBox(ds.Tables("collectibles").Rows(0).Item(0) & " " & ds.Tables("collectibles").Rows(0).Item(4))
                     For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
                         If ds.Tables("collectibles").Rows(z - 1).Item("penalty_status").ToString = 1 Then
                             payableAmt = CDbl(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString().Insert(6, ".")) + _
@@ -1336,6 +1336,8 @@ Public Class frmCollectibles
                     Next
 
                     ds.Clear()
+                    'previous balance
+
                     previousBalance = 0
                     query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
                         uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " ORDER BY due_date ASC"
@@ -1401,49 +1403,47 @@ Public Class frmCollectibles
                     dr = db.ExecuteReader("SELECT penalty_status,payable_amt , previous_balance, collected_amt FROM tbl_collectibles WHERE due_date = '" & _
                                           Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "' AND " & _
                                           "loan_id = " & lvCollectibles.Items(x - 1).Text)
-                   
+
                     If dr.Item("penalty_status").ToString = "0" And CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) = _
                         CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) Then
                         rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE due_date = '" & _
                                           Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "' AND " & _
                                           "loan_id = " & lvCollectibles.Items(x - 1).Text)
                     End If
-                        '-------------------------------end of added code----------------------------'
-                        '
-                        'get min for previousbal
-                        'tignan natin here kung equal or greater than na ang last payment nya at kapag ganoon loan status will equal
-                        'to 2 means COMPLETED. code starts here
-                        'store the ID
+                    '-------------------------------end of added code----------------------------'
+                    '
+                    'get min for previousbal
+                    'tignan natin here kung equal or greater than na ang last payment nya at kapag ganoon loan status will equal
+                    'to 2 means COMPLETED. code starts here
+                    'store the ID
 
-                        'data.Add("collected_amt",) computationS
+                    'data.Add("collected_amt",) computationS
                     dr = db.ExecuteReader("SELECT max(due_date) as petsa, max(ctb_id) as high,payable_amt, collected_amt, previous_balance, penalty_amt,penalty_status  FROM tbl_collectibles WHERE due_date >= '" & _
                                              Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND loan_id= " & _
                                              lvCollectibles.Items(x - 1).Text)
 
-                        If dr.HasRows Then
-                            If dr.Item("petsa").ToString <> "" Then
-                                If dr.Item("penalty_status").ToString = 1 Then
-                                    If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
-                                            + CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")) + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
-                                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
-                                    End If
-                                Else
-                                    If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
-                                             + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
-                                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
-                                    End If
+                    If dr.HasRows Then
+                        If dr.Item("petsa").ToString <> "" Then
+                            If dr.Item("penalty_status").ToString = 1 Then
+                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
+                                        + CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")) + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
+                                End If
+                            Else
+                                If CDbl(dr.Item("collected_amt").ToString.Insert(6, ".")) = CDbl(dr.Item("payable_amt").ToString.Insert(6, ".")) _
+                                         + CDbl(dr.Item("previous_balance").ToString.Insert(6, ".")) Then
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
                                 End If
                             End If
-
                         End If
 
-
-
+                    End If
+                    ds.Clear()
+                    con.Close()
                 Next
-                ds.Clear()
-                con.Close()
+                
                 ShowData()
-                MsgBox("Process completed!", MsgBoxStyle.Information, "Congratulations!")
+                MsgBox("Process completed!", MsgBoxStyle.Information, "EMS")
             End If
         End If
 

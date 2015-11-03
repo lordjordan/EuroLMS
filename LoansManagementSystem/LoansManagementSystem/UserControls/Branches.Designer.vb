@@ -53,7 +53,6 @@ Partial Class Branches
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtBranchName = New System.Windows.Forms.TextBox()
-        Me.btnPrint = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         Me.SuspendLayout()
@@ -226,7 +225,7 @@ Partial Class Branches
         '
         'gbxAddEdit
         '
-        Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
         Me.gbxAddEdit.Controls.Add(Me.cbxCompanyName)
         Me.gbxAddEdit.Controls.Add(Me.Label8)
@@ -244,7 +243,7 @@ Partial Class Branches
         Me.gbxAddEdit.Controls.Add(Me.txtBranchName)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAddEdit.Location = New System.Drawing.Point(180, 61)
+        Me.gbxAddEdit.Location = New System.Drawing.Point(86, 61)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(726, 424)
         Me.gbxAddEdit.TabIndex = 50
@@ -338,9 +337,9 @@ Partial Class Branches
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(35, 199)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(97, 16)
+        Me.Label7.Size = New System.Drawing.Size(104, 16)
         Me.Label7.TabIndex = 35
-        Me.Label7.Text = "Branch Addres"
+        Me.Label7.Text = "Branch Address"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'txtBranchAd
@@ -402,28 +401,12 @@ Partial Class Branches
         Me.txtBranchName.Size = New System.Drawing.Size(296, 26)
         Me.txtBranchName.TabIndex = 1
         '
-        'btnPrint
-        '
-        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnPrint.FlatAppearance.BorderSize = 0
-        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrint.ForeColor = System.Drawing.Color.White
-        Me.btnPrint.Location = New System.Drawing.Point(242, 346)
-        Me.btnPrint.Name = "btnPrint"
-        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
-        Me.btnPrint.TabIndex = 89
-        Me.btnPrint.Text = "Print"
-        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnPrint.UseVisualStyleBackColor = False
-        '
         'Branches
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxAddEdit)
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Name = "Branches"

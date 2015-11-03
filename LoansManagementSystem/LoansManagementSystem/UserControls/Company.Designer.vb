@@ -53,7 +53,6 @@ Partial Class Company
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtCompanyName = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.btnPrint = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         Me.SuspendLayout()
@@ -214,7 +213,7 @@ Partial Class Company
         '
         'gbxAddEdit
         '
-        Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
         Me.gbxAddEdit.Controls.Add(Me.txtCompanyRemarks)
         Me.gbxAddEdit.Controls.Add(Me.Label8)
@@ -232,7 +231,7 @@ Partial Class Company
         Me.gbxAddEdit.Controls.Add(Me.txtCompanyName)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAddEdit.Location = New System.Drawing.Point(179, 71)
+        Me.gbxAddEdit.Location = New System.Drawing.Point(71, 71)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(790, 424)
         Me.gbxAddEdit.TabIndex = 51
@@ -325,9 +324,9 @@ Partial Class Company
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(77, 134)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(113, 16)
+        Me.Label7.Size = New System.Drawing.Size(120, 16)
         Me.Label7.TabIndex = 35
-        Me.Label7.Text = "Company Addres"
+        Me.Label7.Text = "Company Address"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'txtCompanyAd
@@ -401,30 +400,14 @@ Partial Class Company
         Me.Label1.TabIndex = 53
         Me.Label1.Text = "Company"
         '
-        'btnPrint
-        '
-        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnPrint.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.btnPrint.FlatAppearance.BorderSize = 0
-        Me.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrint.ForeColor = System.Drawing.Color.White
-        Me.btnPrint.Location = New System.Drawing.Point(242, 346)
-        Me.btnPrint.Name = "btnPrint"
-        Me.btnPrint.Size = New System.Drawing.Size(108, 60)
-        Me.btnPrint.TabIndex = 90
-        Me.btnPrint.Text = "Print"
-        Me.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnPrint.UseVisualStyleBackColor = False
-        '
         'Company
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "Company"
         Me.Size = New System.Drawing.Size(919, 546)
         Me.pnlMain.ResumeLayout(False)

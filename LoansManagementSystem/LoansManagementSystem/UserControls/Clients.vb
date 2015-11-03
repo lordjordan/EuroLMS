@@ -68,10 +68,11 @@ Public Class Clients
     Private Sub EditClient()
         Dim rec As Integer
         Dim data As New Dictionary(Of String, Object)
-        Dim cID, bID As String
+        Dim cID, bID, cID2(), bID2() As String
         cID = cbxCompany.SelectedItem
         bID = cbxBranch.SelectedItem
-
+        cID2 = Split(cID, "$")
+        bID2 = Split(bID, "$")
         Try
             data.Add("first_name", txt_FName.Text)
             data.Add("last_name", txt_LName.Text)
@@ -92,7 +93,7 @@ Public Class Clients
             End If
             data.Add("employee_no", txtEmpNum.Text)
             data.Add("credit_limit", NumToStr(txt_Credit.Text))
-            data.Add("branch_id", bID.Substring(bID.Length - 6))
+            data.Add("branch_id", bID2(1))
             'data.Add("picture", imgbyte)
             data.Add("date_hired", Format(DateTimePicker2.Value, "yyyyMMdd"))
             data.Add("security_info", txtSecurity_info.Text)
@@ -293,12 +294,15 @@ Public Class Clients
     Private Sub NewClient()
         Dim rec As Integer
         Dim data As New Dictionary(Of String, Object)
-        Dim cID, bID As String
+        Dim cID, bID, bID2(), cID2() As String
         cID = cbxCompany.SelectedItem
+        cID2 = Split(cID, "$")
         bID = cbxBranch.SelectedItem
+        bID2 = Split(bID, "$")
+
         Try
-            data.Add("company_name", cbxCompany.Text)
-            data.Add("branch_id", bID.Substring(bID.Length - 3))
+            data.Add("company_name", cID2(1))
+            data.Add("branch_id", bID2(1))
             data.Add("first_name", txt_FName.Text)
             data.Add("last_name", txt_LName.Text)
             data.Add("middle_name", txt_MName.Text)

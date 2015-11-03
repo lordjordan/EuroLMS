@@ -544,8 +544,8 @@ Public Class LoansV2
                     itmx.SubItems.Add(dr.Item("branch_name").ToString)
                     'itmx.SubItems.Add(dr.Item("company_name").ToString)
                     itmx.SubItems.Add(dr.Item("employee_no").ToString)
-                    itmx.SubItems.Add(dr.Item("credit_limit").ToString)
-
+                    Dim cLimit As Integer = dr.Item("credit_limit").ToString
+                    itmx.SubItems.Add((cLimit * 0.01).ToString("N2"))
                 Loop
             End If
         Catch ex As Exception
@@ -579,9 +579,10 @@ Public Class LoansV2
         txtCompany.Text = lvClientList.SelectedItems.Item(0).SubItems(2).Text
         txtBranch.Text = lvClientList.SelectedItems.Item(0).SubItems(3).Text
         lblEmployeeNumber.Text = lvClientList.SelectedItems.Item(0).SubItems(4).Text
-        txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
+        'txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
+        'Dim cLimit As Integer = lvClientList.SelectedItems.Item(0).SubItems(5).Text
+        txtCreditLimit.Text = lvClientList.SelectedItems.Item(0).SubItems(5).Text
         txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
-        
         toggleClientSearch()
         'Catch ex As Exception
         '    MsgBox("Please select a valid client first. You can filter or search client data through the 'search box' and then click the 'search button'", MsgBoxStyle.Exclamation)
@@ -612,7 +613,10 @@ Public Class LoansV2
         Try
             dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
             If dr.HasRows Then
-                creditLimit = dr.Item(0).ToString.Insert(6, ".")
+
+                creditLimit = StrToNum(dr.Item(0).ToString)
+
+                'creditLimit = dr.Item(0).ToString.Insert(6, ".")
             End If
             'Get all the active loans of the client.
             dr = db.ExecuteReader("SELECT loan_id, principal, interest_percentage, terms FROM tbl_loans INNER JOIN tbl_clients" & _
@@ -621,7 +625,7 @@ Public Class LoansV2
             If dr.HasRows Then
 
                 Do While dr.Read
-                    principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
+                    principal = StrToNum(dr.Item("principal").ToString)
                     monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
                     biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
                     interest = principal * biMonInterest
@@ -639,12 +643,8 @@ Public Class LoansV2
             If dr.HasRows Then
 
                 If dr.Item("amt").ToString <> "" Then
-                    conV = dr.Item("amt").ToString
-
-                    Do Until conV.Length = 8
-                        conV = conV.Insert(0, "0")
-                    Loop
-                    overAllPayment = CDbl(conV.Insert(6, "."))
+                  
+                    overAllPayment = StrToNum(dr.Item("amt").ToString)
                 End If
 
             End If
@@ -653,12 +653,8 @@ Public Class LoansV2
 
             If dr.HasRows Then
                 If dr.Item("amt").ToString <> "" Then
-                    conV = dr.Item("amt").ToString
-
-                    Do Until conV.Length = 8
-                        conV = conV.Insert(0, "0")
-                    Loop
-                    overAllPayment = CDbl(conV.Insert(6, "."))
+                   
+                    overAllPenaltyStats = StrToNum(dr.Item("amt").ToString)
 
                 Else
                     overAllPenaltyStats = 0
@@ -669,13 +665,9 @@ Public Class LoansV2
             If rembal > creditLimit Then
                 Return "0.00"
             ElseIf rembal <= creditLimit Then
-
-                conV = CStr(creditLimit - rembal)
-
-                If Not CStr(creditLimit - rembal).Contains(".") Then
-                    conV &= ".00"
-                End If
-                Return conV
+                conV = NumToStr(creditLimit - rembal)
+                '50000.5
+                Return StrToNum(conV)
             End If
         Catch ex As Exception
             MsgBox(ex.Message)

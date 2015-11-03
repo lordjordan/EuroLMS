@@ -374,7 +374,7 @@ Partial Class Loan_CalculatorV2
         Me.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnGenerate.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGenerate.ForeColor = System.Drawing.Color.White
-        Me.btnGenerate.Location = New System.Drawing.Point(126, 336)
+        Me.btnGenerate.Location = New System.Drawing.Point(41, 335)
         Me.btnGenerate.Name = "btnGenerate"
         Me.btnGenerate.Size = New System.Drawing.Size(108, 60)
         Me.btnGenerate.TabIndex = 179
@@ -390,11 +390,11 @@ Partial Class Loan_CalculatorV2
         Me.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOk.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnOk.ForeColor = System.Drawing.Color.White
-        Me.btnOk.Location = New System.Drawing.Point(11, 337)
+        Me.btnOk.Location = New System.Drawing.Point(155, 337)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(108, 58)
         Me.btnOk.TabIndex = 179
-        Me.btnOk.Text = "OK"
+        Me.btnOk.Text = "Close"
         Me.btnOk.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnOk.UseVisualStyleBackColor = False
         '
