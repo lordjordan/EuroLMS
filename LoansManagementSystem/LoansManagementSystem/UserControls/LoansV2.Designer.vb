@@ -1232,11 +1232,11 @@ Partial Class LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)
