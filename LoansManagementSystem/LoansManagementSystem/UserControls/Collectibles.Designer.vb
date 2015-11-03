@@ -992,12 +992,12 @@ Partial Class frmCollectibles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxPrint)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)

@@ -66,7 +66,7 @@ Public Class frmCollectibles
         con.ConnectionString = My.Settings.ConnectionString
         Try
             query = "SELECT ctb_id,tblCol.loan_id as LoanID, MAX(due_date) as petsa, last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
-                    "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt as colsi,terms, penalty_status,penalty_amt " & _
+                    "payable_amt, previous_balance as previ, principal, date_start, date_end , interest_percentage,collected_amt as colsi,terms, penalty_status,penalty_amt " & _
                     "FROM  (SELECT ctb_id , loan_id , due_date , payable_amt, previous_balance,collected_amt,penalty_status,penalty_amt " & _
                 "FROM tbl_collectibles  WHERE due_date <= '" & Format(Date.Now, "yyyyMMdd") & "') as tblCol " & _
                 "INNER JOIN tbl_loans ON tbl_loans.loan_id = tblCol.loan_id INNER JOIN " & _
@@ -81,8 +81,8 @@ Public Class frmCollectibles
                 Select Case ds.Tables("collectibles").Rows(x - 1).Item("penalty_status").ToString
 
                     Case 2
-                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
-                            + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previous_balance").ToString.Insert(6, ".")) Then
+                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("colsi").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
+                            + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previ").ToString.Insert(6, ".")) Then
                             'find the date that is !=.
                             dr = db.ExecuteReader("SELECT ctb_id,tblCol.loan_id as LoanID, due_date as petsa , last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
                            "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt,terms,penalty_status,penalty_amt " & _
@@ -108,8 +108,8 @@ Public Class frmCollectibles
                             populateCurrentMe(x)
                         End If
                     Case 1
-                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
-                             + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previous_balance").ToString.Insert(6, ".")) + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString.Insert(6, ".")) Then
+                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("colsi").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
+                             + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previ").ToString.Insert(6, ".")) + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString.Insert(6, ".")) Then
                             'find the date that is !=.
                             dr = db.ExecuteReader("SELECT ctb_id,tblCol.loan_id as LoanID, due_date as petsa , last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
                            "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt,terms,penalty_status,penalty_amt " & _
@@ -136,8 +136,8 @@ Public Class frmCollectibles
                         End If
                     Case 0
 
-                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
-                        + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previous_balance").ToString.Insert(6, ".")) Then
+                        If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("colsi").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
+                        + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previ").ToString.Insert(6, ".")) Then
                             'find the date that is !=.
                             dr = db.ExecuteReader("SELECT ctb_id,tblCol.loan_id as LoanID, due_date as petsa , last_name || ', ' || first_name || ' ' || middle_name as Name, " & _
                        "payable_amt, previous_balance, principal, date_start, date_end , interest_percentage,collected_amt,terms,penalty_status,penalty_amt " & _
