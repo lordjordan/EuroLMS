@@ -415,4 +415,8 @@
         End If
         Return amount
     End Function
+
+    Private Sub txtAmount_TextChanged(sender As Object, e As EventArgs) Handles txtAmount.TextChanged
+
+    End Sub
 End Class
