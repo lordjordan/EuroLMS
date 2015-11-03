@@ -443,7 +443,6 @@ Public Class frmCollectibles
                     If Not lvCollectibles.Items(z - 1).SubItems(9).Text.Contains(".") Then
                         lvCollectibles.Items(z - 1).SubItems(9).Text &= ".00"
                     End If
-
                 Next
                 'payable amount , penalty , previous balance kung meron
                 pangIlan = 0
