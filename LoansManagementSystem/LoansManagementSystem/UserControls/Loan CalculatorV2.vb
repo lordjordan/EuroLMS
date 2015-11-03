@@ -704,7 +704,7 @@ Fix2:
     Private Sub txtTerms_TextChanged(sender As Object, e As EventArgs) Handles txtTerms.TextChanged
         computeTotalLoan()
         ComputeEndDate()
-       
+
 
     End Sub
 
