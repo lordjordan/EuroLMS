@@ -340,7 +340,7 @@ Public Class frmCollectibles
 
             ''END UPDATE
             For x = 1 To ds.Tables("collectibles").Rows.Count Step 1
-                'kapag equal dapat next date
+                
                 Select Case ds.Tables("collectibles").Rows(x - 1).Item("penalty_status").ToString
 
                     Case 2
@@ -1182,7 +1182,9 @@ Public Class frmCollectibles
                     End If
 
                     'need update ng collected amount
-                    conV = overallAmount
+                    conV = FormatNumber(overallAmount, 2)
+
+
                     If Not conV.Contains(".") Then
                         conV &= ".00"
                     End If
@@ -1252,7 +1254,7 @@ Public Class frmCollectibles
                                 CDbl(ds.Tables("collectibles").Rows(z - 1).Item("penalty_amt").ToString().Insert(6, "."))
                             If totalInPayment >= payableAmt Then
                                 totalInPayment = totalInPayment - payableAmt
-                                conV = payableAmt
+                                conV = FormatNumber(payableAmt, 2)
                                 If Not conV.Contains(".") Then
                                     conV &= ".00"
                                 End If
@@ -1271,7 +1273,7 @@ Public Class frmCollectibles
 
 
                             Else
-                                conV = totalInPayment
+                                conV = FormatNumber(totalInPayment, 2)
                                 If Not conV.Contains(".") Then
                                     conV &= ".00"
                                 End If
@@ -1294,7 +1296,7 @@ Public Class frmCollectibles
                             payableAmt = CDbl(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString().Insert(6, "."))
                             If totalInPayment >= payableAmt Then
                                 totalInPayment = totalInPayment - payableAmt
-                                conV = payableAmt
+                                conV = FormatNumber(payableAmt, 2)
                                 If Not conV.Contains(".") Then
                                     conV &= ".00"
                                 End If
@@ -1313,7 +1315,7 @@ Public Class frmCollectibles
 
 
                             Else
-                                conV = totalInPayment
+                                conV = FormatNumber(totalInPayment, 2)
                                 If Not conV.Contains(".") Then
                                     conV &= ".00"
                                 End If
