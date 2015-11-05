@@ -24,6 +24,7 @@ Partial Class PaymentHistory
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.btnPrintShow = New System.Windows.Forms.Button()
         Me.radVoid = New System.Windows.Forms.RadioButton()
         Me.radNorm = New System.Windows.Forms.RadioButton()
         Me.radAll = New System.Windows.Forms.RadioButton()
@@ -70,8 +71,13 @@ Partial Class PaymentHistory
         Me.txtSearchLoan = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
+        Me.gbxPrint = New System.Windows.Forms.GroupBox()
+        Me.crvSoa = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnPrintCR = New System.Windows.Forms.Button()
         Me.pnlMain.SuspendLayout()
         Me.gbxShowClient.SuspendLayout()
+        Me.gbxPrint.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -91,6 +97,7 @@ Partial Class PaymentHistory
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.btnPrintShow)
         Me.pnlMain.Controls.Add(Me.radVoid)
         Me.pnlMain.Controls.Add(Me.radNorm)
         Me.pnlMain.Controls.Add(Me.radAll)
@@ -123,6 +130,23 @@ Partial Class PaymentHistory
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(772, 599)
         Me.pnlMain.TabIndex = 49
+        '
+        'btnPrintShow
+        '
+        Me.btnPrintShow.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrintShow.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrintShow.FlatAppearance.BorderSize = 0
+        Me.btnPrintShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrintShow.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintShow.ForeColor = System.Drawing.Color.White
+        Me.btnPrintShow.Location = New System.Drawing.Point(123, 524)
+        Me.btnPrintShow.Name = "btnPrintShow"
+        Me.btnPrintShow.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrintShow.TabIndex = 225
+        Me.btnPrintShow.Text = "Print..."
+        Me.btnPrintShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrintShow.UseVisualStyleBackColor = False
+        Me.btnPrintShow.Visible = False
         '
         'radVoid
         '
@@ -594,6 +618,70 @@ Partial Class PaymentHistory
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
+        'gbxPrint
+        '
+        Me.gbxPrint.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbxPrint.BackColor = System.Drawing.Color.LightGray
+        Me.gbxPrint.Controls.Add(Me.crvSoa)
+        Me.gbxPrint.Controls.Add(Me.Button2)
+        Me.gbxPrint.Controls.Add(Me.btnPrintCR)
+        Me.gbxPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxPrint.Location = New System.Drawing.Point(2, 91)
+        Me.gbxPrint.Name = "gbxPrint"
+        Me.gbxPrint.Size = New System.Drawing.Size(777, 615)
+        Me.gbxPrint.TabIndex = 184
+        Me.gbxPrint.TabStop = False
+        Me.gbxPrint.Text = "Print"
+        Me.gbxPrint.Visible = False
+        '
+        'crvSoa
+        '
+        Me.crvSoa.ActiveViewIndex = -1
+        Me.crvSoa.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.crvSoa.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvSoa.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvSoa.Location = New System.Drawing.Point(14, 34)
+        Me.crvSoa.Name = "crvSoa"
+        Me.crvSoa.Size = New System.Drawing.Size(750, 501)
+        Me.crvSoa.TabIndex = 80
+        Me.crvSoa.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
+        'Button2
+        '
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Button2.FlatAppearance.BorderSize = 0
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Location = New System.Drawing.Point(128, 541)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(108, 60)
+        Me.Button2.TabIndex = 79
+        Me.Button2.Text = "Cancel"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'btnPrintCR
+        '
+        Me.btnPrintCR.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPrintCR.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnPrintCR.FlatAppearance.BorderSize = 0
+        Me.btnPrintCR.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrintCR.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintCR.ForeColor = System.Drawing.Color.White
+        Me.btnPrintCR.Location = New System.Drawing.Point(14, 541)
+        Me.btnPrintCR.Name = "btnPrintCR"
+        Me.btnPrintCR.Size = New System.Drawing.Size(108, 60)
+        Me.btnPrintCR.TabIndex = 78
+        Me.btnPrintCR.Text = "Print"
+        Me.btnPrintCR.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnPrintCR.UseVisualStyleBackColor = False
+        '
         'PaymentHistory
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -602,6 +690,7 @@ Partial Class PaymentHistory
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxPrint)
         Me.Controls.Add(Me.gbxShowClient)
         Me.Name = "PaymentHistory"
         Me.Size = New System.Drawing.Size(779, 706)
@@ -609,6 +698,7 @@ Partial Class PaymentHistory
         Me.pnlMain.PerformLayout()
         Me.gbxShowClient.ResumeLayout(False)
         Me.gbxShowClient.PerformLayout()
+        Me.gbxPrint.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -661,5 +751,10 @@ Partial Class PaymentHistory
     Friend WithEvents radNorm As System.Windows.Forms.RadioButton
     Friend WithEvents radAll As System.Windows.Forms.RadioButton
     Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents btnPrintShow As System.Windows.Forms.Button
+    Friend WithEvents gbxPrint As System.Windows.Forms.GroupBox
+    Friend WithEvents crvSoa As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents btnPrintCR As System.Windows.Forms.Button
 
 End Class

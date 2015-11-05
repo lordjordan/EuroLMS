@@ -120,13 +120,15 @@
 
     Private Sub btnSelectSearchClient_Click(sender As Object, e As EventArgs) Handles btnSelectSearchClient.Click
         Try
+            Dim totalPayables As Double
+            totalPayables = 0
             lvPH.Items.Clear()
 
             collectedAmount = 0
             penalty = 0
             If lvClientList.SelectedItems.Count > 0 Then
                 'get all penalty amount
-                dr = db.ExecuteReader("SELECT penalty_amt,penalty_status FROM tbl_collectibles WHERE loan_id = " & lvClientList.FocusedItem.SubItems(2).Text)
+                dr = db.ExecuteReader("SELECT penalty_amt,penalty_status, payable_amt FROM tbl_collectibles WHERE loan_id = " & lvClientList.FocusedItem.SubItems(2).Text)
 
                 If dr.HasRows Then
 
@@ -138,6 +140,7 @@
                         If Not txtTotalPenalties.Text.Contains(".") Then
                             txtTotalPenalties.Text &= ".00"
                         End If
+                        totalPayables += CDbl(dr.Item("payable_amt").ToString.Insert(6, "."))
                     Loop
 
                 End If
@@ -152,7 +155,7 @@
 
                     itm = lvPH.Items.Add(dr.Item("payment_id").ToString)
                     itm.SubItems.Add(StrToDate(dr.Item("date_stamp").ToString))
-                    itm.SubItems.Add(CDbl(dr.Item("amount").ToString.Insert(6, ".")))
+                    itm.SubItems.Add(FormatNumber(CDbl(dr.Item("amount").ToString.Insert(6, "."))))
                     If Not lvPH.Items(ctr).SubItems(2).Text.Contains(".") Then
                         lvPH.Items(ctr).SubItems(2).Text &= ".00"
                     End If
@@ -165,7 +168,7 @@
                         collectedAmount += lvPH.Items(ctr).SubItems(2).Text
                     End If
 
-                   
+
                     ctr += 1
                 Loop
                 txtLoanid.Text = lvClientList.FocusedItem.SubItems(2).Text
@@ -180,9 +183,9 @@
                 interest = principal * biMonInterest
                 totalPaymentBiMonth = monthlyRate + interest
                 rembal = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
-                txtPrincipalAmt.Text = principal
+                txtPrincipalAmt.Text = FormatNumber(principal, 2)
                 txtTerms.Text = dr.Item("terms").ToString
-                txtTotalLoanAmount.Text = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
+                txtTotalLoanAmount.Text = FormatNumber(totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2),2)
                 txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
                 txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
 
@@ -190,8 +193,8 @@
                 If Not conV.Contains(".") Then
                     conV &= ".00"
                 End If
-                txtCollectedAmt.Text = conV - penalty
-                txtBalance.Text = (rembal - CDbl(txtCollectedAmt.Text)) + penalty
+                txtCollectedAmt.Text = FormatNumber(conV - penalty, 2)
+                txtBalance.Text = FormatNumber((rembal - CDbl(txtCollectedAmt.Text)) + penalty, 2)
                 If Not txtBalance.Text.Contains(".") Then
                     txtBalance.Text &= ".00"
                 End If
@@ -562,5 +565,81 @@
 
     Private Sub lvClientList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvClientList.SelectedIndexChanged
 
+    End Sub
+    Private Sub showSoa(mode As Boolean)
+        gbxPrint.BringToFront()
+        gbxPrint.Visible = mode
+        pnlMain.Enabled = Not mode
+    End Sub
+    Private Sub btnPrintShow_Click(sender As Object, e As EventArgs) Handles btnPrintShow.Click
+        'codes
+        Dim row1 As DataRow = Nothing
+        Dim row2 As DataRow = Nothing
+        Dim DS As New DataSet
+        Dim rptSOA As New SOA
+        'mag a-add na sa dataset (DS)
+        DS.Tables.Add("SOA")
+        DS.Tables.Add("payment")
+        'lagay tayo ng columns
+        With DS.Tables(0).Columns
+            .Add("loan_id")
+            .Add("name")
+            .Add("balance")
+            .Add("collected_amt")
+            .Add("total_penalties")
+            .Add("principal_amt")
+            .Add("gross_amt")
+            .Add("terms")
+            .Add("date_start")
+            .Add("date_end")
+        End With
+
+        row1 = DS.Tables(0).NewRow
+        row1(0) = txtLoanid.Text
+        row1(1) = txtname.Text
+        row1(2) = txtBalance.Text
+        row1(3) = txtCollectedAmt.Text
+        row1(4) = txtTotalPenalties.Text
+        row1(5) = txtPrincipalAmt.Text
+        row1(6) = txtTotalLoanAmount.Text
+        row1(7) = txtTerms.Text
+        row1(8) = txtDateStart.Text
+        row1(9) = txtDateEnd.Text
+
+        DS.Tables(0).Rows.Add(row1)
+
+        With DS.Tables(1).Columns
+            .Add("payment_id")
+            .Add("date_process")
+            .Add("amount")
+        End With
+
+
+        For x = 1 To lvPH.Items.Count Step 1
+            row2 = DS.Tables(1).NewRow
+            row2(0) = lvPH.Items(x - 1).Text
+            row2(1) = lvPH.Items(x - 1).SubItems(1).Text
+            row2(2) = lvPH.Items(x - 1).SubItems(2).Text
+            DS.Tables(1).Rows.Add(row2)
+        Next
+        
+
+        DS.WriteXml("XML\SOA.xml")
+
+        Dim dsSoa As New DataSet
+        dsSoa = New DSreports
+        Dim dsSoaTemp As New DataSet
+        dsSoaTemp = New DataSet()
+        dsSoaTemp.ReadXml("XML\SOA.xml")
+        dsSoa.Merge(dsSoaTemp.Tables(0))
+        dsSoa.Merge(dsSoaTemp.Tables(1))
+        rptSOA = New SOA
+        rptSOA.SetDataSource(dsSoa)
+        crvsoa.ReportSource = (rptSOA)
+        showSoa(True)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        showSoa(False)
     End Sub
 End Class
