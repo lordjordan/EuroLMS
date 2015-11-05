@@ -164,8 +164,8 @@ Partial Class frmLogin
         Me.Controls.Add(Me.lblUtype)
         Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.PictureBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmLogin"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Login"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pnlMain.ResumeLayout(False)
