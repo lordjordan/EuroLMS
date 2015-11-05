@@ -696,7 +696,7 @@ Partial Class frmCollectibles
         Me.gbxPH.Size = New System.Drawing.Size(659, 533)
         Me.gbxPH.TabIndex = 73
         Me.gbxPH.TabStop = False
-        Me.gbxPH.Text = "Payment History"
+        Me.gbxPH.Text = "Payment History (Viewing)"
         Me.gbxPH.Visible = False
         '
         'txtDateStart
@@ -929,9 +929,9 @@ Partial Class frmCollectibles
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbxPrint.BackColor = System.Drawing.Color.LightGray
-        Me.gbxPrint.Controls.Add(Me.crvPaymentCentralReport)
         Me.gbxPrint.Controls.Add(Me.Button2)
         Me.gbxPrint.Controls.Add(Me.btnPrintCR)
+        Me.gbxPrint.Controls.Add(Me.crvPaymentCentralReport)
         Me.gbxPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxPrint.Location = New System.Drawing.Point(0, 83)
         Me.gbxPrint.Name = "gbxPrint"
@@ -992,13 +992,13 @@ Partial Class frmCollectibles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.Controls.Add(Me.pnlMain)
-        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
+        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.gbxPrint)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)
         Me.pnlMain.ResumeLayout(False)
