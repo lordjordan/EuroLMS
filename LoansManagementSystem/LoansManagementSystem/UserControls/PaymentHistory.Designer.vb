@@ -146,7 +146,6 @@ Partial Class PaymentHistory
         Me.btnPrintShow.Text = "Print..."
         Me.btnPrintShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnPrintShow.UseVisualStyleBackColor = False
-        Me.btnPrintShow.Visible = False
         '
         'radVoid
         '
