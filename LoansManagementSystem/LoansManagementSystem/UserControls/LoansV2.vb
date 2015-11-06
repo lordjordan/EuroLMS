@@ -573,20 +573,20 @@ Public Class LoansV2
     End Sub
 
     Private Sub btnSelectSearchClient_Click(sender As Object, e As EventArgs) Handles btnSelectSearchClient.Click
-        'Try
-        txtClientID.Text = lvClientList.SelectedItems.Item(0).Text
-        txtName.Text = lvClientList.SelectedItems.Item(0).SubItems(1).Text
-        txtCompany.Text = lvClientList.SelectedItems.Item(0).SubItems(2).Text
-        txtBranch.Text = lvClientList.SelectedItems.Item(0).SubItems(3).Text
-        lblEmployeeNumber.Text = lvClientList.SelectedItems.Item(0).SubItems(4).Text
-        'txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
-        'Dim cLimit As Integer = lvClientList.SelectedItems.Item(0).SubItems(5).Text
-        txtCreditLimit.Text = lvClientList.SelectedItems.Item(0).SubItems(5).Text
-        txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
-        toggleClientSearch()
-        'Catch ex As Exception
-        '    MsgBox("Please select a valid client first. You can filter or search client data through the 'search box' and then click the 'search button'", MsgBoxStyle.Exclamation)
-        'End Try
+        Try
+            txtClientID.Text = lvClientList.SelectedItems.Item(0).Text
+            txtName.Text = lvClientList.SelectedItems.Item(0).SubItems(1).Text
+            txtCompany.Text = lvClientList.SelectedItems.Item(0).SubItems(2).Text
+            txtBranch.Text = lvClientList.SelectedItems.Item(0).SubItems(3).Text
+            lblEmployeeNumber.Text = lvClientList.SelectedItems.Item(0).SubItems(4).Text
+            'txtCreditLimit.Text = FormatNumber(lvClientList.SelectedItems.Item(0).SubItems(5).Text, 2)
+            'Dim cLimit As Integer = lvClientList.SelectedItems.Item(0).SubItems(5).Text
+            txtCreditLimit.Text = lvClientList.SelectedItems.Item(0).SubItems(5).Text
+            txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+            toggleClientSearch()
+        Catch ex As Exception
+            MsgBox("Please select a valid client first. You can filter or search client data through the 'search box' and then click the 'search button'", MsgBoxStyle.Exclamation)
+        End Try
     End Sub
 
     Private Function ComputeAvailableCredit(ClientID As String) As String
@@ -1043,6 +1043,10 @@ Fix2:
 
 
     Private Sub btnActivateLoan_Click(sender As Object, e As EventArgs) Handles btnActivateLoan.Click
+        If lvLoanList.SelectedItems.Count = 0 Then
+            MsgBox("Please select loan", MsgBoxStyle.Exclamation + vbOKOnly, "No selected loan")
+            Exit Sub
+        End If
         If lvLoanList.FocusedItem.SubItems(8).Text <> cboApplicationStatus.Items(1) Or lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
             MsgBox("Unable to activated this loan. Please check Application status or Loan Status first.", MsgBoxStyle.Critical, "Unable to activate")
             Exit Sub

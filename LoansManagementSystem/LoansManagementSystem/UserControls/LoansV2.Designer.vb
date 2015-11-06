@@ -51,6 +51,21 @@ Partial Class LoansV2
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
+        Me.gbxShowClient = New System.Windows.Forms.GroupBox()
+        Me.btnClientBack = New System.Windows.Forms.Button()
+        Me.lvClientList = New System.Windows.Forms.ListView()
+        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader15 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader16 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.btnSelectSearchClient = New System.Windows.Forms.Button()
+        Me.btnSearchClient = New System.Windows.Forms.Button()
+        Me.txtSearchClient = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.gbxClientData = New System.Windows.Forms.GroupBox()
@@ -101,21 +116,6 @@ Partial Class LoansV2
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.gbxShowClient = New System.Windows.Forms.GroupBox()
-        Me.btnClientBack = New System.Windows.Forms.Button()
-        Me.lvClientList = New System.Windows.Forms.ListView()
-        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader15 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader16 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.btnSelectSearchClient = New System.Windows.Forms.Button()
-        Me.btnSearchClient = New System.Windows.Forms.Button()
-        Me.txtSearchClient = New System.Windows.Forms.TextBox()
-        Me.Label28 = New System.Windows.Forms.Label()
         Me.gbxVerifyActivation = New System.Windows.Forms.GroupBox()
         Me.btnCloseVerification = New System.Windows.Forms.Button()
         Me.btnVerify = New System.Windows.Forms.Button()
@@ -123,6 +123,7 @@ Partial Class LoansV2
         Me.txtUser = New System.Windows.Forms.TextBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
+        Me.gbxShowClient.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxClientData.SuspendLayout()
@@ -130,7 +131,6 @@ Partial Class LoansV2
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbxLoanData2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.gbxShowClient.SuspendLayout()
         Me.gbxVerifyActivation.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -433,6 +433,140 @@ Partial Class LoansV2
         Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "New Loan Application"
         Me.gbxAddEdit.Visible = False
+        '
+        'gbxShowClient
+        '
+        Me.gbxShowClient.BackColor = System.Drawing.Color.DarkGray
+        Me.gbxShowClient.Controls.Add(Me.btnClientBack)
+        Me.gbxShowClient.Controls.Add(Me.lvClientList)
+        Me.gbxShowClient.Controls.Add(Me.btnSelectSearchClient)
+        Me.gbxShowClient.Controls.Add(Me.btnSearchClient)
+        Me.gbxShowClient.Controls.Add(Me.txtSearchClient)
+        Me.gbxShowClient.Controls.Add(Me.Label28)
+        Me.gbxShowClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.gbxShowClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxShowClient.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.gbxShowClient.Location = New System.Drawing.Point(6, 220)
+        Me.gbxShowClient.Name = "gbxShowClient"
+        Me.gbxShowClient.Size = New System.Drawing.Size(750, 433)
+        Me.gbxShowClient.TabIndex = 159
+        Me.gbxShowClient.TabStop = False
+        Me.gbxShowClient.Text = "Select a Client"
+        Me.gbxShowClient.Visible = False
+        '
+        'btnClientBack
+        '
+        Me.btnClientBack.BackColor = System.Drawing.Color.Gray
+        Me.btnClientBack.FlatAppearance.BorderSize = 0
+        Me.btnClientBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnClientBack.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClientBack.ForeColor = System.Drawing.Color.White
+        Me.btnClientBack.Location = New System.Drawing.Point(634, 31)
+        Me.btnClientBack.Name = "btnClientBack"
+        Me.btnClientBack.Size = New System.Drawing.Size(84, 33)
+        Me.btnClientBack.TabIndex = 163
+        Me.btnClientBack.Text = "Back"
+        Me.btnClientBack.UseVisualStyleBackColor = False
+        '
+        'lvClientList
+        '
+        Me.lvClientList.AutoArrange = False
+        Me.lvClientList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader14, Me.ColumnHeader15, Me.ColumnHeader16})
+        Me.lvClientList.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvClientList.FullRowSelect = True
+        Me.lvClientList.GridLines = True
+        Me.lvClientList.Location = New System.Drawing.Point(32, 68)
+        Me.lvClientList.Name = "lvClientList"
+        Me.lvClientList.Size = New System.Drawing.Size(686, 285)
+        Me.lvClientList.TabIndex = 130
+        Me.lvClientList.UseCompatibleStateImageBehavior = False
+        Me.lvClientList.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader19
+        '
+        Me.ColumnHeader19.Text = "Client ID"
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Name"
+        Me.ColumnHeader10.Width = 239
+        '
+        'ColumnHeader11
+        '
+        Me.ColumnHeader11.Text = "Company"
+        Me.ColumnHeader11.Width = 93
+        '
+        'ColumnHeader12
+        '
+        Me.ColumnHeader12.Text = "Branch"
+        Me.ColumnHeader12.Width = 188
+        '
+        'ColumnHeader13
+        '
+        Me.ColumnHeader13.Text = "Employee No."
+        Me.ColumnHeader13.Width = 93
+        '
+        'ColumnHeader14
+        '
+        Me.ColumnHeader14.Text = "CreditLimit"
+        Me.ColumnHeader14.Width = 100
+        '
+        'ColumnHeader15
+        '
+        Me.ColumnHeader15.Text = "AvailableCredit"
+        Me.ColumnHeader15.Width = 120
+        '
+        'ColumnHeader16
+        '
+        Me.ColumnHeader16.Text = "pic"
+        Me.ColumnHeader16.Width = 0
+        '
+        'btnSelectSearchClient
+        '
+        Me.btnSelectSearchClient.BackColor = System.Drawing.Color.Gray
+        Me.btnSelectSearchClient.FlatAppearance.BorderSize = 0
+        Me.btnSelectSearchClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSelectSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSelectSearchClient.ForeColor = System.Drawing.Color.White
+        Me.btnSelectSearchClient.Location = New System.Drawing.Point(271, 360)
+        Me.btnSelectSearchClient.Name = "btnSelectSearchClient"
+        Me.btnSelectSearchClient.Size = New System.Drawing.Size(192, 55)
+        Me.btnSelectSearchClient.TabIndex = 58
+        Me.btnSelectSearchClient.Text = "Select "
+        Me.btnSelectSearchClient.UseVisualStyleBackColor = False
+        '
+        'btnSearchClient
+        '
+        Me.btnSearchClient.BackColor = System.Drawing.Color.Gray
+        Me.btnSearchClient.FlatAppearance.BorderSize = 0
+        Me.btnSearchClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearchClient.ForeColor = System.Drawing.Color.White
+        Me.btnSearchClient.Location = New System.Drawing.Point(271, 36)
+        Me.btnSearchClient.Name = "btnSearchClient"
+        Me.btnSearchClient.Size = New System.Drawing.Size(61, 24)
+        Me.btnSearchClient.TabIndex = 58
+        Me.btnSearchClient.Text = "Search"
+        Me.btnSearchClient.UseVisualStyleBackColor = False
+        '
+        'txtSearchClient
+        '
+        Me.txtSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSearchClient.Location = New System.Drawing.Point(99, 36)
+        Me.txtSearchClient.Name = "txtSearchClient"
+        Me.txtSearchClient.Size = New System.Drawing.Size(166, 22)
+        Me.txtSearchClient.TabIndex = 57
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.Location = New System.Drawing.Point(29, 39)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(51, 16)
+        Me.Label28.TabIndex = 56
+        Me.Label28.Text = "Search"
+        Me.Label28.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'PictureBox2
         '
@@ -1033,140 +1167,6 @@ Partial Class LoansV2
         Me.Label23.Text = "Number of Co-makers"
         Me.Label23.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'gbxShowClient
-        '
-        Me.gbxShowClient.BackColor = System.Drawing.Color.DarkGray
-        Me.gbxShowClient.Controls.Add(Me.btnClientBack)
-        Me.gbxShowClient.Controls.Add(Me.lvClientList)
-        Me.gbxShowClient.Controls.Add(Me.btnSelectSearchClient)
-        Me.gbxShowClient.Controls.Add(Me.btnSearchClient)
-        Me.gbxShowClient.Controls.Add(Me.txtSearchClient)
-        Me.gbxShowClient.Controls.Add(Me.Label28)
-        Me.gbxShowClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.gbxShowClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxShowClient.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.gbxShowClient.Location = New System.Drawing.Point(6, 220)
-        Me.gbxShowClient.Name = "gbxShowClient"
-        Me.gbxShowClient.Size = New System.Drawing.Size(750, 433)
-        Me.gbxShowClient.TabIndex = 159
-        Me.gbxShowClient.TabStop = False
-        Me.gbxShowClient.Text = "Select a Client"
-        Me.gbxShowClient.Visible = False
-        '
-        'btnClientBack
-        '
-        Me.btnClientBack.BackColor = System.Drawing.Color.Gray
-        Me.btnClientBack.FlatAppearance.BorderSize = 0
-        Me.btnClientBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClientBack.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClientBack.ForeColor = System.Drawing.Color.White
-        Me.btnClientBack.Location = New System.Drawing.Point(634, 31)
-        Me.btnClientBack.Name = "btnClientBack"
-        Me.btnClientBack.Size = New System.Drawing.Size(84, 33)
-        Me.btnClientBack.TabIndex = 163
-        Me.btnClientBack.Text = "Back"
-        Me.btnClientBack.UseVisualStyleBackColor = False
-        '
-        'lvClientList
-        '
-        Me.lvClientList.AutoArrange = False
-        Me.lvClientList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader14, Me.ColumnHeader15, Me.ColumnHeader16})
-        Me.lvClientList.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lvClientList.FullRowSelect = True
-        Me.lvClientList.GridLines = True
-        Me.lvClientList.Location = New System.Drawing.Point(32, 68)
-        Me.lvClientList.Name = "lvClientList"
-        Me.lvClientList.Size = New System.Drawing.Size(686, 285)
-        Me.lvClientList.TabIndex = 130
-        Me.lvClientList.UseCompatibleStateImageBehavior = False
-        Me.lvClientList.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader19
-        '
-        Me.ColumnHeader19.Text = "Client ID"
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Name"
-        Me.ColumnHeader10.Width = 239
-        '
-        'ColumnHeader11
-        '
-        Me.ColumnHeader11.Text = "Company"
-        Me.ColumnHeader11.Width = 93
-        '
-        'ColumnHeader12
-        '
-        Me.ColumnHeader12.Text = "Branch"
-        Me.ColumnHeader12.Width = 188
-        '
-        'ColumnHeader13
-        '
-        Me.ColumnHeader13.Text = "Employee No."
-        Me.ColumnHeader13.Width = 93
-        '
-        'ColumnHeader14
-        '
-        Me.ColumnHeader14.Text = "CreditLimit"
-        Me.ColumnHeader14.Width = 100
-        '
-        'ColumnHeader15
-        '
-        Me.ColumnHeader15.Text = "AvailableCredit"
-        Me.ColumnHeader15.Width = 120
-        '
-        'ColumnHeader16
-        '
-        Me.ColumnHeader16.Text = "pic"
-        Me.ColumnHeader16.Width = 0
-        '
-        'btnSelectSearchClient
-        '
-        Me.btnSelectSearchClient.BackColor = System.Drawing.Color.Gray
-        Me.btnSelectSearchClient.FlatAppearance.BorderSize = 0
-        Me.btnSelectSearchClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSelectSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSelectSearchClient.ForeColor = System.Drawing.Color.White
-        Me.btnSelectSearchClient.Location = New System.Drawing.Point(271, 360)
-        Me.btnSelectSearchClient.Name = "btnSelectSearchClient"
-        Me.btnSelectSearchClient.Size = New System.Drawing.Size(192, 55)
-        Me.btnSelectSearchClient.TabIndex = 58
-        Me.btnSelectSearchClient.Text = "Select "
-        Me.btnSelectSearchClient.UseVisualStyleBackColor = False
-        '
-        'btnSearchClient
-        '
-        Me.btnSearchClient.BackColor = System.Drawing.Color.Gray
-        Me.btnSearchClient.FlatAppearance.BorderSize = 0
-        Me.btnSearchClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearchClient.ForeColor = System.Drawing.Color.White
-        Me.btnSearchClient.Location = New System.Drawing.Point(271, 36)
-        Me.btnSearchClient.Name = "btnSearchClient"
-        Me.btnSearchClient.Size = New System.Drawing.Size(61, 24)
-        Me.btnSearchClient.TabIndex = 58
-        Me.btnSearchClient.Text = "Search"
-        Me.btnSearchClient.UseVisualStyleBackColor = False
-        '
-        'txtSearchClient
-        '
-        Me.txtSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSearchClient.Location = New System.Drawing.Point(99, 36)
-        Me.txtSearchClient.Name = "txtSearchClient"
-        Me.txtSearchClient.Size = New System.Drawing.Size(166, 22)
-        Me.txtSearchClient.TabIndex = 57
-        '
-        'Label28
-        '
-        Me.Label28.AutoSize = True
-        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label28.Location = New System.Drawing.Point(29, 39)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(51, 16)
-        Me.Label28.TabIndex = 56
-        Me.Label28.Text = "Search"
-        Me.Label28.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
         'gbxVerifyActivation
         '
         Me.gbxVerifyActivation.Anchor = System.Windows.Forms.AnchorStyles.None
@@ -1242,6 +1242,8 @@ Partial Class LoansV2
         Me.pnlMain.ResumeLayout(False)
         Me.pnlMain.PerformLayout()
         Me.gbxAddEdit.ResumeLayout(False)
+        Me.gbxShowClient.ResumeLayout(False)
+        Me.gbxShowClient.PerformLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxClientData.ResumeLayout(False)
@@ -1253,8 +1255,6 @@ Partial Class LoansV2
         Me.gbxLoanData2.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        Me.gbxShowClient.ResumeLayout(False)
-        Me.gbxShowClient.PerformLayout()
         Me.gbxVerifyActivation.ResumeLayout(False)
         Me.gbxVerifyActivation.PerformLayout()
         Me.ResumeLayout(False)
