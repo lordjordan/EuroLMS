@@ -162,6 +162,13 @@ Public Class LoansV2
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         toggleLoanApplication()
+
+        If gbxAddEdit.Text = "New Loan Application" Then
+            log("Cancelled adding new loan")
+        Else
+            log("Cancelled updating loan id = " & active_loan_id)
+
+        End If
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
@@ -184,6 +191,8 @@ Public Class LoansV2
         MsgBox("Record saved!", MsgBoxStyle.Information)
         toggleLoanApplication()
         LoadListView()
+
+        log("saved new LOAN record")
         'toggleLoanApplication()
     End Sub
 
@@ -366,8 +375,12 @@ Public Class LoansV2
                     dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
                     active_loan_id = dr.Item("id")
                 End If
+
+                log("Initial process of loan record saving. loan_id = " + active_loan_id)
             Catch ex As Exception
                 MsgBox(ex.ToString)
+
+                log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
             End Try
@@ -429,8 +442,13 @@ Public Class LoansV2
                     'dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
                     'active_loan_id = dr.Item("id")
                 End If
+
+                log("Initial process of loan record saving (EDITTING). loan_id = " + active_loan_id)
+
             Catch ex As Exception
                 MsgBox(ex.ToString)
+
+                log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
             End Try
@@ -886,6 +904,8 @@ Fix2:
             End If
             active_loan_id = lvLoanList.FocusedItem.Text.Trim
             loadEditForm(active_loan_id)
+
+            log("Started editting loan id = " & active_loan_id)
 
         Catch ex As NullReferenceException
 

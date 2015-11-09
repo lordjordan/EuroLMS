@@ -26,7 +26,8 @@ Module GeneralMethods
     Public Function DateToStr(petsa As Date) As String
         Return Format(petsa, "yyyyMMdd")
     End Function
-    'Call this method for logging user activities
+    'Call this method for logging user activities 
+    'Jordan 20151104
     Public Sub log(msg As String, Optional logType As String = "EVENT")
         Dim curDirectory As String = "D:/LMSdb/" 'My.Settings.CurrentLogDirectory
         If System.IO.File.Exists(curDirectory) = False Then
