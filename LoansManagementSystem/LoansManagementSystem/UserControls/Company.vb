@@ -25,16 +25,13 @@ Public Class Company
         txtCompanyName.Focus()
         showAddEdit(True)
         dr = db.ExecuteReader("select * from tbl_company")
-        Dim maxId As Integer = 0
+
         gbxAddEdit.Text = "Add New Company"
         showAddEdit(True)
 
-        While dr.Read = True
-            If maxId < dr.Item(0) Then maxId = dr.Item(0)
-        End While
 
         txtCompanyName.Focus()
-        txtCompanyID.Text = maxId + 1
+
         txtCompanyName.Text = ""
         txtCompanyAd.Text = ""
         txtCompanyConNum.Text = ""

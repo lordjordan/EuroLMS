@@ -102,9 +102,9 @@ Partial Class frmCollectibles
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.gbxPrint = New System.Windows.Forms.GroupBox()
-        Me.crvPaymentCentralReport = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.btnPrintCR = New System.Windows.Forms.Button()
+        Me.crvPaymentCentralReport = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.pnlMain.SuspendLayout()
         Me.CMS.SuspendLayout()
         Me.gbxAdvanceSearch.SuspendLayout()
@@ -696,7 +696,7 @@ Partial Class frmCollectibles
         Me.gbxPH.Size = New System.Drawing.Size(659, 533)
         Me.gbxPH.TabIndex = 73
         Me.gbxPH.TabStop = False
-        Me.gbxPH.Text = "Payment History"
+        Me.gbxPH.Text = "Payment History (Viewing)"
         Me.gbxPH.Visible = False
         '
         'txtDateStart
@@ -929,9 +929,9 @@ Partial Class frmCollectibles
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbxPrint.BackColor = System.Drawing.Color.LightGray
-        Me.gbxPrint.Controls.Add(Me.crvPaymentCentralReport)
         Me.gbxPrint.Controls.Add(Me.Button2)
         Me.gbxPrint.Controls.Add(Me.btnPrintCR)
+        Me.gbxPrint.Controls.Add(Me.crvPaymentCentralReport)
         Me.gbxPrint.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxPrint.Location = New System.Drawing.Point(0, 83)
         Me.gbxPrint.Name = "gbxPrint"
@@ -940,20 +940,6 @@ Partial Class frmCollectibles
         Me.gbxPrint.TabStop = False
         Me.gbxPrint.Text = "Print"
         Me.gbxPrint.Visible = False
-        '
-        'crvPaymentCentralReport
-        '
-        Me.crvPaymentCentralReport.ActiveViewIndex = -1
-        Me.crvPaymentCentralReport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.crvPaymentCentralReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.crvPaymentCentralReport.Cursor = System.Windows.Forms.Cursors.Default
-        Me.crvPaymentCentralReport.Location = New System.Drawing.Point(14, 34)
-        Me.crvPaymentCentralReport.Name = "crvPaymentCentralReport"
-        Me.crvPaymentCentralReport.Size = New System.Drawing.Size(1052, 509)
-        Me.crvPaymentCentralReport.TabIndex = 80
-        Me.crvPaymentCentralReport.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
         'Button2
         '
@@ -987,17 +973,31 @@ Partial Class frmCollectibles
         Me.btnPrintCR.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnPrintCR.UseVisualStyleBackColor = False
         '
+        'crvPaymentCentralReport
+        '
+        Me.crvPaymentCentralReport.ActiveViewIndex = -1
+        Me.crvPaymentCentralReport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.crvPaymentCentralReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.crvPaymentCentralReport.Cursor = System.Windows.Forms.Cursors.Default
+        Me.crvPaymentCentralReport.Location = New System.Drawing.Point(14, 34)
+        Me.crvPaymentCentralReport.Name = "crvPaymentCentralReport"
+        Me.crvPaymentCentralReport.Size = New System.Drawing.Size(1052, 509)
+        Me.crvPaymentCentralReport.TabIndex = 80
+        Me.crvPaymentCentralReport.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
         'frmCollectibles
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.Controls.Add(Me.pnlMain)
-        Me.Controls.Add(Me.gbxPH)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
+        Me.Controls.Add(Me.gbxPH)
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxPrint)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)

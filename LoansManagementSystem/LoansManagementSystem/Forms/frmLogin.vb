@@ -57,7 +57,7 @@ Public Class frmLogin
                             frmMainPanel.Close()
                             frmMainPanel.Show()
                             Me.Hide()
-
+                            Exit Do
                         ElseIf utype = 1 Then
                             'MessageBox.Show("Welcome Administrator!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -65,7 +65,7 @@ Public Class frmLogin
                             frmMainPanel.Close()
                             frmMainPanel.Show()
                             Me.Hide()
-
+                            Exit Do
                         ElseIf utype = 2 Then
                             'MessageBox.Show("Welcome Encoder!")
                             MessageBox.Show("Login successful!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -73,6 +73,7 @@ Public Class frmLogin
                             frmMainPanel.Close()
                             frmMainPanel.Show()
                             Me.Hide()
+                            Exit Do
                         End If
 
                         'ElseIf txtPassword.Text = "" And uname = txtUser.Text Then
@@ -95,8 +96,7 @@ Public Class frmLogin
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
-        Finally
-            db.Dispose() '<--------CHECK THIS!
+        
 
         End Try
     End Sub

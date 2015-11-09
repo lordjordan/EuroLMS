@@ -13,7 +13,7 @@
     Dim dr As SQLite.SQLiteDataReader
     Dim rec As Integer
     Dim data As New Dictionary(Of String, Object)
-    Dim colorChanger As Boolean
+
 
     'adjustments
     Dim excess, payableAmount, collectedAmount, penaltyAmount, previousBalance, currPenaltyAmount, storedValue, rembal As Double
@@ -47,12 +47,9 @@
             If dr.HasRows Then
 
                 Do While dr.Read
-                    a = dr.Item("due_date").ToString().Substring(0, 4)
-                    b = dr.Item("due_date").ToString().Substring(4, 2)
-                    c = dr.Item("due_date").ToString().Substring(6, 2)
-                    dueDate = CDate(b & "/" & c & "/" & a)
-                    itm = lvDuedate.Items.Add(dueDate)
-                    itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
+                    
+                    itm = lvDuedate.Items.Add(StrToDate(dr.Item("due_date").ToString))
+                    itm.SubItems.Add(CDbl(StrToNum(dr.Item("penalty_amt").ToString)))
 
                     Select Case dr.Item("penalty_status")
                         Case 0
@@ -64,13 +61,7 @@
                     End Select
 
                     itm.SubItems.Add(dr.Item("ctb_id").ToString)
-                    If colorChanger = True Then
-                        itm.BackColor = Color.LemonChiffon
-                        colorChanger = False
-                    Else
-                        itm.BackColor = Color.LightCyan
-                        colorChanger = True
-                    End If
+                   
                 Loop
                 For x = 1 To lvDuedate.Items.Count Step 1
                     If Not lvDuedate.Items(x - 1).SubItems(1).Text.Contains(".") Then
@@ -147,6 +138,7 @@
             'version 2
             'ang concept pag kinulang sa kalagitnaan adjust sa huling may bayad ? I hope makuha ko 
             'tignan si payment? YES
+            Cursor = Cursors.WaitCursor
             Dim totalInPayment, payableAmt As Double
             dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " AND payment_status= 0")
             If dr.HasRows Then
@@ -156,7 +148,7 @@
                     Do Until conV.Length = 8
                         conV = conV.Insert(0, "0")
                     Loop
-                    totalInPayment = CDbl(conV.Insert(6, "."))
+                    totalInPayment = CDbl(StrToNum(conV))
                 End If
             End If
             'managing penalties 
@@ -193,11 +185,12 @@
             For x = 1 To ds.Tables("collectibles").Rows.Count Step 1
                 'time to allocate the total payment
                 If ds.Tables("collectibles").Rows(x - 1).Item("penalty_status").ToString = 1 Then
-                    payableAmt = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString().Insert(6, ".")) + _
-                        CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString().Insert(6, "."))
+                    payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString)) + _
+                        CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString))
                     If totalInPayment >= payableAmt Then
                         totalInPayment = totalInPayment - payableAmt
-                        conV = payableAmt
+                        conV = FormatNumber(payableAmt, 2)
+                        conV = Replace(conV, ",", "")
                         If Not conV.Contains(".") Then
                             conV &= ".00"
                         End If
@@ -216,7 +209,8 @@
 
 
                     Else
-                        conV = totalInPayment
+                        conV = FormatNumber(totalInPayment, 2)
+                        conV = Replace(conV, ",", "")
                         If Not conV.Contains(".") Then
                             conV &= ".00"
                         End If
@@ -236,10 +230,11 @@
                     End If
                     data.Clear()
                 Else
-                    payableAmt = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString().Insert(6, "."))
+                    payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString))
                     If totalInPayment >= payableAmt Then
                         totalInPayment = totalInPayment - payableAmt
-                        conV = payableAmt
+                        conV = FormatNumber(payableAmt, 2)
+                        conV = Replace(conV, ",", "")
                         If Not conV.Contains(".") Then
                             conV &= ".00"
                         End If
@@ -258,7 +253,8 @@
 
 
                     Else
-                        conV = totalInPayment
+                        conV = FormatNumber(totalInPayment, 2)
+                        conV = Replace(conV, ",", "")
                         If Not conV.Contains(".") Then
                             conV &= ".00"
                         End If
@@ -309,19 +305,19 @@
                 data.Clear()
                 If ds.Tables("collectibles").Rows(x - 1).Item("penalty_status").ToString = 1 Then
 
-                    If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) _
-                                          + CDbl(ds.Tables("collectibles").Rows(x - 1).Item("previous_balance").ToString.Insert(6, ".")) Then
+                    If CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString)) _
+                                          + CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("previous_balance").ToString)) Then
                         previousBalance += 0
                     Else
-                        previousBalance += (CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) + _
-                        CDbl(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString.Insert(6, "."))) - CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, "."))
+                        previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString)) + _
+                        CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("penalty_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString))
                     End If
 
                 Else
-                    If CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, ".")) = CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, ".")) Then
+                    If CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString)) Then
                         previousBalance += 0
                     Else
-                        previousBalance += (CDbl(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString.Insert(6, "."))) - CDbl(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString.Insert(6, "."))
+                        previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("payable_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(x - 1).Item("collected_amt").ToString))
                     End If
 
                 End If
@@ -340,15 +336,9 @@
 
                     dueDate = StrToDate(dr.Item("due_date").ToString)
                     itm = uscCollectibles.lvDuedates.Items.Add(dueDate) 'casted
-                    itm.SubItems.Add(CDbl(dr.Item("penalty_amt").ToString.Insert(6, ".")))
+                    itm.SubItems.Add(CDbl(StrToNum(dr.Item("penalty_amt").ToString)))
                     itm.SubItems.Add(dr.Item("ctb_id").ToString)
-                    If colorChanger = True Then
-                        itm.BackColor = Color.LemonChiffon
-                        colorChanger = False
-                    Else
-                        itm.BackColor = Color.LightCyan
-                        colorChanger = True
-                    End If
+                  
                 Loop
                 splitter = Split(uscCollectibles.lvCollectibles.FocusedItem.SubItems(11).Text, ",") 'splitting ng ctb_id
                 For y = 1 To splitter.Length Step 1
@@ -366,7 +356,7 @@
             uscCollectibles.btnCancelColl.Enabled = False
             uscCollectibles.gbxClientCollectible.BringToFront()
             MsgBox("Records of penalties are updated!", MsgBoxStyle.Information, "Sucessfully updated!")
-
+            Cursor = Cursors.Arrow
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Critical)
         Finally
