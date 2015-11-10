@@ -33,6 +33,7 @@
         Next Control
         lvPH.Clear()
         showUSC(uscMainmenu)
+        uscPaymentHistory = New PaymentHistory
     End Sub
     Private Sub showClient(mode As Boolean)
         gbxShowClient.Visible = mode
