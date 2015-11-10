@@ -15,6 +15,7 @@ Public Class Company
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscCompanies = New Company
     End Sub
 
     Private Sub btnAddbranch_Click(sender As Object, e As EventArgs) Handles btnAddCompany.Click
