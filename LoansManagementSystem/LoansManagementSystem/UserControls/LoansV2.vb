@@ -93,6 +93,7 @@ Public Class LoansV2
     End Function
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscLoans = New LoansV2
     End Sub
 
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
@@ -173,7 +174,7 @@ Public Class LoansV2
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         ComputeAvailableCredit(txtClientID.Text)
-        If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+        If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
 
             MsgBox("Principal is exceed to available credit" & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
             Exit Sub
@@ -347,43 +348,43 @@ Public Class LoansV2
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
-            Try
+            'Try
 
-                data.Add("client_id", txtClientID.Text)
-                data.Add("principal", NumToStr(FormatNumber(txtPrincipal.Text, 2)))
-                data.Add("amortization", NumToStr(FormatNumber(txtBiMonthlyAmort.Text, 2)))
-                data.Add("date_start", Format(dtStart.Value, "yyyyMMdd"))
-                data.Add("date_end", Format(dtEnd.Value, "yyyyMMdd"))
-                data.Add("interest_percentage", cboInterest.Text)
-                data.Add("date_approved", "00000000")
-                data.Add("date_enrolled", Format(Now, "yyyyMMdd"))
-                data.Add("terms", Val(txtTerms.Text))
-                data.Add("application_status", cboApplicationStatus.SelectedIndex)
-                data.Add("loan_status", cboLoanStatus.SelectedIndex)
-                data.Add("loan_remarks", txtLoanRemarks.Text)
+            data.Add("client_id", txtClientID.Text)
+            data.Add("principal", NumToStr(FormatNumber(txtPrincipal.Text, 2)))
+            data.Add("amortization", NumToStr(FormatNumber(txtBiMonthlyAmort.Text, 2)))
+            data.Add("date_start", Format(dtStart.Value, "yyyyMMdd"))
+            data.Add("date_end", Format(dtEnd.Value, "yyyyMMdd"))
+            data.Add("interest_percentage", cboInterest.Text)
+            data.Add("date_approved", "00000000")
+            data.Add("date_enrolled", Format(Now, "yyyyMMdd"))
+            data.Add("terms", Val(txtTerms.Text))
+            data.Add("application_status", cboApplicationStatus.SelectedIndex)
+            data.Add("loan_status", cboLoanStatus.SelectedIndex)
+            data.Add("loan_remarks", txtLoanRemarks.Text)
 
 
-                rec = db.ExecuteNonQuery("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
-                                         "@interest_percentage, @date_approved, @date_enrolled , @terms, @application_status, @loan_status, " & _
-                                         "@loan_remarks)", data)
+            rec = db.ExecuteNonQuery("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
+                                     "@interest_percentage, @date_approved, @date_enrolled , @terms, @application_status, @loan_status, " & _
+                                     "@loan_remarks)", data)
 
-                If Not rec < 1 Then
-                    'MsgBox("Record saved!", MsgBoxStyle.Information)
-                    'toggleLoanApplication()
-                    'LoadListView()
-                    Dim dr As SQLite.SQLiteDataReader
-                    dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
-                    active_loan_id = dr.Item("id")
-                End If
+            If Not rec < 1 Then
+                'MsgBox("Record saved!", MsgBoxStyle.Information)
+                'toggleLoanApplication()
+                'LoadListView()
+                Dim dr As SQLite.SQLiteDataReader
+                dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
+                active_loan_id = dr.Item("id")
+            End If
 
-                log("Initial process of loan record saving. loan_id = " + active_loan_id)
-            Catch ex As Exception
-                MsgBox(ex.ToString)
+            log("Initial process of loan record saving. loan_id = " & active_loan_id)
+            'Catch ex As Exception
+            '    MsgBox(ex.ToString)
 
-                log(ex.Message, "ERROR")
-            Finally
-                db.Dispose()
-            End Try
+            '    log(ex.Message, "ERROR")
+            'Finally
+            '    db.Dispose()
+            'End Try
 
         End Using
 
