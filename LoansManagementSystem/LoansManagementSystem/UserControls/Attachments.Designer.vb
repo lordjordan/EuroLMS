@@ -40,6 +40,8 @@ Partial Class Attachments
         Me.btnAddNew = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.gbxAddEdit = New System.Windows.Forms.GroupBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.txtClientID = New System.Windows.Forms.TextBox()
         Me.txtReqID = New System.Windows.Forms.TextBox()
@@ -54,7 +56,6 @@ Partial Class Attachments
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txt_Remarks = New System.Windows.Forms.TextBox()
         Me.btnUpload = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.ServiceController1 = New System.ServiceProcess.ServiceController()
@@ -74,12 +75,11 @@ Partial Class Attachments
         Me.btnSearchClient = New System.Windows.Forms.Button()
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlMain.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.gbxShowClient.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbxShowClient.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -259,7 +259,7 @@ Partial Class Attachments
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClose.BackColor = System.Drawing.Color.Gray
         Me.btnClose.ForeColor = System.Drawing.Color.White
-        Me.btnClose.Location = New System.Drawing.Point(974, 16)
+        Me.btnClose.Location = New System.Drawing.Point(975, 16)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(123, 39)
         Me.btnClose.TabIndex = 53
@@ -297,6 +297,24 @@ Partial Class Attachments
         Me.gbxAddEdit.TabStop = False
         Me.gbxAddEdit.Text = "Add New Requirement"
         Me.gbxAddEdit.Visible = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox1.Location = New System.Drawing.Point(460, 56)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(348, 254)
+        Me.PictureBox1.TabIndex = 69
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PictureBox2.Location = New System.Drawing.Point(454, 44)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(359, 276)
+        Me.PictureBox2.TabIndex = 176
+        Me.PictureBox2.TabStop = False
         '
         'Label8
         '
@@ -443,15 +461,6 @@ Partial Class Attachments
         Me.btnUpload.TabIndex = 70
         Me.btnUpload.Text = "Browse Image"
         Me.btnUpload.UseVisualStyleBackColor = False
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(460, 56)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(348, 254)
-        Me.PictureBox1.TabIndex = 69
-        Me.PictureBox1.TabStop = False
         '
         'btnCancel
         '
@@ -623,15 +632,6 @@ Partial Class Attachments
         Me.Label28.Text = "Search"
         Me.Label28.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.PictureBox2.Location = New System.Drawing.Point(454, 44)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(359, 276)
-        Me.PictureBox2.TabIndex = 176
-        Me.PictureBox2.TabStop = False
-        '
         'Attachments
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -648,9 +648,9 @@ Partial Class Attachments
         Me.gbxAddEdit.ResumeLayout(False)
         Me.gbxAddEdit.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxShowClient.ResumeLayout(False)
         Me.gbxShowClient.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
