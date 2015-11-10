@@ -27,6 +27,7 @@ Public Class Clients
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscClients = New Clients
     End Sub
     Private Sub loadCombo()
         Try
