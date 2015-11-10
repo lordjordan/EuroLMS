@@ -765,21 +765,32 @@ Public Class frmCollectibles
                 End If
 
             End If
-            dr = db.ExecuteReader("SELECT principal, terms, interest_percentage, date_end, date_start FROM tbl_loans WHERE loan_id =" & lvCollectibles.FocusedItem.Text)
+            conV = ""
+            dr = db.ExecuteReader("select sum(payable_amt) as payables from tbl_collectibles where loan_id = " & lvCollectibles.FocusedItem.Text)
+            Dim val1 As Double
+            val1 = 0
+            If dr.HasRows Then
+                If dr.Item("payables").ToString <> "" Then
+                    conV = dr.Item("payables").ToString
+                    val1 = CDbl(StrToNum(conV))
+                End If
+            End If
+            val1 = val1 - totalInPayment
+            'dr = db.ExecuteReader("SELECT principal, terms, interest_percentage, date_end, date_start FROM tbl_loans WHERE loan_id =" & lvCollectibles.FocusedItem.Text)
 
 
-            principal = CDbl(StrToNum(dr.Item("principal").ToString))
-            monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
-            biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
-            interest = principal * biMonInterest
-            totalPaymentBiMonth = monthlyRate + interest
-            rembal = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
-            totalLoanAmount = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
-            payable_amt = (totalLoanAmount + penalty + penalty1) - totalInPayment
+            'principal = CDbl(StrToNum(dr.Item("principal").ToString))
+            'monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
+            'biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
+            'interest = principal * biMonInterest
+            'totalPaymentBiMonth = monthlyRate + interest
+            'rembal = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
+            'totalLoanAmount = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
+            'payable_amt = (totalLoanAmount + penalty + penalty1) - totalInPayment
 
             If txtAmount.Text <> "" Then
-                If CDbl(txtAmount.Text) > payable_amt Then
-                    Dim x As String = CStr(payable_amt)
+                If CDbl(txtAmount.Text) > val1 Then
+                    Dim x As String = CStr(val1)
                     If Not x.Contains(".") Then
                         x &= ".00"
                     End If
