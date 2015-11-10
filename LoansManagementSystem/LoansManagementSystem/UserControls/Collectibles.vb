@@ -761,10 +761,6 @@ Public Class frmCollectibles
 
                 If dr.Item("TotalAmount").ToString <> "" Then
                     conV = dr.Item("TotalAmount").ToString
-
-                    Do Until conV.Length = 8
-                        conV = conV.Insert(0, "0")
-                    Loop
                     totalInPayment = CDbl(StrToNum(conV))
                 End If
 
@@ -909,58 +905,180 @@ Public Class frmCollectibles
     End Function
     Private Sub Process_Click(sender As Object, e As EventArgs) Handles Process.Click
         'version 2
-        Try
-            Cursor = Cursors.WaitCursor
-            If MsgBox("Are you sure you want to process the collectibles?", vbExclamation + vbYesNo + vbDefaultButton2, "Proceed?") = MsgBoxResult.Yes Then
-                Dim overallAmount As Double
-                Dim totalInPayment, payableAmt As Double
-                totalInPayment = 0
-                'process mode
-                If lvCollectibles.Items.Count <> 0 Then
-                    For x = 1 To lvCollectibles.Items.Count Step 1 'every items in listview
+        'Try
 
-                        'pagsamahin ang collected amount at inputted amount
-                        If lvCollectibles.Items(x - 1).SubItems(5).Text = "" Or lvCollectibles.Items(x - 1).SubItems(5).Text = "0.00" Then
-                            Continue For
+        Cursor = Cursors.WaitCursor
+        If MsgBox("Are you sure you want to process the collectibles?", vbExclamation + vbYesNo + vbDefaultButton2, "Proceed?") = MsgBoxResult.Yes Then
+            Dim overallAmount As Double
+            Dim totalInPayment, payableAmt As Double
+            totalInPayment = 0
+            'process mode
+            If lvCollectibles.Items.Count <> 0 Then
+                For x = 1 To lvCollectibles.Items.Count Step 1 'every items in listview
+
+                    'pagsamahin ang collected amount at inputted amount
+                    If lvCollectibles.Items(x - 1).SubItems(5).Text = "" Or lvCollectibles.Items(x - 1).SubItems(5).Text = "0.00" Then
+                        Continue For
+                    End If
+                    'inputted amount + collected amount
+                    overallAmount = CDbl(lvCollectibles.Items(x - 1).SubItems(4).Text) + CDbl(lvCollectibles.Items(x - 1).SubItems(5).Text)
+
+                    If lvCollectibles.Items(x - 1).SubItems(11).Text <> "" Then
+                        splitter = Split(lvCollectibles.Items(x - 1).SubItems(11).Text, ",")
+                        For y = 1 To splitter.Length Step 1
+                            'update penalty status by ctb_id adjustment
+                            rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 1 WHERE ctb_id =" & splitter(y - 1))
+                        Next
+                    End If
+
+                    ''need update ng collected amount
+                    'conV = FormatNumber(overallAmount, 2)
+                    'conV = Replace(conV, ",", "")
+
+                    'If Not conV.Contains(".") Then
+                    '    conV &= ".00"
+                    'End If
+                    'splitter = Split(conV, ".")
+                    'If splitter(1).Length = 1 Then
+                    '    splitter(1) &= "0"
+                    'End If
+                    'Do Until splitter(0).Length = 6
+                    '    splitter(0) = splitter(0).Insert(0, "0")
+                    'Loop
+                    'data.Add("collected_amt", splitter(0) & splitter(1))
+                    'rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt WHERE due_date='" _
+                    '                         & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & _
+                    '                         "' AND loan_id= " & lvCollectibles.Items(x - 1).SubItems(0).Text, data)
+                    'data.Clear()
+
+                    'data set ulit para sa adjustment note: tbl_collectibles ay nag babago bago ng data.....
+
+
+                    'insert
+                    data.Add("loan_id", lvCollectibles.Items(x - 1).Text)
+
+                    conV = lvCollectibles.Items(x - 1).SubItems(5).Text
+
+                    data.Add("amount", NumToStr(conV))
+                    data.Add("date_stamp", Format(Date.Now, "yyyyMMdd"))
+                    data.Add("ctb_id", lvCollectibles.Items(x - 1).SubItems(12).Text)
+                    data.Add("payment_status", "0")
+                    rec = db.ExecuteNonQuery("INSERT INTO tbl_payments (loan_id, amount, date_stamp, ctb_id, payment_status) VALUES " & _
+                                          "(@loan_id, @amount, @date_stamp, @ctb_id, @payment_status)", data)
+
+
+                    data.Clear()
+
+                    dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & lvCollectibles.Items(x - 1).Text & " AND payment_status= 0")
+                    If dr.HasRows Then
+
+                        If dr.Item("TotalAmount").ToString <> "" Then
+                            conV = dr.Item("TotalAmount").ToString
+
+                            totalInPayment = CDbl(StrToNum(conV))
+
                         End If
-                        'inputted amount + collected amount
-                        overallAmount = CDbl(lvCollectibles.Items(x - 1).SubItems(4).Text) + CDbl(lvCollectibles.Items(x - 1).SubItems(5).Text)
+                    End If
+                    ''
+                    con.ConnectionString = My.Settings.ConnectionString
+                    query = "SELECT ctb_id, due_date, penalty_status, payable_amt , collected_amt, previous_balance, penalty_amt FROM tbl_collectibles WHERE" & _
+                                          " loan_id = " & lvCollectibles.Items(x - 1).Text & " ORDER by due_date ASC"
+                    da = New SQLite.SQLiteDataAdapter(query, con)
+                    da.Fill(ds, "collectibles")
+                    For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
+                        If ds.Tables("collectibles").Rows(z - 1).Item("penalty_status").ToString = 1 Then
+                            payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) + _
+                                CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("penalty_amt").ToString))
+                            If totalInPayment >= payableAmt Then
+                                totalInPayment = totalInPayment - payableAmt
+                                conV = FormatNumber(payableAmt, 2)
+                                conV = Replace(conV, ",", "")
 
-                        If lvCollectibles.Items(x - 1).SubItems(11).Text <> "" Then
-                            splitter = Split(lvCollectibles.Items(x - 1).SubItems(11).Text, ",")
-                            For y = 1 To splitter.Length Step 1
-                                'update penalty status by ctb_id adjustment
-                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 1 WHERE ctb_id =" & splitter(y - 1))
-                            Next
+                                data.Add("collected_amt", NumToStr(conV))
+                                data.Add("previous_balance", "00000000")
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
+                                                         "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
+
+
+                            Else
+                                conV = FormatNumber(totalInPayment, 2)
+                                conV = Replace(conV, ",", "")
+                                If Not conV.Contains(".") Then
+                                    conV &= ".00"
+                                End If
+                                splitter = Split(conV, ".")
+
+                                If splitter(1).Length = 1 Then
+                                    splitter(1) &= "0"
+                                End If
+                                Do Until splitter(0).Length = 6
+                                    splitter(0) = splitter(0).Insert(0, "0")
+                                Loop
+                                data.Add("collected_amt", splitter(0) & splitter(1))
+                                data.Add("previous_balance", "00000000")
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
+                                                         "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
+                                totalInPayment = 0
+                            End If
+                            data.Clear()
+                        Else
+                            payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString))
+                            If totalInPayment >= payableAmt Then
+                                totalInPayment = totalInPayment - payableAmt
+                                conV = FormatNumber(payableAmt, 2)
+                                conV = Replace(conV, ",", "")
+                                If Not conV.Contains(".") Then
+                                    conV &= ".00"
+                                End If
+                                splitter = Split(conV, ".")
+
+                                If splitter(1).Length = 1 Then
+                                    splitter(1) &= "0"
+                                End If
+                                Do Until splitter(0).Length = 6
+                                    splitter(0) = splitter(0).Insert(0, "0")
+                                Loop
+                                data.Add("collected_amt", splitter(0) & splitter(1))
+                                data.Add("previous_balance", "00000000")
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
+                                                         "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
+
+
+                            Else
+                                conV = FormatNumber(totalInPayment, 2)
+                                conV = Replace(conV, ",", "")
+                                If Not conV.Contains(".") Then
+                                    conV &= ".00"
+                                End If
+                                splitter = Split(conV, ".")
+
+                                If splitter(1).Length = 1 Then
+                                    splitter(1) &= "0"
+                                End If
+                                Do Until splitter(0).Length = 6
+                                    splitter(0) = splitter(0).Insert(0, "0")
+                                Loop
+                                data.Add("collected_amt", splitter(0) & splitter(1))
+                                data.Add("previous_balance", "00000000")
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
+                                                         "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
+                                totalInPayment = 0
+                            End If
+                            data.Clear()
                         End If
+                    Next
 
-                        ''need update ng collected amount
-                        'conV = FormatNumber(overallAmount, 2)
-                        'conV = Replace(conV, ",", "")
+                    ds.Clear()
+                    'previous balance
 
-                        'If Not conV.Contains(".") Then
-                        '    conV &= ".00"
-                        'End If
-                        'splitter = Split(conV, ".")
-                        'If splitter(1).Length = 1 Then
-                        '    splitter(1) &= "0"
-                        'End If
-                        'Do Until splitter(0).Length = 6
-                        '    splitter(0) = splitter(0).Insert(0, "0")
-                        'Loop
-                        'data.Add("collected_amt", splitter(0) & splitter(1))
-                        'rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt WHERE due_date='" _
-                        '                         & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & _
-                        '                         "' AND loan_id= " & lvCollectibles.Items(x - 1).SubItems(0).Text, data)
-                        'data.Clear()
-
-                        'data set ulit para sa adjustment note: tbl_collectibles ay nag babago bago ng data.....
-
-
-                        'insert
-                        data.Add("loan_id", lvCollectibles.Items(x - 1).Text)
-
-                        conV = lvCollectibles.Items(x - 1).SubItems(5).Text
+                    previousBalance = 0
+                    query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
+                        uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " ORDER BY due_date ASC"
+                    da = New SQLite.SQLiteDataAdapter(query, con)
+                    da.Fill(ds, "collectibles")
+                    For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
+                        'update
+                        conV = previousBalance
                         If Not conV.Contains(".") Then
                             conV &= ".00"
                         End If
@@ -972,255 +1090,112 @@ Public Class frmCollectibles
                         Do Until splitter(0).Length = 6
                             splitter(0) = splitter(0).Insert(0, "0")
                         Loop
-                        data.Add("amount", splitter(0) & splitter(1))
-                        data.Add("date_stamp", Format(Date.Now, "yyyyMMdd"))
-                        data.Add("ctb_id", lvCollectibles.Items(x - 1).SubItems(12).Text)
-                        data.Add("payment_status", "0")
-                        rec = db.ExecuteNonQuery("INSERT INTO tbl_payments (loan_id, amount, date_stamp, ctb_id, payment_status) VALUES " & _
-                                              "(@loan_id, @amount, @date_stamp, @ctb_id, @payment_status)", data)
+                        ds.Tables("collectibles").Rows(z - 1).Item("previous_balance") = splitter(0) & splitter(1)
+                        data.Add("previous_balance", splitter(0) & splitter(1))
 
-
+                        rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET  previous_balance=@previous_balance " & _
+                                             " WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item(0), data)
                         data.Clear()
+                        If ds.Tables("collectibles").Rows(z - 1).Item("penalty_status").ToString = 1 Then
 
-                        dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & lvCollectibles.Items(x - 1).Text & " AND payment_status= 0")
-                        If dr.HasRows Then
-
-                            If dr.Item("TotalAmount").ToString <> "" Then
-                                conV = dr.Item("TotalAmount").ToString
-
-                                Do Until conV.Length = 8
-                                    conV = conV.Insert(0, "0")
-                                Loop
-                                totalInPayment = CDbl(StrToNum(conV))
-
-                            End If
-                        End If
-                        ''
-                        con.ConnectionString = My.Settings.ConnectionString
-                        query = "SELECT ctb_id, due_date, penalty_status, payable_amt , collected_amt, previous_balance, penalty_amt FROM tbl_collectibles WHERE" & _
-                                              " loan_id = " & lvCollectibles.Items(x - 1).Text & " ORDER by due_date ASC"
-                        da = New SQLite.SQLiteDataAdapter(query, con)
-                        da.Fill(ds, "collectibles")
-                        For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
-                            If ds.Tables("collectibles").Rows(z - 1).Item("penalty_status").ToString = 1 Then
-                                payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) + _
-                                    CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("penalty_amt").ToString))
-                                If totalInPayment >= payableAmt Then
-                                    totalInPayment = totalInPayment - payableAmt
-                                    conV = FormatNumber(payableAmt, 2)
-                                    conV = Replace(conV, ",", "")
-                                    If Not conV.Contains(".") Then
-                                        conV &= ".00"
-                                    End If
-                                    splitter = Split(conV, ".")
-
-                                    If splitter(1).Length = 1 Then
-                                        splitter(1) &= "0"
-                                    End If
-                                    Do Until splitter(0).Length = 6
-                                        splitter(0) = splitter(0).Insert(0, "0")
-                                    Loop
-                                    data.Add("collected_amt", splitter(0) & splitter(1))
-                                    data.Add("previous_balance", "00000000")
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
-                                                             "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
-
-
-                                Else
-                                    conV = FormatNumber(totalInPayment, 2)
-                                    conV = Replace(conV, ",", "")
-                                    If Not conV.Contains(".") Then
-                                        conV &= ".00"
-                                    End If
-                                    splitter = Split(conV, ".")
-
-                                    If splitter(1).Length = 1 Then
-                                        splitter(1) &= "0"
-                                    End If
-                                    Do Until splitter(0).Length = 6
-                                        splitter(0) = splitter(0).Insert(0, "0")
-                                    Loop
-                                    data.Add("collected_amt", splitter(0) & splitter(1))
-                                    data.Add("previous_balance", "00000000")
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
-                                                             "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
-                                    totalInPayment = 0
-                                End If
-                                data.Clear()
+                            If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) _
+                                                  + CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("previous_balance").ToString)) Then
+                                previousBalance += 0
                             Else
-                                payableAmt = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString))
-                                If totalInPayment >= payableAmt Then
-                                    totalInPayment = totalInPayment - payableAmt
-                                    conV = FormatNumber(payableAmt, 2)
-                                    conV = Replace(conV, ",", "")
-                                    If Not conV.Contains(".") Then
-                                        conV &= ".00"
-                                    End If
-                                    splitter = Split(conV, ".")
-
-                                    If splitter(1).Length = 1 Then
-                                        splitter(1) &= "0"
-                                    End If
-                                    Do Until splitter(0).Length = 6
-                                        splitter(0) = splitter(0).Insert(0, "0")
-                                    Loop
-                                    data.Add("collected_amt", splitter(0) & splitter(1))
-                                    data.Add("previous_balance", "00000000")
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
-                                                             "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
-
-
-                                Else
-                                    conV = FormatNumber(totalInPayment, 2)
-                                    conV = Replace(conV, ",", "")
-                                    If Not conV.Contains(".") Then
-                                        conV &= ".00"
-                                    End If
-                                    splitter = Split(conV, ".")
-
-                                    If splitter(1).Length = 1 Then
-                                        splitter(1) &= "0"
-                                    End If
-                                    Do Until splitter(0).Length = 6
-                                        splitter(0) = splitter(0).Insert(0, "0")
-                                    Loop
-                                    data.Add("collected_amt", splitter(0) & splitter(1))
-                                    data.Add("previous_balance", "00000000")
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET collected_amt=@collected_amt,previous_balance=@previous_balance " & _
-                                                             "WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString, data)
-                                    totalInPayment = 0
-                                End If
-                                data.Clear()
+                                previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) + _
+                                CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("penalty_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString))
                             End If
-                        Next
 
-                        ds.Clear()
-                        'previous balance
-
-                        previousBalance = 0
-                        query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
-                            uscCollectibles.lvCollectibles.FocusedItem.SubItems(0).Text & " ORDER BY due_date ASC"
-                        da = New SQLite.SQLiteDataAdapter(query, con)
-                        da.Fill(ds, "collectibles")
-                        For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
-                            'update
-                            conV = previousBalance
-                            If Not conV.Contains(".") Then
-                                conV &= ".00"
-                            End If
-                            splitter = Split(conV, ".")
-
-                            If splitter(1).Length = 1 Then
-                                splitter(1) &= "0"
-                            End If
-                            Do Until splitter(0).Length = 6
-                                splitter(0) = splitter(0).Insert(0, "0")
-                            Loop
-                            ds.Tables("collectibles").Rows(z - 1).Item("previous_balance") = splitter(0) & splitter(1)
-                            data.Add("previous_balance", splitter(0) & splitter(1))
-
-                            rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET  previous_balance=@previous_balance " & _
-                                                 " WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item(0), data)
-                            data.Clear()
-                            If ds.Tables("collectibles").Rows(z - 1).Item("penalty_status").ToString = 1 Then
-
-                                If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) _
-                                                      + CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("previous_balance").ToString)) Then
-                                    previousBalance += 0
-                                Else
-                                    previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) + _
-                                    CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("penalty_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString))
-                                End If
-
+                        Else
+                            If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) Then
+                                previousBalance += 0
                             Else
-                                If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) Then
-                                    previousBalance += 0
-                                Else
-                                    previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString))
-                                End If
-
-                            End If
-
-                        Next
-
-                        ds.Clear()
-
-                        'update penalty status mga date na sumunod
-                        query = "SELECT collected_amt, payable_amt, ctb_id FROM tbl_collectibles WHERE due_date >  '" & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "'"
-                        da = New SQLite.SQLiteDataAdapter(query, con)
-                        da.Fill(ds, "collectibles")
-                        If ds.Tables("collectibles").Rows.Count <> 0 Then
-                            For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
-                                If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = _
-                                   CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) Then
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE ctb_id =" & _
-                                                             ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
-                                End If
-                            Next
-                        End If
-                        '---------------------here's penalty status? new codes added -----------------
-                        dr = db.ExecuteReader("SELECT penalty_status,payable_amt , previous_balance, collected_amt FROM tbl_collectibles WHERE due_date = '" & _
-                                              Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "' AND " & _
-                                              "loan_id = " & lvCollectibles.Items(x - 1).Text)
-
-                        If dr.Item("penalty_status").ToString = "0" And CDbl(StrToNum(dr.Item("payable_amt").ToString)) + CDbl(StrToNum(dr.Item("previous_balance").ToString)) = _
-                            CDbl(StrToNum(dr.Item("collected_amt").ToString)) Then
-                            rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE due_date = '" & _
-                                              Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd") & "' AND " & _
-                                              "loan_id = " & lvCollectibles.Items(x - 1).Text)
-                        End If
-                        '-------------------------------end of added code----------------------------'
-                        '
-                        'get min for previousbal
-                        'tignan natin here kung equal or greater than na ang last payment nya at kapag ganoon loan status will equal
-                        'to 2 means COMPLETED. code starts here
-                        'store the ID
-
-                        'data.Add("collected_amt",) computationS
-                        dr = db.ExecuteReader("SELECT max(due_date) as petsa, max(ctb_id) as high,payable_amt, collected_amt, previous_balance, penalty_amt,penalty_status  FROM tbl_collectibles WHERE due_date >= '" & _
-                                                 Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND loan_id= " & _
-                                                 lvCollectibles.Items(x - 1).Text)
-
-                        If dr.HasRows Then
-                            If dr.Item("petsa").ToString <> "" Then
-                                If dr.Item("penalty_status").ToString = 1 Then
-                                    If CDbl(StrToNum(dr.Item("collected_amt").ToString)) = CDbl(StrToNum(dr.Item("payable_amt").ToString)) _
-                                            + CDbl(StrToNum(dr.Item("penalty_amt").ToString)) + CDbl(StrToNum(dr.Item("previous_balance").ToString)) Then
-                                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
-                                    End If
-                                Else
-                                    If CDbl(StrToNum(dr.Item("collected_amt").ToString)) = CDbl(StrToNum(dr.Item("payable_amt").ToString)) _
-                                             + CDbl(StrToNum(dr.Item("previous_balance").ToString)) Then
-                                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
-                                    End If
-                                End If
+                                previousBalance += (CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString))) - CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString))
                             End If
 
                         End If
-                        ds.Clear()
-                        con.Close()
+
                     Next
 
-                    ShowData()
-                    MsgBox("Process completed!", MsgBoxStyle.Information, "EMS")
-                End If
-            End If
-            Cursor = Cursors.Arrow
+                    ds.Clear()
 
-        Catch ex As Exception
-            MsgBox(ex.ToString, MsgBoxStyle.Critical)
-        Finally
-            db.Dispose()
-            con.Dispose() ' pag may error eto lang huli kong dinagdag
-        End Try
+                    'update penalty status mga date na sumunod
+                    query = "SELECT collected_amt, payable_amt, ctb_id FROM tbl_collectibles WHERE due_date >  '" & Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "'"
+                    da = New SQLite.SQLiteDataAdapter(query, con)
+                    da.Fill(ds, "collectibles")
+                    If ds.Tables("collectibles").Rows.Count <> 0 Then
+                        For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
+                            If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = _
+                               CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) Then
+                                rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE ctb_id =" & _
+                                                         ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
+                            End If
+                        Next
+                    End If
+                    '---------------------here's penalty status? new codes added -----------------
+
+                    dr = db.ExecuteReader("SELECT penalty_status,payable_amt , previous_balance, collected_amt FROM tbl_collectibles WHERE due_date = '" & _
+                                          Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND " & _
+                                          "loan_id = " & lvCollectibles.Items(x - 1).Text)
+                    
+                    If dr.Item("penalty_status").ToString = "0" And CDbl(StrToNum(dr.Item("payable_amt").ToString)) + CDbl(StrToNum(dr.Item("previous_balance").ToString)) = _
+                        CDbl(StrToNum(dr.Item("collected_amt").ToString)) Then
+                        rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE due_date = '" & _
+                                          Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND " & _
+                                          "loan_id = " & lvCollectibles.Items(x - 1).Text)
+                    End If
+                    '-------------------------------end of added code----------------------------'
+                    '
+                    'get min for previousbal
+                    'tignan natin here kung equal or greater than na ang last payment nya at kapag ganoon loan status will equal
+                    'to 2 means COMPLETED. code starts here
+                    'store the ID
+
+                    'data.Add("collected_amt",) computationS
+                    dr = db.ExecuteReader("SELECT max(due_date) as petsa, max(ctb_id) as high,payable_amt, collected_amt, previous_balance, penalty_amt,penalty_status  FROM tbl_collectibles WHERE due_date >= '" & _
+                                             Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND loan_id= " & _
+                                             lvCollectibles.Items(x - 1).Text)
+
+                    If dr.HasRows Then
+                        If dr.Item("petsa").ToString <> "" Then
+                            If dr.Item("penalty_status").ToString = 1 Then
+                                If CDbl(StrToNum(dr.Item("collected_amt").ToString)) = CDbl(StrToNum(dr.Item("payable_amt").ToString)) _
+                                        + CDbl(StrToNum(dr.Item("penalty_amt").ToString)) + CDbl(StrToNum(dr.Item("previous_balance").ToString)) Then
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
+                                End If
+                            Else
+                                If CDbl(StrToNum(dr.Item("collected_amt").ToString)) = CDbl(StrToNum(dr.Item("payable_amt").ToString)) _
+                                         + CDbl(StrToNum(dr.Item("previous_balance").ToString)) Then
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status =2  WHERE loan_id =" & lvCollectibles.Items(x - 1).Text)
+                                End If
+                            End If
+                        End If
+
+                    End If
+                    ds.Clear()
+                    con.Close()
+                Next
+
+                ShowData()
+                MsgBox("Process completed!", MsgBoxStyle.Information, "EMS")
+            End If
+        End If
+        Cursor = Cursors.Arrow
+
+        'Catch ex As Exception
+        '    MsgBox(ex.ToString, MsgBoxStyle.Critical)
+        'Finally
+        '    db.Dispose()
+        '    con.Dispose() ' pag may error eto lang huli kong dinagdag
+        'End Try
 
 
 
         'try catch don't forget
-        Exit Sub
+
         'END of VERSION 2
 
-        
+
     End Sub
 
 
