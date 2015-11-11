@@ -415,7 +415,6 @@ Partial Class LoansV2
         '
         Me.gbxAddEdit.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxAddEdit.BackColor = System.Drawing.Color.LightGray
-        Me.gbxAddEdit.Controls.Add(Me.gbxShowClient)
         Me.gbxAddEdit.Controls.Add(Me.PictureBox2)
         Me.gbxAddEdit.Controls.Add(Me.PictureBox1)
         Me.gbxAddEdit.Controls.Add(Me.gbxClientData)
@@ -424,6 +423,7 @@ Partial Class LoansV2
         Me.gbxAddEdit.Controls.Add(Me.btnSave)
         Me.gbxAddEdit.Controls.Add(Me.btnCancel)
         Me.gbxAddEdit.Controls.Add(Me.GroupBox1)
+        Me.gbxAddEdit.Controls.Add(Me.gbxShowClient)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAddEdit.Location = New System.Drawing.Point(194, 8)
@@ -1129,6 +1129,7 @@ Partial Class LoansV2
         Me.GroupBox1.Size = New System.Drawing.Size(298, 98)
         Me.GroupBox1.TabIndex = 173
         Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Visible = False
         '
         'Button1
         '

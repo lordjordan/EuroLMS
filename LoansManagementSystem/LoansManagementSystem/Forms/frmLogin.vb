@@ -103,11 +103,11 @@ Public Class frmLogin
 
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'frmMainPanel.Close()
-        Dim x As New SGTSIsafe.SGTSI
-        If x.checkDate("20170101") Then               'Format(Now.Date, "yyyyMMdd")) = False Then
-            MsgBox("License expired. Please contact your system administrator", MsgBoxStyle.Critical)
-            End
-        End If
+        'Dim x As New SGTSIsafe.SGTSI
+        'If x.checkDate("20170101") Then               'Format(Now.Date, "yyyyMMdd")) = False Then
+        '    MsgBox("License expired. Please contact your system administrator", MsgBoxStyle.Critical)
+        '    End
+        'End If
         txtUser.Text = ""
         txtPassword.Text = ""
         SetCueText(txtUser, "Username")

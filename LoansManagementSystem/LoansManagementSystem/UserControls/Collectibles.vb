@@ -1209,10 +1209,13 @@ Public Class frmCollectibles
 
     End Sub
 
+  
+
 
 
     Private Sub lvDuedates_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles lvDuedates.ItemChecked
-        'saka na itu
+        'plan b refresh icon sa tabi o sa baba ni amount
+        ' saka na itu
 
         'Dim val, val3 As Double
         'val = 0
@@ -1771,4 +1774,7 @@ Public Class frmCollectibles
     End Sub
     
   
+    Private Sub lvDuedates_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDuedates.SelectedIndexChanged
+
+    End Sub
 End Class

@@ -15,6 +15,8 @@ Public Class Branches
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscBranches = New Branches
+
     End Sub
 
     Private Sub btnAddbranch_Click(sender As Object, e As EventArgs) Handles btnAddbranch.Click

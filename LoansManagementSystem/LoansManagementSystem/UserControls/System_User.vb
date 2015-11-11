@@ -38,6 +38,7 @@ Public Class System_User
     End Sub
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscSystemUser = New System_User
     End Sub
 
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click

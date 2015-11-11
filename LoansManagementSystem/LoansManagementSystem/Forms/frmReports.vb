@@ -87,7 +87,7 @@ Public Class frmReports
             con.ConnectionString = My.Settings.ConnectionString
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
-            query = "select client_id, employee_no, first_name || ' ' || middle_name || ' ' || last_name as name, company_name, branch_name, address,contact_number, credit_limit " & _
+            query = "select client_id, employee_no, first_name || ' ' || middle_name || ' ' || last_name as name, company_name, branch_name, address,contact_number, (cast(credit_limit as currency)) * 0.01 'credit_limit' " & _
                             "from (SELECT * FROM tbl_clients WHERE status_info = 1) as A " & _
                             "left join tbl_branches as B on A.branch_id=B.branch_id " & _
                             "left join tbl_company as C on B.company_id=C.company_id " & _
@@ -224,7 +224,7 @@ Public Class frmReports
         Try
             con.ConnectionString = My.Settings.ConnectionString
 
-            'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
+            'queryss = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
                                 "terms, date_start, date_end, company_name, branch_name " & _
                                 "from (SELECT * from tbl_loans where loan_status=1) as L " & _

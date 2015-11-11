@@ -14,6 +14,7 @@ Public Class Attachments
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         showUSC(uscMainmenu)
+        uscAttachments = New Attachments
     End Sub
     Private Sub clearAll()
         txtReqID.Text = ""
