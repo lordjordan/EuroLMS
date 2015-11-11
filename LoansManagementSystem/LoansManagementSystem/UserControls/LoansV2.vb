@@ -376,7 +376,7 @@ Public Class LoansV2
                     active_loan_id = dr.Item("id")
                 End If
 
-                log("Initial process of loan record saving. loan_id = " + active_loan_id)
+                log("Initial process of loan record saving. loan_id = " & Str(active_loan_id))
             Catch ex As Exception
                 MsgBox(ex.ToString)
 
@@ -661,7 +661,7 @@ Public Class LoansV2
             If dr.HasRows Then
 
                 If dr.Item("amt").ToString <> "" Then
-                  
+
                     overAllPayment = StrToNum(dr.Item("amt").ToString)
                 End If
 
@@ -671,7 +671,7 @@ Public Class LoansV2
 
             If dr.HasRows Then
                 If dr.Item("amt").ToString <> "" Then
-                   
+
                     overAllPenaltyStats = StrToNum(dr.Item("amt").ToString)
 
                 Else

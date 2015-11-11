@@ -11,5 +11,8 @@
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=D:\LMSdb\LMS.s3db; Version=3;</Value>
     </Setting>
+    <Setting Name="PCName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jordan-PC</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

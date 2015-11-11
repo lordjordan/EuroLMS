@@ -96,7 +96,7 @@ Public Class frmLogin
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
-        
+
 
         End Try
     End Sub

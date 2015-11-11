@@ -84,11 +84,13 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>bin\Debug\microsoft.office.interop.excel.dll</HintPath>
     </Reference>
+    <Reference Include="SGTSIsafe">
+      <HintPath>D:\LMSdb\SGTSIsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\System.Data.SQLite.DLL\System.Data.SQLite.DLL</HintPath>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>D:\LMSdb\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -252,6 +254,12 @@
       <DependentUpon>PaymentCentral.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\SOA.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SOA.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\Attachments.Designer.vb">
       <DependentUpon>Attachments.vb</DependentUpon>
     </Compile>
@@ -395,6 +403,10 @@
     <EmbeddedResource Include="Reports\PaymentCentral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PaymentCentral.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SOA.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SOA.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Attachments.resx">
       <DependentUpon>Attachments.vb</DependentUpon>
