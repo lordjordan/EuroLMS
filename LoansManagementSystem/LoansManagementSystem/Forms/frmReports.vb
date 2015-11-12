@@ -186,7 +186,7 @@ Public Class frmReports
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
-                                "terms, date_start, date_end, company_name, branch_name " & _
+                                "terms, date_start, date_end, company_name, branch_name, loan_status " & _
                                 "from (SELECT * from tbl_loans where loan_status=0) as L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -226,7 +226,7 @@ Public Class frmReports
 
             'queryss = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
-                                "terms, date_start, date_end, company_name, branch_name " & _
+                                "terms, date_start, date_end, company_name, branch_name, loan_status " & _
                                 "from (SELECT * from tbl_loans where loan_status=1) as L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -266,7 +266,7 @@ Public Class frmReports
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
-                                "terms, date_start, date_end, company_name, branch_name " & _
+                                "terms, date_start, date_end, company_name, branch_name, loan_status " & _
                                 "from (SELECT * from tbl_loans where loan_status=2) as L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -306,7 +306,7 @@ Public Class frmReports
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
-                                "terms, date_start, date_end, company_name, branch_name " & _
+                                "terms, date_start, date_end, company_name, branch_name, loan_status " & _
                                 "from (SELECT * from tbl_loans where loan_status=3) as L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
@@ -346,7 +346,7 @@ Public Class frmReports
 
             'query = "Select client_id ,company_name, branch_name, first_name || ' ' || middle_name || ' ' || last_name as name, address, contact_number, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id WHERE status_info=1"
             query = "select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], (cast(principal as currency)) * 0.01 'principal' , (cast(amortization as currency)) * 0.01 'amortization', interest_percentage, " & _
-                                "terms, date_start, date_end, company_name, branch_name " & _
+                                "terms, date_start, date_end, company_name, branch_name, loan_status " & _
                                 "from (SELECT * from tbl_loans where loan_status=4) as L " & _
                                 "left join tbl_clients C on L.client_id = C.client_id " & _
                                 "left join tbl_branches B on C.branch_id = B.branch_id " & _
