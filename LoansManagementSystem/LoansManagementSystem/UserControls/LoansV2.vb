@@ -172,13 +172,14 @@ Public Class LoansV2
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If validateInputs() = False Then Exit Sub
         ComputeAvailableCredit(txtClientID.Text)
-        If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+        If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
 
             MsgBox("Principal is exceed to available credit" & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
             Exit Sub
         End If
-        If validateInputs() = False Then Exit Sub
+
 
         If gbxAddEdit.Text = "New Loan Application" Then
             saveNewForm()
