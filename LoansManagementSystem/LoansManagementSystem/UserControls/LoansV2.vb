@@ -443,7 +443,7 @@ Public Class LoansV2
                     'active_loan_id = dr.Item("id")
                 End If
 
-                log("Initial process of loan record saving (EDITTING). loan_id = " + active_loan_id)
+                log("Initial process of loan record saving (EDITTING). loan_id = " & Str(active_loan_id))
 
             Catch ex As Exception
                 MsgBox(ex.ToString)
