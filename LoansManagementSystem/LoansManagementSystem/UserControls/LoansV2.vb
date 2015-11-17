@@ -628,7 +628,7 @@ Public Class LoansV2
         'txtTotalLoanAmount.Text = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
         'txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
         'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
-        'get the credit limit
+        'get the credit limit 
         Try
             dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
             If dr.HasRows Then
