@@ -172,13 +172,14 @@ Public Class LoansV2
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If validateInputs() = False Then Exit Sub
         ComputeAvailableCredit(txtClientID.Text)
-        If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+        If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
 
             MsgBox("Principal is exceed to available credit" & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
             Exit Sub
         End If
-        If validateInputs() = False Then Exit Sub
+
 
         If gbxAddEdit.Text = "New Loan Application" Then
             saveNewForm()
@@ -627,7 +628,7 @@ Public Class LoansV2
         'txtTotalLoanAmount.Text = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
         'txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
         'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
-        'get the credit limit
+        'get the credit limit 
         Try
             dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
             If dr.HasRows Then
