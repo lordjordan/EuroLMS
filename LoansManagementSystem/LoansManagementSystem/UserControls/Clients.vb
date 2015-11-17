@@ -20,6 +20,9 @@ Public Class Clients
     Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
 
+    Private lvwColumnSorter As ListViewColumnSorter
+
+
     Private Sub showAddEdit(mode As Boolean)
         gbxAddEdit.Visible = mode
         pnlMain.Enabled = Not mode
@@ -447,6 +450,9 @@ Public Class Clients
         loadcompany()
         loadEmpType()
         'loadBranch()
+
+        lvwColumnSorter = New ListViewColumnSorter
+        ListView1.ListViewItemSorter = lvwColumnSorter
     End Sub
 
     Private Sub loadBranch()
@@ -682,7 +688,7 @@ Public Class Clients
                 If dr.HasRows Then
                     'MsgBox("May loan.")
                     'HINDI PWEDE I DISABLE
-                    Dim msgrslt As MsgBoxResult = MsgBox("This client has a loan already. ''CANNOT BE DISABLE''", vbExclamation, "Message alert")
+                    Dim msgrslt As MsgBoxResult = MsgBox("This client has a loan already. Client record 'CANNOT BE DISABLED'.", vbExclamation, "Message alert")
 
                 Else
                     'DISABLE A CLIENT
@@ -719,6 +725,30 @@ Public Class Clients
         If e.KeyCode = Keys.Enter Then
             SearchInfo()
         End If
+    End Sub
+
+    Private Sub ListView1_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles ListView1.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
+
+        ' Perform the sort with these new sort options.
+        Me.ListView1.Sort()
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
+
     End Sub
 End Class
 

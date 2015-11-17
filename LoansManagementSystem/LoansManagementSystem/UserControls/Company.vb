@@ -6,6 +6,7 @@ Public Class Company
     Dim db As New DBHelper(My.Settings.ConnectionString)
     Dim dr As SQLite.SQLiteDataReader
     Dim cmd As SQLite.SQLiteCommand
+    Private lvwColumnSorter As ListViewColumnSorter
 
     Private Sub showAddEdit(mode As Boolean)
         gbxAddEdit.Visible = mode
@@ -190,6 +191,9 @@ Public Class Company
             btnEdit.Enabled = False
         End If
         LoadListview()
+
+        lvwColumnSorter = New ListViewColumnSorter
+        ListView1.ListViewItemSorter = lvwColumnSorter
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
@@ -266,5 +270,30 @@ Public Class Company
         frm.lblHeader.Text = "Company Report"
         frm.lblHeader.ForeColor = Color.Tomato
         frm.ShowDialog()
+    End Sub
+
+    Private Sub ListView1_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles ListView1.ColumnClick
+        ' Determine if the clicked column is already the column that is 
+        ' being sorted.
+        If (e.Column = lvwColumnSorter.SortColumn) Then
+            ' Reverse the current sort direction for this column.
+            If (lvwColumnSorter.Order = SortOrder.Ascending) Then
+                lvwColumnSorter.Order = SortOrder.Descending
+            Else
+                lvwColumnSorter.Order = SortOrder.Ascending
+            End If
+        Else
+            ' Set the column number that is to be sorted; default to ascending.
+            lvwColumnSorter.SortColumn = e.Column
+            lvwColumnSorter.Order = SortOrder.Ascending
+        End If
+
+        ' Perform the sort with these new sort options.
+        Me.ListView1.Sort()
+
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
+
     End Sub
 End Class

@@ -1141,6 +1141,7 @@ Fix2:
     End Sub
 
     Private Sub lvLoanList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.SelectedIndexChanged
+
     End Sub
 
     Private Sub txtSearchLoan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtSearchLoan.KeyPress
@@ -1190,5 +1191,9 @@ Fix2:
         frm.lblHeader.Text = "Loans Report"
         frm.lblHeader.ForeColor = Color.DarkViolet
         frm.ShowDialog()
+    End Sub
+
+    Private Sub lvLoanList_TabIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.TabIndexChanged
+
     End Sub
 End Class
