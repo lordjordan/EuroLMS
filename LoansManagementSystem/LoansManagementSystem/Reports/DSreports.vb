@@ -1,11 +1,5 @@
 ﻿Partial Class DSreports
-    Partial Class PaymentDataTable
-
-        Private Sub PaymentDataTable_PaymentRowChanging(sender As Object, e As PaymentRowChangeEvent) Handles Me.PaymentRowChanging
-
-        End Sub
-
-    End Class
+    
 
     Partial Class Detailed_ReportDataTable
 
