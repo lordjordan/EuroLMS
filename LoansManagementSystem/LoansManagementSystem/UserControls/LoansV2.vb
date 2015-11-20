@@ -176,7 +176,7 @@ Public Class LoansV2
         ComputeAvailableCredit(txtClientID.Text)
         If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
 
-            MsgBox("Principal is exceed to available credit" & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+            MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
             Exit Sub
         End If
 

@@ -997,8 +997,8 @@ Partial Class frmCollectibles
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
         Me.Controls.Add(Me.gbxPH)
-        Me.Controls.Add(Me.gbxPrint)
         Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxPrint)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)
         Me.pnlMain.ResumeLayout(False)

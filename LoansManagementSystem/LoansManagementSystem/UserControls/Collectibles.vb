@@ -733,13 +733,13 @@ Public Class frmCollectibles
         penalty1 = 0
         payable_amt = 0
         Try
-            dr = db.ExecuteReader("SELECT penalty_amt,penalty_status FROM tbl_collectibles WHERE loan_id = " & lvCollectibles.FocusedItem.Text & _
-                                  " AND due_date = " & Format(CDate(lvCollectibles.FocusedItem.SubItems(1).Text), "yyyyMMdd"))
+            dr = db.ExecuteReader("SELECT penalty_amt,penalty_status FROM tbl_collectibles WHERE loan_id = " & lvCollectibles.FocusedItem.Text _
+                                  )
             If dr.HasRows Then
 
                 Do While dr.Read
                     If dr.Item("penalty_status").ToString = 1 Then
-                        penalty1 = CDbl(StrToNum(dr.Item("penalty_amt").ToString))
+                        penalty1 += CDbl(StrToNum(dr.Item("penalty_amt").ToString))
                     End If
 
                 Loop
@@ -775,7 +775,7 @@ Public Class frmCollectibles
                     val1 = CDbl(StrToNum(conV))
                 End If
             End If
-            val1 = val1 - totalInPayment
+            val1 = val1 - (totalInPayment - penalty1)
             'dr = db.ExecuteReader("SELECT principal, terms, interest_percentage, date_end, date_start FROM tbl_loans WHERE loan_id =" & lvCollectibles.FocusedItem.Text)
 
 
@@ -1323,10 +1323,10 @@ brgy:
                     If Not conV.Contains(".") Then
                         conV &= ".00"
                     End If
-                    txtCollectedAmt.Text = conV - penalty
+                    txtCollectedAmt.Text = conV
 
 
-                    txtBalance.Text = (rembal - CDbl(txtCollectedAmt.Text)) + penalty
+                    txtBalance.Text = (rembal - CDbl(txtCollectedAmt.Text - penalty))
 
                     If Not txtBalance.Text.Contains(".") Then
                         txtBalance.Text &= ".00"

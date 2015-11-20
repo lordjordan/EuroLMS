@@ -355,6 +355,7 @@
             End If
             uscCollectibles.btnCancelColl.Enabled = False
             uscCollectibles.gbxClientCollectible.BringToFront()
+
             MsgBox("Records of penalties are updated!", MsgBoxStyle.Information, "Sucessfully updated!")
             Cursor = Cursors.Arrow
         Catch ex As Exception
