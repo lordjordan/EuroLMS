@@ -382,6 +382,21 @@
 
                         Next
                         ds.Clear()
+
+                        query = "SELECT collected_amt, payable_amt, ctb_id FROM tbl_collectibles WHERE loan_id = " & txtLoanid.Text
+                        da = New SQLite.SQLiteDataAdapter(query, con)
+                        da.Fill(ds, "collectibles")
+
+                        If ds.Tables("collectibles").Rows.Count <> 0 Then
+                            For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
+                                If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = 0 Then
+                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 0 WHERE ctb_id =" & _
+                                                             ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
+                                End If
+                            Next
+
+                        End If
+                        ds.Clear()
                         previousBalance = 0
                         query = "SELECT ctb_id, previous_balance, payable_amt, penalty_status, penalty_amt, collected_amt FROM tbl_collectibles WHERE loan_id = " & _
                             txtLoanid.Text
@@ -426,24 +441,6 @@
                                 End If
                             End If
                         Next
-
-                        ds.Clear()
-                        query = "SELECT collected_amt, payable_amt, ctb_id FROM tbl_collectibles WHERE due_date >=  '" & Format(Date.Now, "yyyyMMdd") & "' AND loan_id = " & txtLoanid.Text
-                        da = New SQLite.SQLiteDataAdapter(query, con)
-                        da.Fill(ds, "collectibles")
-
-                        If ds.Tables("collectibles").Rows.Count <> 0 Then
-                            For z = 1 To ds.Tables("collectibles").Rows.Count Step 1
-                                If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) <> _
-                                   CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("payable_amt").ToString)) Then
-                                    rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 0 WHERE ctb_id =" & _
-                                                             ds.Tables("collectibles").Rows(z - 1).Item("ctb_id").ToString)
-                                End If
-                            Next
-                            rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 1 WHERE loan_id =" & _
-                                                             txtLoanid.Text)
-                        End If
-                        ds.Clear()
                         con.Close()
                         MsgBox("Payment was voided successfully", MsgBoxStyle.Information, "Voided")
 

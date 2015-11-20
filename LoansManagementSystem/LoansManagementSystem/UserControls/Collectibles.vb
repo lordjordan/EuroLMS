@@ -71,8 +71,8 @@ Public Class frmCollectibles
                 "FROM tbl_collectibles  WHERE due_date <= '" & Format(Date.Now, "yyyyMMdd") & "') as tblCol " & _
                 "INNER JOIN tbl_loans ON tbl_loans.loan_id = tblCol.loan_id INNER JOIN " & _
                 "tbl_clients ON tbl_loans.client_id = tbl_clients.client_id WHERE tblCol.loan_id LIKE '%" & _
-                 txtSearchLoan.Text & "%' OR last_name LIKE '%" & txtSearchLoan.Text & "%' " & _
-                 "OR first_name LIKE '%" & txtSearchLoan.Text & "%' OR middle_name LIKE '%" & txtSearchLoan.Text & _
+                 txtSearchLoan.Text & "%' AND last_name LIKE '%" & txtSearchLoan.Text & "%' " & _
+                 "AND first_name LIKE '%" & txtSearchLoan.Text & "%' AND middle_name LIKE '%" & txtSearchLoan.Text & _
                  "%' AND tbl_loans.loan_status = 1 GROUP BY tblCol.loan_id"
             da = New SQLite.SQLiteDataAdapter(query, con)
             da.Fill(ds, "collectibles")
@@ -271,7 +271,7 @@ Public Class frmCollectibles
         con.ConnectionString = My.Settings.ConnectionString
         'version 2
         Try
-
+            
 
 
 
@@ -1216,27 +1216,31 @@ Public Class frmCollectibles
     Private Sub lvDuedates_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles lvDuedates.ItemChecked
         'plan b refresh icon sa tabi o sa baba ni amount
         ' saka na itu
+        On Error GoTo brgy
+        Dim val, val3 As Double
+        val = 0
 
-        'Dim val, val3 As Double
-        'val = 0
+        val3 = 0
+        payableAmount = CDbl(lvCollectibles.FocusedItem.SubItems(3).Text) - CDbl(lvCollectibles.FocusedItem.SubItems(6).Text)
+        If gbxClientCollectible.Enabled = True Then '
+            For x = 1 To lvDuedates.Items.Count Step 1
 
-        'val3 = 0
-        'payableAmount = lvCollectibles.FocusedItem.SubItems(3).Text
-        'If gbxClientCollectible.Enabled = True Then '
-        '    For x = 1 To lvDuedates.Items.Count Step 1
-        '        If lvDuedates.Items(x - 1).Checked = True Then
-        '            val += lvDuedates.Items(x - 1).SubItems(1).Text
-        '        End If
-        '    Next
-        '    val3 = payableAmount - val
-        '    For x = 1 To lvDuedates.Items.Count Step 1
-        '        If lvDuedates.Items(x - 1).Checked = False Then
-        '            val -= CDbl(lvDuedates.Items(x - 1).SubItems(1).Text)
-        '        End If
-        '    Next
-        '    lblPayableAmount.Text = val + val3
-        'End If
 
+                If lvDuedates.Items(x - 1).Checked = True Then
+                    val += lvDuedates.Items(x - 1).SubItems(1).Text
+                End If
+            Next
+            val3 = payableAmount + val
+
+            
+
+            lblPayableAmount.Text = val3
+        End If
+        Exit Sub
+
+brgy:
+        ' MsgBox("yo!")
+        Exit Sub
     End Sub
 
 
