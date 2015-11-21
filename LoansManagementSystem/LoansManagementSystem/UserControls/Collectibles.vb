@@ -872,8 +872,8 @@ Public Class frmCollectibles
             End If
             'validations
             lvCollectibles.FocusedItem.SubItems(7).Text = FormatNumber(CDbl(StrToNum(dr.Item("previous_balance").ToString)), 2)
-            lvCollectibles.FocusedItem.SubItems(6).Text = FormatNumber(penalty + penalty1, 2)
-            lvCollectibles.FocusedItem.SubItems(3).Text = FormatNumber(CDbl(StrToNum(dr.Item("payable_amt").ToString)) + penalty + penalty1 + CDbl(StrToNum(dr.Item("previous_balance").ToString)) - CDbl(StrToNum(dr.Item("collected_amt").ToString)), 2)
+            lvCollectibles.FocusedItem.SubItems(6).Text = FormatNumber(penalty, 2)
+            lvCollectibles.FocusedItem.SubItems(3).Text = FormatNumber(CDbl(StrToNum(dr.Item("payable_amt").ToString)) + penalty + CDbl(StrToNum(dr.Item("previous_balance").ToString)) - CDbl(StrToNum(dr.Item("collected_amt").ToString)), 2)
             lvCollectibles.FocusedItem.SubItems(11).Text = tagakuhaNgID
 
             If Not lvCollectibles.FocusedItem.SubItems(6).Text.Contains(".") Then

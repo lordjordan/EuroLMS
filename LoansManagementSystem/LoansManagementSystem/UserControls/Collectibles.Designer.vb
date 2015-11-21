@@ -142,6 +142,7 @@ Partial Class frmCollectibles
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.lvCollectibles)
         Me.pnlMain.Controls.Add(Me.lblInfoSearch)
         Me.pnlMain.Controls.Add(Me.btnEnterPay)
         Me.pnlMain.Controls.Add(Me.btnPH)
@@ -153,7 +154,6 @@ Partial Class frmCollectibles
         Me.pnlMain.Controls.Add(Me.txtSearchLoan)
         Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.Process)
-        Me.pnlMain.Controls.Add(Me.lvCollectibles)
         Me.pnlMain.Location = New System.Drawing.Point(16, 94)
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1053, 599)

@@ -357,12 +357,13 @@
                 Next
             End If
             'payable amount
-            dr = db.ExecuteReader("SELECT payable_amt , collected_amt , previous_balance from tbl_collectibles where duedate = " _
-                                  & uscCollectibles.lvCollectibles.FocusedItem.SubItems(1).Text)
+            dr = db.ExecuteReader("SELECT payable_amt , collected_amt , previous_balance from tbl_collectibles where due_date = " _
+                                  & DateToStr(uscCollectibles.lvCollectibles.FocusedItem.SubItems(1).Text))
 
+            payableAmt = CDbl(StrToNum(dr.Item("payable_amt").ToString)) + CDbl(StrToNum(dr.Item("collected_amt").ToString)) + _
+                CDbl(StrToNum(dr.Item("previous_balance").ToString)) + penalty
 
-            uscCollectibles.lblPayableAmount.Text = StrToNum(dr.Item("payable_amt").ToString) + StrToNum(dr.Item("collected_amt").ToString) + _
-                StrToNum(dr.Item("previous_balance").ToString) + penalty
+            uscCollectibles.lblPayableAmount.Text = payableAmt
             uscCollectibles.btnCancelColl.Enabled = False
             uscCollectibles.gbxClientCollectible.BringToFront()
 
