@@ -598,7 +598,7 @@ Public Class frmCollectibles
        
     End Sub
 
-    Private Sub frmCollectibles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub frmCollectibles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lvwColumnSorter = New ListViewColumnSorter()
         Me.lvCollectibles.ListViewItemSorter = lvwColumnSorter
         lvwColumnSorter1 = New ListViewColumnSorter()
@@ -616,7 +616,7 @@ Public Class frmCollectibles
     Private Sub btnManage_Click(sender As Object, e As EventArgs) Handles btnManage.Click
         frmManagePenalties.ShowDialog()
 
-        
+
 
     End Sub
 
@@ -682,7 +682,7 @@ Public Class frmCollectibles
                         itm = lvDuedates.Items.Add(StrToDate(dr.Item("due_date").ToString)) 'casted
                         itm.SubItems.Add(StrToNum(dr.Item("penalty_amt").ToString))
                         itm.SubItems.Add(dr.Item("ctb_id").ToString)
-                       
+
                     Loop
                     For x = 1 To lvDuedates.Items.Count
                         lvDuedates.Items(x - 1).SubItems(1).Text = CDbl(lvDuedates.Items(x - 1).SubItems(1).Text)
@@ -896,7 +896,7 @@ Public Class frmCollectibles
         End Try
 
     End Sub
-   
+
 
 
     Private Function checkPenalty(principal As Double, dueDate As Date)
@@ -1148,7 +1148,7 @@ Public Class frmCollectibles
                     dr = db.ExecuteReader("SELECT penalty_status,payable_amt , previous_balance, collected_amt FROM tbl_collectibles WHERE due_date = '" & _
                                           Format(CDate(lvCollectibles.Items(x - 1).SubItems(1).Text), "yyyyMMdd") & "' AND " & _
                                           "loan_id = " & lvCollectibles.Items(x - 1).Text)
-                    
+
                     If dr.Item("penalty_status").ToString = "0" And CDbl(StrToNum(dr.Item("payable_amt").ToString)) + CDbl(StrToNum(dr.Item("previous_balance").ToString)) = _
                         CDbl(StrToNum(dr.Item("collected_amt").ToString)) Then
                         rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET penalty_status = 2 WHERE due_date = '" & _
@@ -1209,7 +1209,7 @@ Public Class frmCollectibles
 
     End Sub
 
-  
+
 
 
 
@@ -1232,7 +1232,7 @@ Public Class frmCollectibles
             Next
             val3 = payableAmount + val
 
-            
+
 
             lblPayableAmount.Text = val3
         End If
@@ -1744,7 +1744,7 @@ brgy:
 
     End Sub
 
-    
+
     Private Sub btnPrintCR_Click(sender As Object, e As EventArgs) Handles btnPrintCR.Click
         crvPaymentCentralReport.PrintReport()
     End Sub
@@ -1776,9 +1776,11 @@ brgy:
         ' Perform the sort with these new sort options.
         Me.lvPH.Sort()
     End Sub
-    
-  
+
+
     Private Sub lvDuedates_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvDuedates.SelectedIndexChanged
 
     End Sub
+
+
 End Class
