@@ -42,8 +42,18 @@ Partial Class frmComaker
         Me.txtSearchClient = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.pnlComaker = New System.Windows.Forms.Panel()
+        Me.btnSelectSearchClient = New System.Windows.Forms.Button()
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.btnSaveExit = New System.Windows.Forms.Button()
+        Me.gbxEditAmount = New System.Windows.Forms.GroupBox()
+        Me.btnCancelColl = New System.Windows.Forms.Button()
+        Me.btnOk = New System.Windows.Forms.Button()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.txtAmount = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.gbxAddCoMaker.SuspendLayout()
         Me.pnlComaker.SuspendLayout()
+        Me.gbxEditAmount.SuspendLayout()
         Me.SuspendLayout()
         '
         'lvCoMakerList
@@ -52,13 +62,13 @@ Partial Class frmComaker
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lvCoMakerList.AutoArrange = False
-        Me.lvCoMakerList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12})
+        Me.lvCoMakerList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader10, Me.ColumnHeader5, Me.ColumnHeader11, Me.ColumnHeader12})
         Me.lvCoMakerList.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvCoMakerList.FullRowSelect = True
         Me.lvCoMakerList.GridLines = True
         Me.lvCoMakerList.Location = New System.Drawing.Point(6, 44)
         Me.lvCoMakerList.Name = "lvCoMakerList"
-        Me.lvCoMakerList.Size = New System.Drawing.Size(854, 387)
+        Me.lvCoMakerList.Size = New System.Drawing.Size(854, 373)
         Me.lvCoMakerList.TabIndex = 135
         Me.lvCoMakerList.UseCompatibleStateImageBehavior = False
         Me.lvCoMakerList.View = System.Windows.Forms.View.Details
@@ -101,7 +111,7 @@ Partial Class frmComaker
         Me.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRemove.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRemove.ForeColor = System.Drawing.Color.White
-        Me.btnRemove.Location = New System.Drawing.Point(132, 463)
+        Me.btnRemove.Location = New System.Drawing.Point(120, 434)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(108, 60)
         Me.btnRemove.TabIndex = 136
@@ -117,7 +127,7 @@ Partial Class frmComaker
         Me.btnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAddNew.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddNew.ForeColor = System.Drawing.Color.White
-        Me.btnAddNew.Location = New System.Drawing.Point(18, 463)
+        Me.btnAddNew.Location = New System.Drawing.Point(6, 434)
         Me.btnAddNew.Name = "btnAddNew"
         Me.btnAddNew.Size = New System.Drawing.Size(108, 60)
         Me.btnAddNew.TabIndex = 137
@@ -129,6 +139,7 @@ Partial Class frmComaker
         '
         Me.gbxAddCoMaker.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbxAddCoMaker.BackColor = System.Drawing.Color.LightGray
+        Me.gbxAddCoMaker.Controls.Add(Me.btnSelectSearchClient)
         Me.gbxAddCoMaker.Controls.Add(Me.btnClientBack)
         Me.gbxAddCoMaker.Controls.Add(Me.lvClientList)
         Me.gbxAddCoMaker.Controls.Add(Me.Label1)
@@ -139,7 +150,7 @@ Partial Class frmComaker
         Me.gbxAddCoMaker.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAddCoMaker.Location = New System.Drawing.Point(153, 57)
         Me.gbxAddCoMaker.Name = "gbxAddCoMaker"
-        Me.gbxAddCoMaker.Size = New System.Drawing.Size(637, 295)
+        Me.gbxAddCoMaker.Size = New System.Drawing.Size(637, 466)
         Me.gbxAddCoMaker.TabIndex = 138
         Me.gbxAddCoMaker.TabStop = False
         Me.gbxAddCoMaker.Text = "Add New Co-maker"
@@ -166,7 +177,7 @@ Partial Class frmComaker
         Me.lvClientList.GridLines = True
         Me.lvClientList.Location = New System.Drawing.Point(6, 96)
         Me.lvClientList.Name = "lvClientList"
-        Me.lvClientList.Size = New System.Drawing.Size(626, 193)
+        Me.lvClientList.Size = New System.Drawing.Size(626, 287)
         Me.lvClientList.TabIndex = 168
         Me.lvClientList.UseCompatibleStateImageBehavior = False
         Me.lvClientList.View = System.Windows.Forms.View.Details
@@ -237,20 +248,139 @@ Partial Class frmComaker
         Me.pnlComaker.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlComaker.Controls.Add(Me.Label26)
+        Me.pnlComaker.Controls.Add(Me.btnSaveExit)
         Me.pnlComaker.Controls.Add(Me.lvCoMakerList)
+        Me.pnlComaker.Controls.Add(Me.Label26)
+        Me.pnlComaker.Controls.Add(Me.btnAddNew)
+        Me.pnlComaker.Controls.Add(Me.btnRemove)
         Me.pnlComaker.Location = New System.Drawing.Point(12, 23)
         Me.pnlComaker.Name = "pnlComaker"
-        Me.pnlComaker.Size = New System.Drawing.Size(873, 434)
+        Me.pnlComaker.Size = New System.Drawing.Size(873, 500)
         Me.pnlComaker.TabIndex = 140
+        '
+        'btnSelectSearchClient
+        '
+        Me.btnSelectSearchClient.BackColor = System.Drawing.Color.Gray
+        Me.btnSelectSearchClient.FlatAppearance.BorderSize = 0
+        Me.btnSelectSearchClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSelectSearchClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSelectSearchClient.ForeColor = System.Drawing.Color.White
+        Me.btnSelectSearchClient.Location = New System.Drawing.Point(225, 398)
+        Me.btnSelectSearchClient.Name = "btnSelectSearchClient"
+        Me.btnSelectSearchClient.Size = New System.Drawing.Size(192, 55)
+        Me.btnSelectSearchClient.TabIndex = 170
+        Me.btnSelectSearchClient.Text = "Select "
+        Me.btnSelectSearchClient.UseVisualStyleBackColor = False
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Amount"
+        Me.ColumnHeader5.Width = 176
+        '
+        'btnSaveExit
+        '
+        Me.btnSaveExit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnSaveExit.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSaveExit.FlatAppearance.BorderSize = 0
+        Me.btnSaveExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSaveExit.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSaveExit.ForeColor = System.Drawing.Color.White
+        Me.btnSaveExit.Location = New System.Drawing.Point(234, 434)
+        Me.btnSaveExit.Name = "btnSaveExit"
+        Me.btnSaveExit.Size = New System.Drawing.Size(108, 60)
+        Me.btnSaveExit.TabIndex = 138
+        Me.btnSaveExit.Text = "Save / Exit"
+        Me.btnSaveExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnSaveExit.UseVisualStyleBackColor = False
+        '
+        'gbxEditAmount
+        '
+        Me.gbxEditAmount.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.gbxEditAmount.BackColor = System.Drawing.Color.LightGray
+        Me.gbxEditAmount.Controls.Add(Me.btnCancelColl)
+        Me.gbxEditAmount.Controls.Add(Me.btnOk)
+        Me.gbxEditAmount.Controls.Add(Me.Label11)
+        Me.gbxEditAmount.Controls.Add(Me.txtAmount)
+        Me.gbxEditAmount.Controls.Add(Me.Button1)
+        Me.gbxEditAmount.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.gbxEditAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxEditAmount.Location = New System.Drawing.Point(235, 122)
+        Me.gbxEditAmount.Name = "gbxEditAmount"
+        Me.gbxEditAmount.Size = New System.Drawing.Size(443, 201)
+        Me.gbxEditAmount.TabIndex = 171
+        Me.gbxEditAmount.TabStop = False
+        Me.gbxEditAmount.Text = "Input amount"
+        Me.gbxEditAmount.Visible = False
+        '
+        'btnCancelColl
+        '
+        Me.btnCancelColl.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnCancelColl.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnCancelColl.FlatAppearance.BorderSize = 0
+        Me.btnCancelColl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCancelColl.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelColl.ForeColor = System.Drawing.Color.White
+        Me.btnCancelColl.Location = New System.Drawing.Point(147, 121)
+        Me.btnCancelColl.Name = "btnCancelColl"
+        Me.btnCancelColl.Size = New System.Drawing.Size(108, 60)
+        Me.btnCancelColl.TabIndex = 174
+        Me.btnCancelColl.Text = "Cancel"
+        Me.btnCancelColl.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnCancelColl.UseVisualStyleBackColor = False
+        '
+        'btnOk
+        '
+        Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnOk.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnOk.FlatAppearance.BorderSize = 0
+        Me.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnOk.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnOk.ForeColor = System.Drawing.Color.White
+        Me.btnOk.Location = New System.Drawing.Point(33, 121)
+        Me.btnOk.Name = "btnOk"
+        Me.btnOk.Size = New System.Drawing.Size(108, 60)
+        Me.btnOk.TabIndex = 173
+        Me.btnOk.Text = "OK"
+        Me.btnOk.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnOk.UseVisualStyleBackColor = False
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(30, 43)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(53, 16)
+        Me.Label11.TabIndex = 172
+        Me.Label11.Text = "Amount"
+        '
+        'txtAmount
+        '
+        Me.txtAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAmount.Location = New System.Drawing.Point(33, 62)
+        Me.txtAmount.Name = "txtAmount"
+        Me.txtAmount.Size = New System.Drawing.Size(378, 44)
+        Me.txtAmount.TabIndex = 171
+        Me.txtAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.Gray
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Location = New System.Drawing.Point(572, 15)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(60, 24)
+        Me.Button1.TabIndex = 169
+        Me.Button1.Text = "Back"
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'frmComaker
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(903, 535)
-        Me.Controls.Add(Me.btnRemove)
-        Me.Controls.Add(Me.btnAddNew)
+        Me.Controls.Add(Me.gbxEditAmount)
         Me.Controls.Add(Me.gbxAddCoMaker)
         Me.Controls.Add(Me.pnlComaker)
         Me.Name = "frmComaker"
@@ -260,6 +390,8 @@ Partial Class frmComaker
         Me.gbxAddCoMaker.PerformLayout()
         Me.pnlComaker.ResumeLayout(False)
         Me.pnlComaker.PerformLayout()
+        Me.gbxEditAmount.ResumeLayout(False)
+        Me.gbxEditAmount.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -283,4 +415,13 @@ Partial Class frmComaker
     Friend WithEvents txtSearchClient As System.Windows.Forms.TextBox
     Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents pnlComaker As System.Windows.Forms.Panel
+    Friend WithEvents btnSelectSearchClient As System.Windows.Forms.Button
+    Friend WithEvents ColumnHeader5 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents btnSaveExit As System.Windows.Forms.Button
+    Friend WithEvents gbxEditAmount As System.Windows.Forms.GroupBox
+    Friend WithEvents btnCancelColl As System.Windows.Forms.Button
+    Friend WithEvents btnOk As System.Windows.Forms.Button
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents txtAmount As System.Windows.Forms.TextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class

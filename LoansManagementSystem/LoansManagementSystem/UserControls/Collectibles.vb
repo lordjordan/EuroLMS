@@ -775,7 +775,7 @@ Public Class frmCollectibles
                     val1 = CDbl(StrToNum(conV))
                 End If
             End If
-            val1 = val1 - (totalInPayment - penalty1)
+            val1 = val1 - (totalInPayment - penalty1) + penalty
             'dr = db.ExecuteReader("SELECT principal, terms, interest_percentage, date_end, date_start FROM tbl_loans WHERE loan_id =" & lvCollectibles.FocusedItem.Text)
 
 

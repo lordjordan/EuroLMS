@@ -174,11 +174,46 @@ Public Class LoansV2
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If validateInputs() = False Then Exit Sub
         ComputeAvailableCredit(txtClientID.Text)
-        If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
+        Using db As New DBHelper(My.Settings.ConnectionString)
+            Dim dr As SQLite.SQLiteDataReader
 
-            MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
-            Exit Sub
-        End If
+            Try
+
+                dr = db.ExecuteReader("SELECT client_id FROM tbl_loans WHERE client_id =" & txtClientID.Text & " AND loan_status = 1")
+                If dr.HasRows Then
+                    If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
+
+                        MsgBox("Gross amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+                        Exit Sub
+                    End If
+
+                    If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+
+                        MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+                        Exit Sub
+                    End If
+                End If
+                
+
+                'dr = db1.ExecuteReader("select * from tbl_collectibles where loan_id=@loan_id")
+
+                'If dr.HasRows Then
+                '    Dim index As Byte = 0
+                '    Dim ddate(DataGridView1.RowCount - 1) As DueDateObj
+                '    Do While dr.Read
+                '        ddate(index) = New DueDateObj(dr.Item("ctb_id"), DataGridView1.Item(1, index).Value)
+                '    Loop
+
+
+                'End If
+
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            Finally
+                db.Dispose()
+            End Try
+        End Using
+        
 
 
         If gbxAddEdit.Text = "New Loan Application" Then
@@ -1196,5 +1231,11 @@ Fix2:
 
     Private Sub lvLoanList_TabIndexChanged(sender As Object, e As EventArgs) Handles lvLoanList.TabIndexChanged
 
+    End Sub
+
+
+    Private Sub btn_comakers_Click(sender As Object, e As EventArgs) Handles btn_comakers.Click
+        frmComaker.Text = "Co-maker(s) of " & txtName.Text
+        frmComaker.Show()
     End Sub
 End Class

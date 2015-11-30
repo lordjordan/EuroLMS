@@ -186,7 +186,7 @@
                 rembal = totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2)
                 txtPrincipalAmt.Text = FormatNumber(principal, 2)
                 txtTerms.Text = dr.Item("terms").ToString
-                txtTotalLoanAmount.Text = FormatNumber(totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2),2)
+                txtTotalLoanAmount.Text = FormatNumber(totalPaymentBiMonth * (CInt(dr.Item("terms").ToString) * 2), 2)
                 txtDateStart.Text = StrToDate(dr.Item("date_start").ToString)
                 txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
 
@@ -195,7 +195,7 @@
                     conV &= ".00"
                 End If
                 txtCollectedAmt.Text = FormatNumber(conV - penalty, 2)
-                txtBalance.Text = FormatNumber((rembal - CDbl(txtCollectedAmt.Text)) + penalty, 2)
+                txtBalance.Text = FormatNumber((rembal - CDbl(txtCollectedAmt.Text)), 2)
                 If Not txtBalance.Text.Contains(".") Then
                     txtBalance.Text &= ".00"
                 End If
@@ -441,7 +441,10 @@
                                 End If
                             End If
                         Next
+                        rec = db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status = 1 WHERE loan_id =" & _
+                                                             txtLoanid.Text)
                         con.Close()
+
                         MsgBox("Payment was voided successfully", MsgBoxStyle.Information, "Voided")
 
                     End If

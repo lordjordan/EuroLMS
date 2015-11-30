@@ -488,7 +488,7 @@ Partial Class PaymentHistory
         Me.gbxShowClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxShowClient.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxShowClient.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.gbxShowClient.Location = New System.Drawing.Point(15, 239)
+        Me.gbxShowClient.Location = New System.Drawing.Point(15, 154)
         Me.gbxShowClient.Name = "gbxShowClient"
         Me.gbxShowClient.Size = New System.Drawing.Size(753, 457)
         Me.gbxShowClient.TabIndex = 183
@@ -688,9 +688,9 @@ Partial Class PaymentHistory
         Me.AutoScroll = True
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
-        Me.Controls.Add(Me.gbxPrint)
         Me.Controls.Add(Me.gbxShowClient)
+        Me.Controls.Add(Me.gbxPrint)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "PaymentHistory"
         Me.Size = New System.Drawing.Size(779, 706)
         Me.pnlMain.ResumeLayout(False)

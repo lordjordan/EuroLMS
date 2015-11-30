@@ -360,6 +360,9 @@
             dr = db.ExecuteReader("SELECT payable_amt , collected_amt , previous_balance from tbl_collectibles where due_date = " _
                                   & DateToStr(uscCollectibles.lvCollectibles.FocusedItem.SubItems(1).Text))
 
+
+            'MsgBox(dr.Item("payable_amt").ToString & " _____ " & dr.Item("collected_amt").ToString & " _____ " & _
+            '    dr.Item("previous_balance").ToString & " _____ " & penalty & "---" & DateToStr(uscCollectibles.lvCollectibles.FocusedItem.SubItems(1).Text))
             payableAmt = CDbl(StrToNum(dr.Item("payable_amt").ToString)) + CDbl(StrToNum(dr.Item("collected_amt").ToString)) + _
                 CDbl(StrToNum(dr.Item("previous_balance").ToString)) + penalty
 
