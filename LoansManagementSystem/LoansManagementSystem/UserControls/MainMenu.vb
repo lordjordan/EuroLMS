@@ -184,4 +184,8 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         frmReports.Show()
     End Sub
+
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+
+    End Sub
 End Class

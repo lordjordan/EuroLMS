@@ -149,6 +149,7 @@ Public Class LoansV2
         cboApplicationStatus.Enabled = True
         cboApplicationStatus.SelectedIndex = 0
         cboLoanStatus.SelectedIndex = 0
+        txtPrincipal.Enabled = True
     End Sub
 
     Private Sub toggleVerifyActivation(Optional mode As Boolean = False)
@@ -1433,7 +1434,7 @@ Fix2:
         Dim sql_penalty As String
 
         If cbx_include_penalty.Checked = True Then
-            sql_penalty = "SELECT SUM(penalty_amt) FROM tbl_collectibles c WHERE c.loan_id=l.loan_id AND (penalty_status=1 OR (penalty_status=0 AND due_date<=" & DateToStr(Date.Now) & "))"
+            sql_penalty = "SELECT SUM(penalty_amt) FROM tbl_collectibles c WHERE c.loan_id=l.loan_id AND (penalty_status=1 OR (penalty_status=0 AND due_date<" & DateToStr(Date.Now) & "))"
         Else
             sql_penalty = "SELECT SUM(penalty_amt) FROM tbl_collectibles p WHERE p.loan_id=l.loan_id AND penalty_status=1"
         End If
@@ -1561,6 +1562,7 @@ Fix2:
         cboLoanStatus.SelectedIndex = 1
         cboApplicationStatus.SelectedIndex = 1
         cboApplicationStatus.Enabled = False
+        txtPrincipal.Enabled = False
     End Sub
 
     Private Sub btn_restructure_Click_1(sender As Object, e As EventArgs) Handles btn_restructure.Click
