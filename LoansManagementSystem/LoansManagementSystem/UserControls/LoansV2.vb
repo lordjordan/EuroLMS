@@ -57,7 +57,6 @@ Public Class LoansV2
                 Control.Text = ""     'Clear all text
             End If
         Next Control
-        txt_no_of_Comaker.Clear()
     End Sub
 
     Private Function validateInputs() As Boolean
@@ -146,6 +145,9 @@ Public Class LoansV2
         gbxClientData.Enabled = Not mode
 
         pnlMain.Enabled = Not mode
+        cboApplicationStatus.Enabled = True
+        cboApplicationStatus.SelectedIndex = 0
+        cboLoanStatus.SelectedIndex = 0
     End Sub
 
     Private Sub toggleVerifyActivation(Optional mode As Boolean = False)
@@ -170,27 +172,38 @@ Public Class LoansV2
             log("Cancelled updating loan id = " & active_loan_id)
 
         End If
-        frmComaker.lvCoMakerList.Items.Clear()
+
+        lbl_loan_id.Text = ""
+        lbl_is_restructure.Text = 0
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
         If validateInputs() = False Then Exit Sub
-        'ComputeAvailableCredit(txtClientID.Text) 'may mababago sa method na ito
+        ComputeAvailableCredit(txtClientID.Text)
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim dr As SQLite.SQLiteDataReader
+
             Try
+
                 dr = db.ExecuteReader("SELECT client_id FROM tbl_loans WHERE client_id =" & txtClientID.Text & " AND loan_status = 1")
                 If dr.HasRows Then
-                    If CDbl(txtTotalLoanAmount.Text) > CDbl(txtAvailableCredit.Text) Then
-                        MsgBox("Gross amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
-                        Exit Sub
+                    If lbl_is_restructure.Text = 0 Then
+
+
+                        If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
+
+                            MsgBox("Gross amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+                            Exit Sub
+                        End If
+
+                        If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
+
+                            MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+                            Exit Sub
+                        End If
                     End If
                 End If
-                If CDbl(txtPrincipal.Text) > CDbl(txtAvailableCredit.Text) Then
-                    MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
-                    Exit Sub
-                End If
+
 
                 'dr = db1.ExecuteReader("select * from tbl_collectibles where loan_id=@loan_id")
 
@@ -204,13 +217,19 @@ Public Class LoansV2
 
                 'End If
 
+                If lbl_is_restructure.Text = 1 Then
+
+                    db.ExecuteNonQuery("UPDATE tbl_loans SET loan_status=3 WHERE loan_id=" & lbl_loan_id.Text)
+                    log("restructured a LOAN")
+                End If
+
             Catch ex As Exception
                 MsgBox(ex.ToString)
             Finally
                 db.Dispose()
             End Try
         End Using
-
+        
 
 
         If gbxAddEdit.Text = "New Loan Application" Then
@@ -224,7 +243,7 @@ Public Class LoansV2
         MsgBox("Record saved!", MsgBoxStyle.Information)
         toggleLoanApplication()
         LoadListView()
-
+      
         log("saved new LOAN record")
         'toggleLoanApplication()
     End Sub
@@ -376,14 +395,10 @@ Public Class LoansV2
         ''        Next
     End Sub
     Private Sub saveNewForm()
-        'comakers ipapasok
-
+        
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
-            'Dim cmd As SQLite.SQLiteCommand
-            'Dim trans As SQLite.SQLiteTransaction
-            Dim dr As SQLite.SQLiteDataReader
             Try
 
                 data.Add("client_id", txtClientID.Text)
@@ -400,33 +415,23 @@ Public Class LoansV2
                 data.Add("loan_remarks", txtLoanRemarks.Text)
 
 
-                rec = db.ExecuteScalar("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
+                rec = db.ExecuteNonQuery("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
                                          "@interest_percentage, @date_approved, @date_enrolled , @terms, @application_status, @loan_status, " & _
-                                         "@loan_remarks); SELECT Last_Insert_Rowid();", data)
-                data.Clear()
-                'saving comakers
-                Dim num As Integer
-                If txt_no_of_Comaker.Text <> "" Then
-                    If rec <> "0" Then
-                        num = rec
-                        For x = 1 To frmComaker.lvCoMakerList.Items.Count Step 1
-                            data.Add("loan_id", num)
-                            data.Add("client_id", frmComaker.lvCoMakerList.Items(x - 1).Text)
-                            rec = db.ExecuteNonQuery("insert into tbl_comakers values(@loan_id, @client_id)", data)
-                            data.Clear()
-                        Next
-
-                    End If
-                End If
-               
+                                         "@loan_remarks)", data)
 
                 If Not rec < 1 Then
+                    'MsgBox("Record saved!", MsgBoxStyle.Information)
+                    'toggleLoanApplication()
+                    'LoadListView()
+                    Dim dr As SQLite.SQLiteDataReader
                     dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
                     active_loan_id = dr.Item("id")
                 End If
+
                 log("Initial process of loan record saving. loan_id = " & Str(active_loan_id))
             Catch ex As Exception
                 MsgBox(ex.ToString)
+
                 log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
@@ -455,13 +460,11 @@ Public Class LoansV2
         'Dim dr As SQLite.SQLiteDataReader
 
     End Sub
-   
+
     Private Sub saveEditForm()
-        'same here ipapasok ang comaker
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
-
             Try
 
                 data.Add("client_id", txtClientID.Text)
@@ -482,19 +485,6 @@ Public Class LoansV2
                 rec = db.ExecuteNonQuery("update tbl_loans set client_id = @client_id, principal = @principal, amortization = @amortization, date_start = @date_start, date_end = @date_end, " & _
                                          "interest_percentage = @interest_percentage, date_approved = @date_approved, date_enrolled = @date_enrolled , terms = @terms, application_status = @application_status, loan_status = @loan_status, " & _
                                          "loan_remarks = @loan_remarks where loan_id = @loan_id;", data)
-                data.Clear()
-                'saving comakers
-                If txt_no_of_Comaker.Text <> "" Then
-                    rec = db.ExecuteNonQuery("DELETE from tbl_comakers where loan_id= " & active_loan_id)
-                    For x = 1 To frmComaker.lvCoMakerList.Items.Count Step 1
-                        data.Add("loan_id", active_loan_id)
-                        data.Add("client_id", frmComaker.lvCoMakerList.Items(x - 1).Text)
-                        rec = db.ExecuteNonQuery("insert into tbl_comakers values(@loan_id, @client_id)", data)
-                        data.Clear()
-                    Next
-                End If
-                
-               
 
                 If Not rec < 1 Then
                     'MsgBox("Record saved!", MsgBoxStyle.Information)
@@ -509,6 +499,7 @@ Public Class LoansV2
 
             Catch ex As Exception
                 MsgBox(ex.ToString)
+
                 log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
@@ -643,13 +634,7 @@ Public Class LoansV2
     End Sub
 
 
-    Private Sub txtSearchClient_TextChanged(sender As Object, e As EventArgs) Handles txtSearchClient.TextChanged
 
-    End Sub
-
-    Private Sub selectUser(listindex As Long)
-
-    End Sub
 
     Private Sub btnSelectSearchClient_Click(sender As Object, e As EventArgs) Handles btnSelectSearchClient.Click
         Try
@@ -669,17 +654,14 @@ Public Class LoansV2
     End Sub
 
     Private Function ComputeAvailableCredit(ClientID As String) As String
-
+        'codes for available credit (isasama ko pa ba mga penalized o hiwalay na yun????)oo nga pala penalties pa.....
         Dim db As New DBHelper(My.Settings.ConnectionString)
         Dim dr As SQLite.SQLiteDataReader
-        Dim con As New SQLite.SQLiteConnection
-        Dim ds As New DataSet
-        Dim da As SQLite.SQLiteDataAdapter
-        Dim query As String
         Dim data As New Dictionary(Of String, Object)
         Dim totalUtangWInterest, overAllPayment, creditLimit, principal, monthlyRate, biMonInterest, interest _
             , totalPaymentBimonth, rembal, overAllPenaltyStats As Double
         Dim conV As String
+
         'principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
         'monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
         'biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
@@ -693,48 +675,6 @@ Public Class LoansV2
         'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
         'get the credit limit 
         Try
-            'tignan natin kung may kinomake 1)tbl comakers
-            'mga variables na gagamitin
-            Dim remVal, totalval, overallcomake As Double
-            remVal = 0
-            totalval = 0
-            overallcomake = 0
-            con.ConnectionString = My.Settings.ConnectionString
-            query = "select * from tbl_comakers where client_id=" & ClientID
-            da = New SQLite.SQLiteDataAdapter(query, con)
-            da.Fill(ds, "comakers")
-            For z = 1 To ds.Tables("comakers").Rows.Count Step 1
-                dr = db.ExecuteReader("SELECT loan_id , sum(amount) as amt  FROM tbl_payments" & _
-                                      " where loan_id = " & ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
-                                      " and payment_status= 0")
-                If dr.HasRows Then
-                    If dr.Item("amt").ToString <> "" Then
-                        totalval = CDbl(StrToNum(dr.Item("amt").ToString))
-                    Else
-                        totalval = 0
-                    End If
-                
-                End If
-
-                dr = db.ExecuteReader("select loan_id, principal " & _
-                                      " from tbl_loans  where tbl_loans.loan_id= " & _
-                                      ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
-                                      " and loan_status = 1 or loan_status = 0")
-                If dr.HasRows Then
-                    remVal = CDbl(StrToNum(dr.Item("principal").ToString)) - totalval
-                    If remVal < 0 Then
-                        remVal = 0
-                    End If
-                Else
-                    remVal = 0
-                End If
-
-                    
-                overallcomake += remVal
-            Next
-
-
-
             dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
             If dr.HasRows Then
 
@@ -789,7 +729,7 @@ Public Class LoansV2
             If rembal > creditLimit Then
                 Return "0.00"
             ElseIf rembal <= creditLimit Then
-                conV = NumToStr((creditLimit - rembal) - overallcomake) 'minus ang kinomake kung merons
+                conV = NumToStr(creditLimit - rembal)
                 '50000.5
                 Return StrToNum(conV)
             End If
@@ -927,9 +867,7 @@ Fix2:
         btnSelectSearchClient_Click(sender, e)
     End Sub
 
-    Private Sub lvClientList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvClientList.SelectedIndexChanged
 
-    End Sub
 
     Private Sub Label14_Click(sender As Object, e As EventArgs) Handles Label14.Click
 
@@ -945,8 +883,6 @@ Fix2:
     End Sub
 
     Private Sub txtPrincipal_TextChanged(sender As Object, e As EventArgs) Handles txtPrincipal.TextChanged
-        frmComaker.lvCoMakerList.Items.Clear()
-        txt_no_of_Comaker.Clear()
         computeTotalLoan()
     End Sub
 
@@ -1006,7 +942,6 @@ Fix2:
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Try
-            'populate the listcount of comakers
             If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
                 MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be editted.", MsgBoxStyle.Critical, "Unable to edit")
                 Exit Sub
@@ -1023,7 +958,7 @@ Fix2:
     End Sub
 
     Private Sub loadEditForm(loan_id As Long)
-        Dim itm As New ListViewItem
+
         Using db As New DBHelper(My.Settings.ConnectionString)
 
             'Dim rec As Integer
@@ -1068,23 +1003,6 @@ Fix2:
 
                 End If
                 txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
-                'populate
-                dr = db.ExecuteReader("SELECT tbl_clients.client_id as clientID, last_name || ', ' || first_name || ' ' || last_name as name, " & _
-                "company_name || '/' || branch_name as comBran, employee_no from tbl_comakers " & _
-                "inner join tbl_clients on tbl_comakers.client_id = tbl_clients.client_id inner join tbl_branches " & _
-                "on tbl_clients.branch_id = tbl_branches.branch_id inner join tbl_company on tbl_branches.company_id = " & _
-                "tbl_company.company_id WHERE loan_id=" & lvLoanList.FocusedItem.Text)
-                If dr.HasRows Then
-                    frmComaker.lvCoMakerList.Items.Clear()
-                    Do While dr.Read
-                        itm = frmComaker.lvCoMakerList.Items.Add(dr.Item("clientID").ToString)
-                        itm.SubItems.Add(dr.Item("name").ToString)
-                        itm.SubItems.Add(dr.Item("employee_no").ToString)
-                        itm.SubItems.Add(dr.Item("combran").ToString)
-                    Loop
-                End If
-                txt_no_of_Comaker.Text = frmComaker.lvCoMakerList.Items.Count
-                'frmComaker.lvCoMakerList
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally
@@ -1141,25 +1059,46 @@ Fix2:
 
         End Using
 
-        If isVERIFIED Then
-            Using db2 As New DBHelper(My.Settings.ConnectionString)
-                Try
-                    Dim rec As Integer
-                    Dim data2 As New Dictionary(Of String, Object)
+        If gbxVerifyActivation.Text = "Verify to Activate Loan" Then
 
-                    data2.Add("loan_id", lvLoanList.FocusedItem.Text)
-                    rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=1 where loan_id=@loan_id", data2)
+            If isVERIFIED Then
+                Using db2 As New DBHelper(My.Settings.ConnectionString)
+                    Try
+                        Dim rec As Integer
+                        Dim data2 As New Dictionary(Of String, Object)
 
-                    MsgBox("Loan successfuly activated!", MsgBoxStyle.Information, "Activate Loan")
-                Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Critical)
-                Finally
-                    db2.Dispose()
-                End Try
+                        data2.Add("loan_id", lvLoanList.FocusedItem.Text)
+                        rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=1 where loan_id=@loan_id", data2)
 
-            End Using
+                        MsgBox("Loan successfuly activated!", MsgBoxStyle.Information, "Activate Loan")
+                    Catch ex As Exception
+                        MsgBox(ex.Message, MsgBoxStyle.Critical)
+                    Finally
+                        db2.Dispose()
+                    End Try
+
+                End Using
+            End If
+        ElseIf gbxVerifyActivation.Text = "Verify to Stop Loan" Then
+            If isVERIFIED Then
+                Using db2 As New DBHelper(My.Settings.ConnectionString)
+                    Try
+                        Dim rec As Integer
+                        Dim data2 As New Dictionary(Of String, Object)
+
+                        data2.Add("loan_id", lvLoanList.FocusedItem.Text)
+                        rec = db2.ExecuteNonQuery("update tbl_loans set loan_status=4 where loan_id=@loan_id", data2)
+
+                        MsgBox("Loan successfuly stopped!", MsgBoxStyle.Information, "Stop Loan")
+                    Catch ex As Exception
+                        MsgBox(ex.Message, MsgBoxStyle.Critical)
+                    Finally
+                        db2.Dispose()
+                    End Try
+
+                End Using
+            End If
         End If
-
         toggleVerifyActivation()
         LoadListView()
     End Sub
@@ -1201,6 +1140,8 @@ Fix2:
         txtPassword.Text = ""
         SetCueText(txtUser, "Username")
         SetCueText(txtPassword, "Password")
+        gbxVerifyActivation.Text = "Verify to Activate Loan"
+        btnVerify.Text = "Verify to Activate Loan"
         toggleVerifyActivation(True)
     End Sub
 
@@ -1296,9 +1237,11 @@ Fix2:
                 Dim rec As Integer
                 Dim data As New Dictionary(Of String, Object)
                 data.Add("loan_id", lvLoanList.FocusedItem.Text)
+
                 rec = db.ExecuteNonQuery("Delete from tbl_loans where loan_id=@loan_id", data)
+
                 rec = db.ExecuteNonQuery("Delete from tbl_collectibles where loan_id=@loan_id", data)
-                rec = db.ExecuteNonQuery("delete from tbl_comakers where loan_id=@loan_id", data)
+
                 LoadListView()
                 MsgBox("Record deleted!", MsgBoxStyle.Information, "Delete loan")
             Catch ex As Exception
@@ -1323,41 +1266,324 @@ Fix2:
 
 
     Private Sub btn_comakers_Click(sender As Object, e As EventArgs) Handles btn_comakers.Click
-        If beforeProceedToManageCom() = False Then Exit Sub
         frmComaker.Text = "Co-maker(s) of " & txtName.Text
-        frmComaker.ShowDialog()
+        frmComaker.Show()
     End Sub
-    Private Function beforeProceedToManageCom() As Boolean
-        If txtClientID.Text.Trim = "" Then
-            MsgBox("Cannot proceed. Please select a client first.", MsgBoxStyle.Critical, "Error")
-            toggleClientSearch(True)
-            Return False
+
+    Private Sub btnReStructure_Click(sender As Object, e As EventArgs) Handles btnReStructure.Click
+        If lvLoanList.SelectedItems.Count = 0 Then
+            MsgBox("Please select a loan.", MsgBoxStyle.Exclamation + vbOKOnly, "No selected loan")
+            Exit Sub
+        ElseIf lvLoanList.SelectedItems.Count > 1 Then
+            MsgBox("Multiple loan selected. You can only restructure one loan at a time.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information)
+            Exit Sub
+        ElseIf lvLoanList.SelectedItems.Item(0).SubItems(9).Text <> "Active" Then
+            MsgBox("Please select an active loan to restructure.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Invalid Loan Status")
+            Exit Sub
+        End If
+        lbl_loan_id.Text = lvLoanList.SelectedItems.Item(0).SubItems(0).Text
+
+        gbx_restructure.Visible = True
+        gbx_restructure.Parent = Me
+        gbx_restructure.BringToFront()
+        btn_scheme_one.BringToFront()
+        btn_scheme_two.BringToFront()
+        pnlMain.Enabled = False
+    End Sub
+
+
+
+
+    Private Sub btn_cancel_Click_1(sender As Object, e As EventArgs) Handles btn_cancel.Click
+        gbx_restructure.Visible = False
+        pnlMain.Enabled = True
+
+        lbl_loan_id.Text = ""
+        lbl_is_restructure.Text = 0
+    End Sub
+    Private Sub restructure(scheme As Integer)
+        Dim loan, client As SQLite.SQLiteDataReader
+        Dim penalty As Double
+        Dim sql_penalty As String
+
+        If cbx_include_penalty.Checked = True Then
+            sql_penalty = "SELECT SUM(penalty_amt) FROM tbl_collectibles c WHERE c.loan_id=l.loan_id AND (penalty_status=1 OR (penalty_status=0 AND due_date<=" & DateToStr(Date.Now) & "))"
+        Else
+            sql_penalty = "SELECT SUM(penalty_amt) FROM tbl_collectibles p WHERE p.loan_id=l.loan_id AND penalty_status=1"
+        End If
+        If scheme = 2 Then
+            '## SCHEME 2 - REMAINING BALANCE #############################################################
+            Dim amount_paid As Double
+            Using db As New DBHelper(My.Settings.ConnectionString)
+                Try
+                    loan = db.ExecuteReader("SELECT loan_id,client_id,principal,interest_percentage,amortization,terms,(SELECT SUM(amount) FROM tbl_payments p WHERE p.loan_id=l.loan_id AND payment_status=0)as amount_paid,(" & sql_penalty & ") as penalty FROM tbl_loans l WHERE loan_id=" & lbl_loan_id.Text)
+                    If loan.HasRows Then
+                        loan.Read()
+                        If IsDBNull(loan.Item("penalty")) Then
+                            penalty = 0
+                        Else
+                            penalty = loan.Item("penalty")
+
+                        End If
+                        If IsDBNull(loan.Item("amount_paid")) Then
+                            amount_paid = 0
+                        Else
+                            amount_paid = StrToNum(loan.Item("amount_paid"), 2, False)
+
+                        End If
+                        txtPrincipal.Text = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2)) + penalty), 2, False)
+
+                        client = db.ExecuteReader("select client_id, employee_no, last_name, first_name, middle_name, company_name, branch_name, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id where a.client_id=" & loan.Item("client_id"))
+                        If client.HasRows Then
+                            client.Read()
+                            With client
+                                txtClientID.Text = .Item("client_id")
+                                txtName.Text = .Item("last_name") & ", " & .Item("first_name") & " " & .Item("middle_name")
+                                txtCompany.Text = .Item("company_name")
+                                txtBranch.Text = .Item("branch_name")
+                                lblEmployeeNumber.Text = .Item("employee_no")
+                                txtCreditLimit.Text = StrToNum(.Item("credit_limit"), 2)
+                                txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+                            End With
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                End Try
+            End Using
+        Else
+            '## SCHEME 1 - NET AMOUNT ####################################################################
+
+            Using db As New DBHelper(My.Settings.ConnectionString)
+                Dim no_of_mos_paid As SQLite.SQLiteDataReader
+                Dim mos_paid As Integer = 0
+                Dim terms, principal, amount_paid, new_principal, mon_payment, mon_principal As Double
+
+                Try
+                    no_of_mos_paid = db.ExecuteReader("SELECT count(ctb_id) as paid FROM tbl_collectibles WHERE loan_id=" & lbl_loan_id.Text & " AND collected_amt>=payable_amt")
+                    no_of_mos_paid.Read()
+                    mos_paid = CInt(Math.Ceiling(no_of_mos_paid.Item("paid") / 2))
+                    loan = db.ExecuteReader("SELECT loan_id,client_id,principal,interest_percentage,amortization,terms,(SELECT SUM(amount) FROM tbl_payments p WHERE p.loan_id=l.loan_id AND payment_status=0)as amount_paid,(" & sql_penalty & ") as penalty FROM tbl_loans l WHERE loan_id=" & lbl_loan_id.Text)
+                    If loan.HasRows Then
+
+                        loan.Read()
+                        Dim MIA As Double = ((loan.Item("interest_percentage")) / 100) * StrToNum(loan.Item("principal"))
+                        terms = CInt(loan.Item("terms"))
+                        principal = StrToNum(loan.Item("principal"), 2, False)
+                        mon_principal = principal / terms
+
+                        mon_payment = MIA + mon_principal
+                        If IsDBNull(loan.Item("penalty")) Then
+                            penalty = 0
+                        Else
+                            penalty = StrToNum(loan.Item("penalty"), 2, False)
+
+                        End If
+
+                        If IsDBNull(loan.Item("amount_paid")) Then
+                            amount_paid = 0
+                        Else
+                            amount_paid = StrToNum(loan.Item("amount_paid"), 2, False)
+
+                        End If
+                        If mos_paid >= 1 Then
+                            'new_principal = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2))) - (amount_paid), 2, False) - ((MIA * (terms - mos_paid)))
+                            new_principal = (penalty + principal + (MIA * terms) - (amount_paid)) - ((MIA * (terms - mos_paid)))
+
+                        Else
+                            'new_principal = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2))) - (amount_paid), 2, False) - ((MIA * (terms)))
+                            new_principal = (penalty + principal + (MIA * terms) - (amount_paid)) - ((MIA * (terms)))
+
+
+
+                        End If
+                        txtPrincipal.Text = StrToNum(NumToStr(new_principal), 2, False)
+
+                        'txtPrincipal.Text = StrToNum(((loan.Item("principal")) * ((loan.Item("interest_percentage")) / 100)) * mos_paid - (loan.Item("amount_paid")), 2, False)
+
+                        client = db.ExecuteReader("select client_id, employee_no, last_name, first_name, middle_name, company_name, branch_name, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id where a.client_id=" & loan.Item("client_id"))
+                        If client.HasRows Then
+                            client.Read()
+                            With client
+                                txtClientID.Text = .Item("client_id")
+                                txtName.Text = .Item("last_name") & ", " & .Item("first_name") & " " & .Item("middle_name")
+                                txtCompany.Text = .Item("company_name")
+                                txtBranch.Text = .Item("branch_name")
+                                lblEmployeeNumber.Text = .Item("employee_no")
+                                txtCreditLimit.Text = StrToNum(.Item("credit_limit"), 2)
+                                txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+                            End With
+
+
+
+                        End If
+
+
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                End Try
+            End Using
         End If
 
-        If txtPrincipal.Text.Trim = "" Then
-            MsgBox("Cannot proceed. Please put a value for principal first.", MsgBoxStyle.Critical, "Error")
-            txtPrincipal.Select()
-            Return False
+        lbl_is_restructure.Text = 1
+        gbxAddEdit.Visible = True
+        gbxAddEdit.Enabled = True
+        pnlMain.Enabled = True
+        gbxAddEdit.BringToFront()
+        gbx_restructure.Visible = False
+        cboLoanStatus.SelectedIndex = 1
+        cboApplicationStatus.SelectedIndex = 1
+        cboApplicationStatus.Enabled = False
+    End Sub
+
+    Private Sub btn_restructure_Click_1(sender As Object, e As EventArgs) Handles btn_restructure.Click
+        Dim loan, client As SQLite.SQLiteDataReader
+        If cbo_scheme_type.Text = "" Then
+            MsgBox("Please select scheme type.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Select scheme type")
+            Exit Sub
+        End If
+        If cbo_scheme_type.SelectedIndex = 1 Then
+            '## SCHEME 2 - REMAINING BALANCE #############################################################
+            Dim amount_paid As Double
+            Using db As New DBHelper(My.Settings.ConnectionString)
+                Try
+                    loan = db.ExecuteReader("SELECT loan_id,client_id,principal,interest_percentage,amortization,terms,(SELECT SUM(amount) FROM tbl_payments p WHERE p.loan_id=l.loan_id AND payment_status=0)as amount_paid,(SELECT SUM(penalty_amt) FROM tbl_collectibles c WHERE c.loan_id=l.loan_id) as penalty FROM tbl_loans l WHERE loan_id=" & lbl_loan_id.Text)
+                    If loan.HasRows Then
+                        loan.Read()
+                        If IsDBNull(loan.Item("amount_paid")) Then
+                            amount_paid = 0
+                        Else
+                            amount_paid = StrToNum(loan.Item("amount_paid"), 2, False)
+
+                        End If
+                        txtPrincipal.Text = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2))) - NumToStr(amount_paid), 2, False)
+
+                        client = db.ExecuteReader("select client_id, employee_no, last_name, first_name, middle_name, company_name, branch_name, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id where a.client_id=" & loan.Item("client_id"))
+                        If client.HasRows Then
+                            client.Read()
+                            With client
+                                txtClientID.Text = .Item("client_id")
+                                txtName.Text = .Item("last_name") & ", " & .Item("first_name") & " " & .Item("middle_name")
+                                txtCompany.Text = .Item("company_name")
+                                txtBranch.Text = .Item("branch_name")
+                                lblEmployeeNumber.Text = .Item("employee_no")
+                                txtCreditLimit.Text = StrToNum(.Item("credit_limit"), 2)
+                                txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+                            End With
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                End Try
+            End Using
+        Else
+            '## SCHEME 1 - NET AMOUNT ####################################################################
+
+            Using db As New DBHelper(My.Settings.ConnectionString)
+                Dim no_of_mos_paid As SQLite.SQLiteDataReader
+                Dim mos_paid As Integer = 0
+                Dim terms, principal, amount_paid, new_principal, mon_payment, mon_principal As Double
+                Try
+                    no_of_mos_paid = db.ExecuteReader("SELECT count(ctb_id) as paid FROM tbl_collectibles WHERE loan_id=" & lbl_loan_id.Text & " AND collected_amt>=payable_amt")
+                    no_of_mos_paid.Read()
+                    mos_paid = CInt(Math.Ceiling(no_of_mos_paid.Item("paid") / 2))
+                    loan = db.ExecuteReader("SELECT loan_id,client_id,principal,interest_percentage,amortization,terms,(SELECT SUM(amount) FROM tbl_payments p WHERE p.loan_id=l.loan_id AND payment_status=0)as amount_paid,(SELECT SUM(penalty_amt) FROM tbl_collectibles c WHERE c.loan_id=l.loan_id) as penalty FROM tbl_loans l WHERE loan_id=" & lbl_loan_id.Text)
+                    If loan.HasRows Then
+
+                        loan.Read()
+                        Dim MIA As Double = ((loan.Item("interest_percentage")) / 100) * StrToNum(loan.Item("principal"))
+                        terms = CInt(loan.Item("terms"))
+                        principal = StrToNum(loan.Item("principal"), 2, False)
+                        mon_principal = principal / terms
+
+                        mon_payment = MIA + mon_principal
+                        If IsDBNull(loan.Item("amount_paid")) Then
+                            amount_paid = 0
+                        Else
+                            amount_paid = StrToNum(loan.Item("amount_paid"), 2, False)
+
+                        End If
+                        If mos_paid >= 1 Then
+                            'new_principal = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2))) - (amount_paid), 2, False) - ((MIA * (terms - mos_paid)))
+                            new_principal = (principal + (MIA * terms) - (amount_paid)) - ((MIA * (terms - mos_paid)))
+
+                        Else
+                            'new_principal = StrToNum(((loan.Item("amortization")) * ((loan.Item("terms") * 2))) - (amount_paid), 2, False) - ((MIA * (terms)))
+                            new_principal = (principal + (MIA * terms) - (amount_paid)) - ((MIA * (terms)))
+
+
+
+                        End If
+                        txtPrincipal.Text = StrToNum(NumToStr(new_principal), 2, False)
+
+                        'txtPrincipal.Text = StrToNum(((loan.Item("principal")) * ((loan.Item("interest_percentage")) / 100)) * mos_paid - (loan.Item("amount_paid")), 2, False)
+
+                        client = db.ExecuteReader("select client_id, employee_no, last_name, first_name, middle_name, company_name, branch_name, credit_limit from tbl_clients as A left join tbl_branches as B on A.branch_id=B.branch_id left join tbl_company as C on B.company_id=C.company_id where a.client_id=" & loan.Item("client_id"))
+                        If client.HasRows Then
+                            client.Read()
+                            With client
+                                txtClientID.Text = .Item("client_id")
+                                txtName.Text = .Item("last_name") & ", " & .Item("first_name") & " " & .Item("middle_name")
+                                txtCompany.Text = .Item("company_name")
+                                txtBranch.Text = .Item("branch_name")
+                                lblEmployeeNumber.Text = .Item("employee_no")
+                                txtCreditLimit.Text = StrToNum(.Item("credit_limit"), 2)
+                                txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+                            End With
+
+
+
+                        End If
+
+
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                End Try
+            End Using
+        End If
+        lbl_is_restructure.Text = 1
+        gbxAddEdit.Visible = True
+        gbxAddEdit.Enabled = True
+        pnlMain.Enabled = True
+        gbxAddEdit.BringToFront()
+        gbx_restructure.Visible = False
+        cboLoanStatus.SelectedIndex = 1
+        cboApplicationStatus.SelectedIndex = 1
+        cboApplicationStatus.Enabled = False
+    End Sub
+
+    Private Sub btnForceStop_Click(sender As Object, e As EventArgs) Handles btnForceStop.Click
+        If lvLoanList.SelectedItems.Count = 0 Then
+            MsgBox("Please select a loan to be stopped.", MsgBoxStyle.Exclamation + vbOKOnly, "No selected loan")
+            Exit Sub
+        ElseIf lvLoanList.SelectedItems.Count > 1 Then
+            MsgBox("Multiple loan selected. You can only stop one loan at a time.", MsgBoxStyle.OkOnly + MsgBoxStyle.Information)
+            Exit Sub
+        ElseIf lvLoanList.SelectedItems.Item(0).SubItems(9).Text <> "Active" Then
+            MsgBox("Please select an active loan to stop", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Invalid Loan Status")
+            Exit Sub
         End If
 
-        If cboInterest.Text.Trim = "" Then
-            MsgBox("Cannot proceed. Please put an interest rate first.", MsgBoxStyle.Critical, "Error")
-            cboInterest.Select()
-            Return False
-        End If
+        txtUser.Text = ""
+        txtPassword.Text = ""
+        SetCueText(txtUser, "Username")
+        SetCueText(txtPassword, "Password")
+        gbxVerifyActivation.Text = "Verify to Stop Loan"
+        btnVerify.Text = "Verify to Stop Loan"
+        toggleVerifyActivation(True)
 
-        If txtTerms.Text.Trim = "" Then
-            MsgBox("Cannot proceed. Please put a value for terms first.", MsgBoxStyle.Critical, "Error")
-            txtTerms.Select()
-            Return False
-        End If
 
-        If Val(txtTotalLoanAmount.Text.Trim) = 0 Then
-            MsgBox("Cannot proceed. Please put a valid loan.", MsgBoxStyle.Critical, "Error")
-            txtPrincipal.Select()
-            Return False
-        End If
-        Return True
-    End Function
+    End Sub
 
+
+    Private Sub btn_scheme_two_Click(sender As Object, e As EventArgs) Handles btn_scheme_two.Click
+        restructure(2)
+    End Sub
+
+    Private Sub btn_scheme_one_Click(sender As Object, e As EventArgs) Handles btn_scheme_one.Click
+        restructure(1)
+
+    End Sub
 End Class

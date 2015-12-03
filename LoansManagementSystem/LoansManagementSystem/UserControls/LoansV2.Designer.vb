@@ -25,6 +25,14 @@ Partial Class LoansV2
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoansV2))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.gbx_restructure = New System.Windows.Forms.GroupBox()
+        Me.btn_scheme_two = New System.Windows.Forms.Button()
+        Me.btn_scheme_one = New System.Windows.Forms.Button()
+        Me.lbl_loan_id = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.cbo_scheme_type = New System.Windows.Forms.ComboBox()
+        Me.btn_cancel = New System.Windows.Forms.Button()
+        Me.btn_restructure = New System.Windows.Forms.Button()
         Me.btnPrint = New System.Windows.Forms.Button()
         Me.lvLoanList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -54,6 +62,7 @@ Partial Class LoansV2
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.gbxClientData = New System.Windows.Forms.GroupBox()
+        Me.lbl_is_restructure = New System.Windows.Forms.Label()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.txtAvailableCredit = New System.Windows.Forms.TextBox()
         Me.txtBranch = New System.Windows.Forms.TextBox()
@@ -99,7 +108,7 @@ Partial Class LoansV2
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btn_comakers = New System.Windows.Forms.Button()
-        Me.txt_no_of_Comaker = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.gbxShowClient = New System.Windows.Forms.GroupBox()
         Me.btnClientBack = New System.Windows.Forms.Button()
@@ -121,7 +130,9 @@ Partial Class LoansV2
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
+        Me.cbx_include_penalty = New System.Windows.Forms.CheckBox()
         Me.pnlMain.SuspendLayout()
+        Me.gbx_restructure.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -151,6 +162,7 @@ Partial Class LoansV2
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.gbx_restructure)
         Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.lvLoanList)
         Me.pnlMain.Controls.Add(Me.btnSearchLoan)
@@ -166,6 +178,112 @@ Partial Class LoansV2
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1079, 610)
         Me.pnlMain.TabIndex = 53
+        '
+        'gbx_restructure
+        '
+        Me.gbx_restructure.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.gbx_restructure.BackColor = System.Drawing.Color.Gainsboro
+        Me.gbx_restructure.Controls.Add(Me.cbx_include_penalty)
+        Me.gbx_restructure.Controls.Add(Me.btn_scheme_two)
+        Me.gbx_restructure.Controls.Add(Me.btn_scheme_one)
+        Me.gbx_restructure.Controls.Add(Me.lbl_loan_id)
+        Me.gbx_restructure.Controls.Add(Me.Label12)
+        Me.gbx_restructure.Controls.Add(Me.cbo_scheme_type)
+        Me.gbx_restructure.Controls.Add(Me.btn_cancel)
+        Me.gbx_restructure.Controls.Add(Me.btn_restructure)
+        Me.gbx_restructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.gbx_restructure.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbx_restructure.Location = New System.Drawing.Point(286, 341)
+        Me.gbx_restructure.Name = "gbx_restructure"
+        Me.gbx_restructure.Size = New System.Drawing.Size(442, 200)
+        Me.gbx_restructure.TabIndex = 63
+        Me.gbx_restructure.TabStop = False
+        Me.gbx_restructure.Text = "Restructure Loan"
+        Me.gbx_restructure.Visible = False
+        '
+        'btn_scheme_two
+        '
+        Me.btn_scheme_two.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btn_scheme_two.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_scheme_two.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_scheme_two.ForeColor = System.Drawing.Color.White
+        Me.btn_scheme_two.Location = New System.Drawing.Point(224, 75)
+        Me.btn_scheme_two.Name = "btn_scheme_two"
+        Me.btn_scheme_two.Size = New System.Drawing.Size(182, 48)
+        Me.btn_scheme_two.TabIndex = 76
+        Me.btn_scheme_two.Text = "Scheme 2" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Remaining Balance"
+        Me.btn_scheme_two.UseVisualStyleBackColor = False
+        '
+        'btn_scheme_one
+        '
+        Me.btn_scheme_one.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btn_scheme_one.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_scheme_one.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_scheme_one.ForeColor = System.Drawing.Color.White
+        Me.btn_scheme_one.Location = New System.Drawing.Point(37, 75)
+        Me.btn_scheme_one.Name = "btn_scheme_one"
+        Me.btn_scheme_one.Size = New System.Drawing.Size(182, 48)
+        Me.btn_scheme_one.TabIndex = 73
+        Me.btn_scheme_one.Text = "Scheme 1  " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Without Interest"
+        Me.btn_scheme_one.UseVisualStyleBackColor = False
+        '
+        'lbl_loan_id
+        '
+        Me.lbl_loan_id.AutoSize = True
+        Me.lbl_loan_id.Location = New System.Drawing.Point(180, 22)
+        Me.lbl_loan_id.Name = "lbl_loan_id"
+        Me.lbl_loan_id.Size = New System.Drawing.Size(66, 20)
+        Me.lbl_loan_id.TabIndex = 72
+        Me.lbl_loan_id.Text = "Label18"
+        Me.lbl_loan_id.Visible = False
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(32, 95)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(106, 20)
+        Me.Label12.TabIndex = 71
+        Me.Label12.Text = "Scheme Type"
+        Me.Label12.Visible = False
+        '
+        'cbo_scheme_type
+        '
+        Me.cbo_scheme_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbo_scheme_type.FormattingEnabled = True
+        Me.cbo_scheme_type.Items.AddRange(New Object() {"Scheme 1 - from Net Amount", "Scheme 2 - from Remaining Balance"})
+        Me.cbo_scheme_type.Location = New System.Drawing.Point(157, 92)
+        Me.cbo_scheme_type.Name = "cbo_scheme_type"
+        Me.cbo_scheme_type.Size = New System.Drawing.Size(248, 28)
+        Me.cbo_scheme_type.TabIndex = 70
+        Me.cbo_scheme_type.Visible = False
+        '
+        'btn_cancel
+        '
+        Me.btn_cancel.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btn_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_cancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_cancel.ForeColor = System.Drawing.Color.White
+        Me.btn_cancel.Location = New System.Drawing.Point(225, 139)
+        Me.btn_cancel.Name = "btn_cancel"
+        Me.btn_cancel.Size = New System.Drawing.Size(182, 48)
+        Me.btn_cancel.TabIndex = 69
+        Me.btn_cancel.Text = "Cancel"
+        Me.btn_cancel.UseVisualStyleBackColor = False
+        '
+        'btn_restructure
+        '
+        Me.btn_restructure.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btn_restructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_restructure.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_restructure.ForeColor = System.Drawing.Color.White
+        Me.btn_restructure.Location = New System.Drawing.Point(37, 139)
+        Me.btn_restructure.Name = "btn_restructure"
+        Me.btn_restructure.Size = New System.Drawing.Size(182, 48)
+        Me.btn_restructure.TabIndex = 69
+        Me.btn_restructure.Text = "Restructure"
+        Me.btn_restructure.UseVisualStyleBackColor = False
+        Me.btn_restructure.Visible = False
         '
         'btnPrint
         '
@@ -426,7 +544,7 @@ Partial Class LoansV2
         Me.gbxAddEdit.Controls.Add(Me.gbxShowClient)
         Me.gbxAddEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.gbxAddEdit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAddEdit.Location = New System.Drawing.Point(194, 8)
+        Me.gbxAddEdit.Location = New System.Drawing.Point(218, 17)
         Me.gbxAddEdit.Name = "gbxAddEdit"
         Me.gbxAddEdit.Size = New System.Drawing.Size(762, 661)
         Me.gbxAddEdit.TabIndex = 56
@@ -456,6 +574,7 @@ Partial Class LoansV2
         'gbxClientData
         '
         Me.gbxClientData.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.gbxClientData.Controls.Add(Me.lbl_is_restructure)
         Me.gbxClientData.Controls.Add(Me.txtName)
         Me.gbxClientData.Controls.Add(Me.txtAvailableCredit)
         Me.gbxClientData.Controls.Add(Me.txtBranch)
@@ -475,6 +594,16 @@ Partial Class LoansV2
         Me.gbxClientData.Size = New System.Drawing.Size(738, 186)
         Me.gbxClientData.TabIndex = 173
         Me.gbxClientData.TabStop = False
+        '
+        'lbl_is_restructure
+        '
+        Me.lbl_is_restructure.AutoSize = True
+        Me.lbl_is_restructure.Location = New System.Drawing.Point(20, 22)
+        Me.lbl_is_restructure.Name = "lbl_is_restructure"
+        Me.lbl_is_restructure.Size = New System.Drawing.Size(18, 20)
+        Me.lbl_is_restructure.TabIndex = 175
+        Me.lbl_is_restructure.Text = "0"
+        Me.lbl_is_restructure.Visible = False
         '
         'txtName
         '
@@ -988,7 +1117,7 @@ Partial Class LoansV2
         '
         Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.Controls.Add(Me.btn_comakers)
-        Me.GroupBox1.Controls.Add(Me.txt_no_of_Comaker)
+        Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Label23)
         Me.GroupBox1.Location = New System.Drawing.Point(451, 561)
         Me.GroupBox1.Name = "GroupBox1"
@@ -1010,16 +1139,16 @@ Partial Class LoansV2
         Me.btn_comakers.Text = "Manage Co-makers"
         Me.btn_comakers.UseVisualStyleBackColor = False
         '
-        'txt_no_of_Comaker
+        'TextBox1
         '
-        Me.txt_no_of_Comaker.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_no_of_Comaker.Location = New System.Drawing.Point(170, 14)
-        Me.txt_no_of_Comaker.Name = "txt_no_of_Comaker"
-        Me.txt_no_of_Comaker.ReadOnly = True
-        Me.txt_no_of_Comaker.Size = New System.Drawing.Size(109, 26)
-        Me.txt_no_of_Comaker.TabIndex = 135
-        Me.txt_no_of_Comaker.Text = "0"
-        Me.txt_no_of_Comaker.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(170, 14)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(109, 26)
+        Me.TextBox1.TabIndex = 135
+        Me.TextBox1.Text = "0"
+        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label23
         '
@@ -1191,7 +1320,7 @@ Partial Class LoansV2
         Me.btnCloseVerification.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCloseVerification.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCloseVerification.ForeColor = System.Drawing.Color.White
-        Me.btnCloseVerification.Location = New System.Drawing.Point(226, 147)
+        Me.btnCloseVerification.Location = New System.Drawing.Point(226, 148)
         Me.btnCloseVerification.Name = "btnCloseVerification"
         Me.btnCloseVerification.Size = New System.Drawing.Size(182, 48)
         Me.btnCloseVerification.TabIndex = 69
@@ -1228,19 +1357,33 @@ Partial Class LoansV2
         Me.txtUser.Size = New System.Drawing.Size(255, 29)
         Me.txtUser.TabIndex = 64
         '
+        'cbx_include_penalty
+        '
+        Me.cbx_include_penalty.AutoSize = True
+        Me.cbx_include_penalty.Checked = True
+        Me.cbx_include_penalty.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbx_include_penalty.Location = New System.Drawing.Point(39, 35)
+        Me.cbx_include_penalty.Name = "cbx_include_penalty"
+        Me.cbx_include_penalty.Size = New System.Drawing.Size(211, 24)
+        Me.cbx_include_penalty.TabIndex = 77
+        Me.cbx_include_penalty.Text = "Include Pending Penalties"
+        Me.cbx_include_penalty.UseVisualStyleBackColor = True
+        '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxAddEdit)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)
         Me.pnlMain.PerformLayout()
+        Me.gbx_restructure.ResumeLayout(False)
+        Me.gbx_restructure.PerformLayout()
         Me.gbxAddEdit.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1337,7 +1480,7 @@ Partial Class LoansV2
     Friend WithEvents txtTotalLoanAmount As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents btn_comakers As System.Windows.Forms.Button
-    Friend WithEvents txt_no_of_Comaker As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents cboLoanStatus As System.Windows.Forms.ComboBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
@@ -1359,5 +1502,15 @@ Partial Class LoansV2
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents btnReStructure As System.Windows.Forms.Button
     Friend WithEvents btnPrint As System.Windows.Forms.Button
+    Friend WithEvents lbl_is_restructure As System.Windows.Forms.Label
+    Friend WithEvents gbx_restructure As System.Windows.Forms.GroupBox
+    Friend WithEvents lbl_loan_id As System.Windows.Forms.Label
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents cbo_scheme_type As System.Windows.Forms.ComboBox
+    Friend WithEvents btn_cancel As System.Windows.Forms.Button
+    Friend WithEvents btn_restructure As System.Windows.Forms.Button
+    Friend WithEvents btn_scheme_one As System.Windows.Forms.Button
+    Friend WithEvents btn_scheme_two As System.Windows.Forms.Button
+    Friend WithEvents cbx_include_penalty As System.Windows.Forms.CheckBox
 
 End Class
