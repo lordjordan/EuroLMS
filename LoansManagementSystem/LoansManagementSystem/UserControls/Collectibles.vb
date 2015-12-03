@@ -915,6 +915,8 @@ Public Class frmCollectibles
         Return amount
     End Function
     Private Sub Process_Click(sender As Object, e As EventArgs) Handles Process.Click
+        'risky because when the system crashed in the middle of process it may display wrong output.....
+        'didn't test if they try to click this button at the same time, what will happen?
         'version 2
         'Try
 
@@ -976,21 +978,15 @@ Public Class frmCollectibles
                     data.Add("payment_status", "0")
                     rec = db.ExecuteNonQuery("INSERT INTO tbl_payments (loan_id, amount, date_stamp, ctb_id, payment_status) VALUES " & _
                                           "(@loan_id, @amount, @date_stamp, @ctb_id, @payment_status)", data)
-
-
                     data.Clear()
-
                     dr = db.ExecuteReader("SELECT SUM(amount) as TotalAmount FROM tbl_payments WHERE loan_id = " & lvCollectibles.Items(x - 1).Text & " AND payment_status= 0")
                     If dr.HasRows Then
-
                         If dr.Item("TotalAmount").ToString <> "" Then
                             conV = dr.Item("TotalAmount").ToString
-
                             totalInPayment = CDbl(StrToNum(conV))
-
                         End If
                     End If
-                    ''
+                    '
                     con.ConnectionString = My.Settings.ConnectionString
                     query = "SELECT ctb_id, due_date, penalty_status, payable_amt , collected_amt, previous_balance, penalty_amt FROM tbl_collectibles WHERE" & _
                                           " loan_id = " & lvCollectibles.Items(x - 1).Text & " ORDER by due_date ASC"
@@ -1125,7 +1121,13 @@ Public Class frmCollectibles
                             End If
 
                         End If
+                        'update penalty_status ng  mga di naabot nung siniksik.
+                        'if condition? ----- added
 
+                        If CDbl(StrToNum(ds.Tables("collectibles").Rows(z - 1).Item("collected_amt").ToString)) = 0 Then
+                            rec = db.ExecuteNonQuery("UPDATE tbl_collectibles SET  penalty_status= 0 " & _
+                                             " WHERE ctb_id=" & ds.Tables("collectibles").Rows(z - 1).Item(0).ToString)
+                        End If
                     Next
 
                     ds.Clear()
@@ -1188,7 +1190,7 @@ Public Class frmCollectibles
                 Next
 
                 ShowData()
-                MsgBox("Process completed!", MsgBoxStyle.Information, "EMS")
+                MsgBox("Process completed!", MsgBoxStyle.Information, "EMCC")
             End If
         End If
         Cursor = Cursors.Arrow

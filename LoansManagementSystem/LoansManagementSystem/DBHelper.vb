@@ -66,10 +66,11 @@ Public Class DBHelper
         cmd.CommandText = commandText
         Using cmd
             BuildCommand(cmd, params)
+
             Return cmd.ExecuteScalar
         End Using
     End Function
-
+    
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
 

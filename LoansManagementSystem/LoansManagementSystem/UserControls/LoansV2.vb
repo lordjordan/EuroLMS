@@ -57,6 +57,7 @@ Public Class LoansV2
                 Control.Text = ""     'Clear all text
             End If
         Next Control
+        txt_no_of_Comaker.Clear()
     End Sub
 
     Private Function validateInputs() As Boolean
@@ -169,31 +170,27 @@ Public Class LoansV2
             log("Cancelled updating loan id = " & active_loan_id)
 
         End If
+        frmComaker.lvCoMakerList.Items.Clear()
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
         If validateInputs() = False Then Exit Sub
-        ComputeAvailableCredit(txtClientID.Text)
+        'ComputeAvailableCredit(txtClientID.Text) 'may mababago sa method na ito
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim dr As SQLite.SQLiteDataReader
-
             Try
-
                 dr = db.ExecuteReader("SELECT client_id FROM tbl_loans WHERE client_id =" & txtClientID.Text & " AND loan_status = 1")
                 If dr.HasRows Then
-                    If CDbl(txtAvailableCredit.Text) < CDbl(txtTotalLoanAmount.Text) Then
-
+                    If CDbl(txtTotalLoanAmount.Text) > CDbl(txtAvailableCredit.Text) Then
                         MsgBox("Gross amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
                         Exit Sub
                     End If
-
-                    If CDbl(txtAvailableCredit.Text) < CDbl(txtPrincipal.Text) Then
-
-                        MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
-                        Exit Sub
-                    End If
                 End If
-                
+                If CDbl(txtPrincipal.Text) > CDbl(txtAvailableCredit.Text) Then
+                    MsgBox("Principal amount exceeded available credit." & vbCrLf & "Available Credit: " & txtAvailableCredit.Text, vbExclamation + vbOKOnly, "Exceed")
+                    Exit Sub
+                End If
 
                 'dr = db1.ExecuteReader("select * from tbl_collectibles where loan_id=@loan_id")
 
@@ -213,7 +210,7 @@ Public Class LoansV2
                 db.Dispose()
             End Try
         End Using
-        
+
 
 
         If gbxAddEdit.Text = "New Loan Application" Then
@@ -379,10 +376,14 @@ Public Class LoansV2
         ''        Next
     End Sub
     Private Sub saveNewForm()
-        
+        'comakers ipapasok
+
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
+            'Dim cmd As SQLite.SQLiteCommand
+            'Dim trans As SQLite.SQLiteTransaction
+            Dim dr As SQLite.SQLiteDataReader
             Try
 
                 data.Add("client_id", txtClientID.Text)
@@ -399,23 +400,33 @@ Public Class LoansV2
                 data.Add("loan_remarks", txtLoanRemarks.Text)
 
 
-                rec = db.ExecuteNonQuery("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
+                rec = db.ExecuteScalar("insert into tbl_loans values(NULL, @client_id, @principal, @amortization, @date_start, @date_end, " & _
                                          "@interest_percentage, @date_approved, @date_enrolled , @terms, @application_status, @loan_status, " & _
-                                         "@loan_remarks)", data)
+                                         "@loan_remarks); SELECT Last_Insert_Rowid();", data)
+                data.Clear()
+                'saving comakers
+                Dim num As Integer
+                If txt_no_of_Comaker.Text <> "" Then
+                    If rec <> "0" Then
+                        num = rec
+                        For x = 1 To frmComaker.lvCoMakerList.Items.Count Step 1
+                            data.Add("loan_id", num)
+                            data.Add("client_id", frmComaker.lvCoMakerList.Items(x - 1).Text)
+                            rec = db.ExecuteNonQuery("insert into tbl_comakers values(@loan_id, @client_id)", data)
+                            data.Clear()
+                        Next
+
+                    End If
+                End If
+               
 
                 If Not rec < 1 Then
-                    'MsgBox("Record saved!", MsgBoxStyle.Information)
-                    'toggleLoanApplication()
-                    'LoadListView()
-                    Dim dr As SQLite.SQLiteDataReader
                     dr = db.ExecuteReader("select max(loan_id) as id from tbl_loans")
                     active_loan_id = dr.Item("id")
                 End If
-
                 log("Initial process of loan record saving. loan_id = " & Str(active_loan_id))
             Catch ex As Exception
                 MsgBox(ex.ToString)
-
                 log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
@@ -444,11 +455,13 @@ Public Class LoansV2
         'Dim dr As SQLite.SQLiteDataReader
 
     End Sub
-
+   
     Private Sub saveEditForm()
+        'same here ipapasok ang comaker
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim rec As Integer
             Dim data As New Dictionary(Of String, Object)
+
             Try
 
                 data.Add("client_id", txtClientID.Text)
@@ -469,6 +482,19 @@ Public Class LoansV2
                 rec = db.ExecuteNonQuery("update tbl_loans set client_id = @client_id, principal = @principal, amortization = @amortization, date_start = @date_start, date_end = @date_end, " & _
                                          "interest_percentage = @interest_percentage, date_approved = @date_approved, date_enrolled = @date_enrolled , terms = @terms, application_status = @application_status, loan_status = @loan_status, " & _
                                          "loan_remarks = @loan_remarks where loan_id = @loan_id;", data)
+                data.Clear()
+                'saving comakers
+                If txt_no_of_Comaker.Text <> "" Then
+                    rec = db.ExecuteNonQuery("DELETE from tbl_comakers where loan_id= " & active_loan_id)
+                    For x = 1 To frmComaker.lvCoMakerList.Items.Count Step 1
+                        data.Add("loan_id", active_loan_id)
+                        data.Add("client_id", frmComaker.lvCoMakerList.Items(x - 1).Text)
+                        rec = db.ExecuteNonQuery("insert into tbl_comakers values(@loan_id, @client_id)", data)
+                        data.Clear()
+                    Next
+                End If
+                
+               
 
                 If Not rec < 1 Then
                     'MsgBox("Record saved!", MsgBoxStyle.Information)
@@ -483,7 +509,6 @@ Public Class LoansV2
 
             Catch ex As Exception
                 MsgBox(ex.ToString)
-
                 log(ex.Message, "ERROR")
             Finally
                 db.Dispose()
@@ -644,14 +669,17 @@ Public Class LoansV2
     End Sub
 
     Private Function ComputeAvailableCredit(ClientID As String) As String
-        'codes for available credit (isasama ko pa ba mga penalized o hiwalay na yun????)oo nga pala penalties pa.....
+
         Dim db As New DBHelper(My.Settings.ConnectionString)
         Dim dr As SQLite.SQLiteDataReader
+        Dim con As New SQLite.SQLiteConnection
+        Dim ds As New DataSet
+        Dim da As SQLite.SQLiteDataAdapter
+        Dim query As String
         Dim data As New Dictionary(Of String, Object)
         Dim totalUtangWInterest, overAllPayment, creditLimit, principal, monthlyRate, biMonInterest, interest _
             , totalPaymentBimonth, rembal, overAllPenaltyStats As Double
         Dim conV As String
-
         'principal = CDbl(dr.Item("principal").Insert(6, ".").ToString)
         'monthlyRate = principal / (CInt(dr.Item("terms").ToString) * 2)
         'biMonInterest = (CInt(dr.Item("interest_percentage").ToString) / 100) / 2
@@ -665,6 +693,48 @@ Public Class LoansV2
         'txtDateEnd.Text = StrToDate(dr.Item("date_end").ToString)
         'get the credit limit 
         Try
+            'tignan natin kung may kinomake 1)tbl comakers
+            'mga variables na gagamitin
+            Dim remVal, totalval, overallcomake As Double
+            remVal = 0
+            totalval = 0
+            overallcomake = 0
+            con.ConnectionString = My.Settings.ConnectionString
+            query = "select * from tbl_comakers where client_id=" & ClientID
+            da = New SQLite.SQLiteDataAdapter(query, con)
+            da.Fill(ds, "comakers")
+            For z = 1 To ds.Tables("comakers").Rows.Count Step 1
+                dr = db.ExecuteReader("SELECT loan_id , sum(amount) as amt  FROM tbl_payments" & _
+                                      " where loan_id = " & ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
+                                      " and payment_status= 0")
+                If dr.HasRows Then
+                    If dr.Item("amt").ToString <> "" Then
+                        totalval = CDbl(StrToNum(dr.Item("amt").ToString))
+                    Else
+                        totalval = 0
+                    End If
+                
+                End If
+
+                dr = db.ExecuteReader("select loan_id, principal " & _
+                                      " from tbl_loans  where tbl_loans.loan_id= " & _
+                                      ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
+                                      " and loan_status = 1 or loan_status = 0")
+                If dr.HasRows Then
+                    remVal = CDbl(StrToNum(dr.Item("principal").ToString)) - totalval
+                    If remVal < 0 Then
+                        remVal = 0
+                    End If
+                Else
+                    remVal = 0
+                End If
+
+                    
+                overallcomake += remVal
+            Next
+
+
+
             dr = db.ExecuteReader("SELECT credit_limit FROM tbl_clients WHERE client_id = " & txtClientID.Text)
             If dr.HasRows Then
 
@@ -719,7 +789,7 @@ Public Class LoansV2
             If rembal > creditLimit Then
                 Return "0.00"
             ElseIf rembal <= creditLimit Then
-                conV = NumToStr(creditLimit - rembal)
+                conV = NumToStr((creditLimit - rembal) - overallcomake) 'minus ang kinomake kung merons
                 '50000.5
                 Return StrToNum(conV)
             End If
@@ -875,6 +945,8 @@ Fix2:
     End Sub
 
     Private Sub txtPrincipal_TextChanged(sender As Object, e As EventArgs) Handles txtPrincipal.TextChanged
+        frmComaker.lvCoMakerList.Items.Clear()
+        txt_no_of_Comaker.Clear()
         computeTotalLoan()
     End Sub
 
@@ -934,6 +1006,7 @@ Fix2:
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Try
+            'populate the listcount of comakers
             If lvLoanList.FocusedItem.SubItems(9).Text <> cboLoanStatus.Items(0) Then
                 MsgBox("This loan is currently " & lvLoanList.FocusedItem.SubItems(9).Text & " and cannot be editted.", MsgBoxStyle.Critical, "Unable to edit")
                 Exit Sub
@@ -950,7 +1023,7 @@ Fix2:
     End Sub
 
     Private Sub loadEditForm(loan_id As Long)
-
+        Dim itm As New ListViewItem
         Using db As New DBHelper(My.Settings.ConnectionString)
 
             'Dim rec As Integer
@@ -995,6 +1068,23 @@ Fix2:
 
                 End If
                 txtAvailableCredit.Text = ComputeAvailableCredit(txtClientID.Text)
+                'populate
+                dr = db.ExecuteReader("SELECT tbl_clients.client_id as clientID, last_name || ', ' || first_name || ' ' || last_name as name, " & _
+                "company_name || '/' || branch_name as comBran, employee_no from tbl_comakers " & _
+                "inner join tbl_clients on tbl_comakers.client_id = tbl_clients.client_id inner join tbl_branches " & _
+                "on tbl_clients.branch_id = tbl_branches.branch_id inner join tbl_company on tbl_branches.company_id = " & _
+                "tbl_company.company_id WHERE loan_id=" & lvLoanList.FocusedItem.Text)
+                If dr.HasRows Then
+                    frmComaker.lvCoMakerList.Items.Clear()
+                    Do While dr.Read
+                        itm = frmComaker.lvCoMakerList.Items.Add(dr.Item("clientID").ToString)
+                        itm.SubItems.Add(dr.Item("name").ToString)
+                        itm.SubItems.Add(dr.Item("employee_no").ToString)
+                        itm.SubItems.Add(dr.Item("combran").ToString)
+                    Loop
+                End If
+                txt_no_of_Comaker.Text = frmComaker.lvCoMakerList.Items.Count
+                'frmComaker.lvCoMakerList
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally
@@ -1206,11 +1296,9 @@ Fix2:
                 Dim rec As Integer
                 Dim data As New Dictionary(Of String, Object)
                 data.Add("loan_id", lvLoanList.FocusedItem.Text)
-
                 rec = db.ExecuteNonQuery("Delete from tbl_loans where loan_id=@loan_id", data)
-
                 rec = db.ExecuteNonQuery("Delete from tbl_collectibles where loan_id=@loan_id", data)
-
+                rec = db.ExecuteNonQuery("delete from tbl_comakers where loan_id=@loan_id", data)
                 LoadListView()
                 MsgBox("Record deleted!", MsgBoxStyle.Information, "Delete loan")
             Catch ex As Exception
@@ -1235,7 +1323,41 @@ Fix2:
 
 
     Private Sub btn_comakers_Click(sender As Object, e As EventArgs) Handles btn_comakers.Click
+        If beforeProceedToManageCom() = False Then Exit Sub
         frmComaker.Text = "Co-maker(s) of " & txtName.Text
-        frmComaker.Show()
+        frmComaker.ShowDialog()
     End Sub
+    Private Function beforeProceedToManageCom() As Boolean
+        If txtClientID.Text.Trim = "" Then
+            MsgBox("Cannot proceed. Please select a client first.", MsgBoxStyle.Critical, "Error")
+            toggleClientSearch(True)
+            Return False
+        End If
+
+        If txtPrincipal.Text.Trim = "" Then
+            MsgBox("Cannot proceed. Please put a value for principal first.", MsgBoxStyle.Critical, "Error")
+            txtPrincipal.Select()
+            Return False
+        End If
+
+        If cboInterest.Text.Trim = "" Then
+            MsgBox("Cannot proceed. Please put an interest rate first.", MsgBoxStyle.Critical, "Error")
+            cboInterest.Select()
+            Return False
+        End If
+
+        If txtTerms.Text.Trim = "" Then
+            MsgBox("Cannot proceed. Please put a value for terms first.", MsgBoxStyle.Critical, "Error")
+            txtTerms.Select()
+            Return False
+        End If
+
+        If Val(txtTotalLoanAmount.Text.Trim) = 0 Then
+            MsgBox("Cannot proceed. Please put a valid loan.", MsgBoxStyle.Critical, "Error")
+            txtPrincipal.Select()
+            Return False
+        End If
+        Return True
+    End Function
+
 End Class

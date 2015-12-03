@@ -99,7 +99,7 @@ Partial Class LoansV2
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btn_comakers = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txt_no_of_Comaker = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.gbxShowClient = New System.Windows.Forms.GroupBox()
         Me.btnClientBack = New System.Windows.Forms.Button()
@@ -988,7 +988,7 @@ Partial Class LoansV2
         '
         Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.GroupBox1.Controls.Add(Me.btn_comakers)
-        Me.GroupBox1.Controls.Add(Me.TextBox1)
+        Me.GroupBox1.Controls.Add(Me.txt_no_of_Comaker)
         Me.GroupBox1.Controls.Add(Me.Label23)
         Me.GroupBox1.Location = New System.Drawing.Point(451, 561)
         Me.GroupBox1.Name = "GroupBox1"
@@ -1010,16 +1010,16 @@ Partial Class LoansV2
         Me.btn_comakers.Text = "Manage Co-makers"
         Me.btn_comakers.UseVisualStyleBackColor = False
         '
-        'TextBox1
+        'txt_no_of_Comaker
         '
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(170, 14)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(109, 26)
-        Me.TextBox1.TabIndex = 135
-        Me.TextBox1.Text = "0"
-        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txt_no_of_Comaker.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_no_of_Comaker.Location = New System.Drawing.Point(170, 14)
+        Me.txt_no_of_Comaker.Name = "txt_no_of_Comaker"
+        Me.txt_no_of_Comaker.ReadOnly = True
+        Me.txt_no_of_Comaker.Size = New System.Drawing.Size(109, 26)
+        Me.txt_no_of_Comaker.TabIndex = 135
+        Me.txt_no_of_Comaker.Text = "0"
+        Me.txt_no_of_Comaker.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label23
         '
@@ -1191,7 +1191,7 @@ Partial Class LoansV2
         Me.btnCloseVerification.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCloseVerification.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCloseVerification.ForeColor = System.Drawing.Color.White
-        Me.btnCloseVerification.Location = New System.Drawing.Point(226, 148)
+        Me.btnCloseVerification.Location = New System.Drawing.Point(226, 147)
         Me.btnCloseVerification.Name = "btnCloseVerification"
         Me.btnCloseVerification.Size = New System.Drawing.Size(182, 48)
         Me.btnCloseVerification.TabIndex = 69
@@ -1232,10 +1232,10 @@ Partial Class LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.pnlMain)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
@@ -1337,7 +1337,7 @@ Partial Class LoansV2
     Friend WithEvents txtTotalLoanAmount As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents btn_comakers As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents txt_no_of_Comaker As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents cboLoanStatus As System.Windows.Forms.ComboBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
