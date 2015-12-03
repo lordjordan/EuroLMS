@@ -26,6 +26,7 @@ Partial Class LoansV2
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
         Me.gbx_restructure = New System.Windows.Forms.GroupBox()
+        Me.cbx_include_penalty = New System.Windows.Forms.CheckBox()
         Me.btn_scheme_two = New System.Windows.Forms.Button()
         Me.btn_scheme_one = New System.Windows.Forms.Button()
         Me.lbl_loan_id = New System.Windows.Forms.Label()
@@ -107,8 +108,8 @@ Partial Class LoansV2
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btn_comakers = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.btn_Comaker = New System.Windows.Forms.Button()
+        Me.txt_no_of_comaker = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.gbxShowClient = New System.Windows.Forms.GroupBox()
         Me.btnClientBack = New System.Windows.Forms.Button()
@@ -130,7 +131,6 @@ Partial Class LoansV2
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUser = New System.Windows.Forms.TextBox()
-        Me.cbx_include_penalty = New System.Windows.Forms.CheckBox()
         Me.pnlMain.SuspendLayout()
         Me.gbx_restructure.SuspendLayout()
         Me.gbxAddEdit.SuspendLayout()
@@ -200,6 +200,18 @@ Partial Class LoansV2
         Me.gbx_restructure.TabStop = False
         Me.gbx_restructure.Text = "Restructure Loan"
         Me.gbx_restructure.Visible = False
+        '
+        'cbx_include_penalty
+        '
+        Me.cbx_include_penalty.AutoSize = True
+        Me.cbx_include_penalty.Checked = True
+        Me.cbx_include_penalty.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbx_include_penalty.Location = New System.Drawing.Point(39, 35)
+        Me.cbx_include_penalty.Name = "cbx_include_penalty"
+        Me.cbx_include_penalty.Size = New System.Drawing.Size(211, 24)
+        Me.cbx_include_penalty.TabIndex = 77
+        Me.cbx_include_penalty.Text = "Include Pending Penalties"
+        Me.cbx_include_penalty.UseVisualStyleBackColor = True
         '
         'btn_scheme_two
         '
@@ -1116,8 +1128,8 @@ Partial Class LoansV2
         'GroupBox1
         '
         Me.GroupBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.GroupBox1.Controls.Add(Me.btn_comakers)
-        Me.GroupBox1.Controls.Add(Me.TextBox1)
+        Me.GroupBox1.Controls.Add(Me.btn_Comaker)
+        Me.GroupBox1.Controls.Add(Me.txt_no_of_comaker)
         Me.GroupBox1.Controls.Add(Me.Label23)
         Me.GroupBox1.Location = New System.Drawing.Point(451, 561)
         Me.GroupBox1.Name = "GroupBox1"
@@ -1125,30 +1137,30 @@ Partial Class LoansV2
         Me.GroupBox1.TabIndex = 173
         Me.GroupBox1.TabStop = False
         '
-        'btn_comakers
+        'btn_Comaker
         '
-        Me.btn_comakers.BackColor = System.Drawing.Color.Gray
-        Me.btn_comakers.FlatAppearance.BorderSize = 0
-        Me.btn_comakers.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_comakers.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_comakers.ForeColor = System.Drawing.Color.White
-        Me.btn_comakers.Location = New System.Drawing.Point(32, 55)
-        Me.btn_comakers.Name = "btn_comakers"
-        Me.btn_comakers.Size = New System.Drawing.Size(247, 29)
-        Me.btn_comakers.TabIndex = 163
-        Me.btn_comakers.Text = "Manage Co-makers"
-        Me.btn_comakers.UseVisualStyleBackColor = False
+        Me.btn_Comaker.BackColor = System.Drawing.Color.Gray
+        Me.btn_Comaker.FlatAppearance.BorderSize = 0
+        Me.btn_Comaker.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Comaker.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Comaker.ForeColor = System.Drawing.Color.White
+        Me.btn_Comaker.Location = New System.Drawing.Point(32, 55)
+        Me.btn_Comaker.Name = "btn_Comaker"
+        Me.btn_Comaker.Size = New System.Drawing.Size(247, 29)
+        Me.btn_Comaker.TabIndex = 163
+        Me.btn_Comaker.Text = "Manage Co-makers"
+        Me.btn_Comaker.UseVisualStyleBackColor = False
         '
-        'TextBox1
+        'txt_no_of_comaker
         '
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(170, 14)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(109, 26)
-        Me.TextBox1.TabIndex = 135
-        Me.TextBox1.Text = "0"
-        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txt_no_of_comaker.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_no_of_comaker.Location = New System.Drawing.Point(170, 14)
+        Me.txt_no_of_comaker.Name = "txt_no_of_comaker"
+        Me.txt_no_of_comaker.ReadOnly = True
+        Me.txt_no_of_comaker.Size = New System.Drawing.Size(109, 26)
+        Me.txt_no_of_comaker.TabIndex = 135
+        Me.txt_no_of_comaker.Text = "0"
+        Me.txt_no_of_comaker.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label23
         '
@@ -1357,27 +1369,15 @@ Partial Class LoansV2
         Me.txtUser.Size = New System.Drawing.Size(255, 29)
         Me.txtUser.TabIndex = 64
         '
-        'cbx_include_penalty
-        '
-        Me.cbx_include_penalty.AutoSize = True
-        Me.cbx_include_penalty.Checked = True
-        Me.cbx_include_penalty.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbx_include_penalty.Location = New System.Drawing.Point(39, 35)
-        Me.cbx_include_penalty.Name = "cbx_include_penalty"
-        Me.cbx_include_penalty.Size = New System.Drawing.Size(211, 24)
-        Me.cbx_include_penalty.TabIndex = 77
-        Me.cbx_include_penalty.Text = "Include Pending Penalties"
-        Me.cbx_include_penalty.UseVisualStyleBackColor = True
-        '
         'LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.pnlMain)
-        Me.Controls.Add(Me.gbxAddEdit)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)
@@ -1479,8 +1479,8 @@ Partial Class LoansV2
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents txtTotalLoanAmount As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents btn_comakers As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents btn_Comaker As System.Windows.Forms.Button
+    Friend WithEvents txt_no_of_comaker As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents cboLoanStatus As System.Windows.Forms.ComboBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
