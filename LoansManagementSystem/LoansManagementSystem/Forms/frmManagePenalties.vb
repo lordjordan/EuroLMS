@@ -755,8 +755,4 @@
         itm.SubItems.Add(ds.Tables("collectibles").Rows(num - 1).Item("ctb_id").ToString)    'ctb_id specific
 
     End Sub
-
-    Private Sub txtAmount_TextChanged(sender As Object, e As EventArgs) Handles txtAmount.TextChanged
-
-    End Sub
 End Class
