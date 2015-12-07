@@ -176,16 +176,31 @@
             da = New SQLite.SQLiteDataAdapter(query, con)
             da.Fill(ds, "comakers")
             For z = 1 To ds.Tables("comakers").Rows.Count Step 1
-                dr = db.ExecuteReader("select tbl_loans.loan_id, principal, sum(amount) as amt, loan_status, payment_status " & _
-                                      " from tbl_loans inner join tbl_payments on tbl_loans.loan_id = tbl_payments.loan_id where tbl_loans.loan_id= " & _
+                dr = db.ExecuteReader("SELECT loan_id , sum(amount) as amt  FROM tbl_payments" & _
+                                      " where loan_id = " & ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
+                                      " and payment_status= 0")
+                If dr.HasRows Then
+                    If dr.Item("amt").ToString <> "" Then
+                        totalval = CDbl(StrToNum(dr.Item("amt").ToString))
+                    Else
+                        totalval = 0
+                    End If
+
+                End If
+
+                dr = db.ExecuteReader("select loan_id, principal " & _
+                                      " from tbl_loans  where loan_id= " & _
                                       ds.Tables("comakers").Rows(z - 1).Item("loan_id").ToString & _
-                                      " and loan_status = 1 and payment_status= 0")
-                totalval = FormatNumber(dr.Item("amt").ToString, 2)
-                totalval = Replace(remVal, ",", "")
-                remVal = StrToNum(dr.Item("principal").ToString.ToString) - totalval
-                If remVal < 0 Then
+                                      " and loan_status = 1 or loan_status = 0")
+                If dr.HasRows Then
+                    remVal = CDbl(StrToNum(dr.Item("principal").ToString)) - totalval
+                    If remVal < 0 Then
+                        remVal = 0
+                    End If
+                Else
                     remVal = 0
                 End If
+                
                 overallcomake += remVal
             Next
 
@@ -242,13 +257,31 @@
             End If
             'conditiones.x
             rembal = totalUtangWInterest - (overAllPayment - overAllPenaltyStats)
-            If rembal > creditLimit Then
-                Return "0.00"
-            ElseIf rembal <= creditLimit Then
-                conV = NumToStr((creditLimit - rembal) - overallcomake) 'minus ang kinomake kung merons
+            Dim restructured_principal As Double = 0
+
+            If uscLoans.lbl_is_restructure.Text = 1 Then
+                dr = db.ExecuteReader("SELECT COUNT(loan_id) as is_comake FROM tbl_comakers WHERE loan_id=" & uscLoans.lvLoanList.SelectedItems.Item(0).Text & " AND client_id=" & lvClientList.FocusedItem.Text)
+                If dr.HasRows Then
+                    dr.Read()
+                    If dr.Item("is_comake") > 0 Then
+                        With uscLoans
+                            restructured_principal = CDbl(.lvLoanList.SelectedItems.Item(0).SubItems(2).Text)
+                        End With
+                    End If
+
+                End If
+            End if
+                If rembal > creditLimit Then
+                Return StrToNum(NumToStr(0 + restructured_principal))
+                'Return "0.00"
+
+                ElseIf rembal <= creditLimit Then
+                conV = NumToStr((creditLimit - rembal) - overallcomake + restructured_principal) 'minus ang kinomake kung merons
+                'conV = NumToStr((creditLimit - rembal) - overallcomake) 'minus ang kinomake kung merons
+
                 '50000.5
-                Return StrToNum(conV)
-            End If
+                    Return StrToNum(conV)
+                End If
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
