@@ -689,8 +689,8 @@ Partial Class PaymentHistory
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.gbxShowClient)
-        Me.Controls.Add(Me.gbxPrint)
         Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxPrint)
         Me.Name = "PaymentHistory"
         Me.Size = New System.Drawing.Size(779, 706)
         Me.pnlMain.ResumeLayout(False)

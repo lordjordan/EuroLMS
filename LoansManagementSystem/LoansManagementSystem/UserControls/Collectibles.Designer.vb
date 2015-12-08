@@ -26,17 +26,6 @@ Partial Class frmCollectibles
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMain = New System.Windows.Forms.Panel()
-        Me.lblInfoSearch = New System.Windows.Forms.Label()
-        Me.btnEnterPay = New System.Windows.Forms.Button()
-        Me.btnPH = New System.Windows.Forms.Button()
-        Me.btnExport = New System.Windows.Forms.Button()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
-        Me.btnSearchLoan = New System.Windows.Forms.Button()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtSearchLoan = New System.Windows.Forms.TextBox()
-        Me.btnPrint = New System.Windows.Forms.Button()
-        Me.Process = New System.Windows.Forms.Button()
         Me.lvCollectibles = New System.Windows.Forms.ListView()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -55,6 +44,17 @@ Partial Class frmCollectibles
         Me.tsmViewPH = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmInputAmount = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmManagePenalties = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lblInfoSearch = New System.Windows.Forms.Label()
+        Me.btnEnterPay = New System.Windows.Forms.Button()
+        Me.btnPH = New System.Windows.Forms.Button()
+        Me.btnExport = New System.Windows.Forms.Button()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.btnSearchLoan = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtSearchLoan = New System.Windows.Forms.TextBox()
+        Me.btnPrint = New System.Windows.Forms.Button()
+        Me.Process = New System.Windows.Forms.Button()
         Me.gbxAdvanceSearch = New System.Windows.Forms.GroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.cbxCompany = New System.Windows.Forms.ComboBox()
@@ -158,6 +158,120 @@ Partial Class frmCollectibles
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1053, 599)
         Me.pnlMain.TabIndex = 48
+        '
+        'lvCollectibles
+        '
+        Me.lvCollectibles.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lvCollectibles.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader1, Me.ColumnHeader10, Me.ColumnHeader13, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader2, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader14, Me.ColumnHeader16})
+        Me.lvCollectibles.ContextMenuStrip = Me.CMS
+        Me.lvCollectibles.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lvCollectibles.FullRowSelect = True
+        Me.lvCollectibles.GridLines = True
+        Me.lvCollectibles.Location = New System.Drawing.Point(9, 96)
+        Me.lvCollectibles.Name = "lvCollectibles"
+        Me.lvCollectibles.Size = New System.Drawing.Size(1031, 383)
+        Me.lvCollectibles.TabIndex = 30
+        Me.lvCollectibles.UseCompatibleStateImageBehavior = False
+        Me.lvCollectibles.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Loan ID"
+        Me.ColumnHeader3.Width = 70
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "Due Date"
+        Me.ColumnHeader4.Width = 93
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Name"
+        Me.ColumnHeader5.Width = 200
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Payable Amount"
+        Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader1.Width = 120
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Collected Amount"
+        Me.ColumnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader10.Width = 120
+        '
+        'ColumnHeader13
+        '
+        Me.ColumnHeader13.Text = "Inputted Amount"
+        Me.ColumnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader13.Width = 112
+        '
+        'ColumnHeader11
+        '
+        Me.ColumnHeader11.Text = "Penalty Amount"
+        Me.ColumnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader11.Width = 120
+        '
+        'ColumnHeader12
+        '
+        Me.ColumnHeader12.Text = "Previous Balance"
+        Me.ColumnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader12.Width = 120
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Principal Amount"
+        Me.ColumnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader2.Width = 120
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Interest"
+        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader6.Width = 100
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Outstanding Balance"
+        Me.ColumnHeader7.Width = 0
+        '
+        'ColumnHeader14
+        '
+        Me.ColumnHeader14.Text = "ctb_id"
+        Me.ColumnHeader14.Width = 0
+        '
+        'ColumnHeader16
+        '
+        Me.ColumnHeader16.Text = "ctb_id specific"
+        Me.ColumnHeader16.Width = 0
+        '
+        'CMS
+        '
+        Me.CMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmViewPH, Me.tsmInputAmount, Me.tsmManagePenalties})
+        Me.CMS.Name = "ContextMenuStrip1"
+        Me.CMS.Size = New System.Drawing.Size(191, 70)
+        Me.CMS.Text = "LMS"
+        '
+        'tsmViewPH
+        '
+        Me.tsmViewPH.Name = "tsmViewPH"
+        Me.tsmViewPH.Size = New System.Drawing.Size(190, 22)
+        Me.tsmViewPH.Text = "View Payment History"
+        '
+        'tsmInputAmount
+        '
+        Me.tsmInputAmount.Name = "tsmInputAmount"
+        Me.tsmInputAmount.Size = New System.Drawing.Size(190, 22)
+        Me.tsmInputAmount.Text = "Input amount"
+        '
+        'tsmManagePenalties
+        '
+        Me.tsmManagePenalties.Name = "tsmManagePenalties"
+        Me.tsmManagePenalties.Size = New System.Drawing.Size(190, 22)
+        Me.tsmManagePenalties.Text = "Manage penalties"
         '
         'lblInfoSearch
         '
@@ -302,120 +416,6 @@ Partial Class frmCollectibles
         Me.Process.Text = "Process"
         Me.Process.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Process.UseVisualStyleBackColor = False
-        '
-        'lvCollectibles
-        '
-        Me.lvCollectibles.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lvCollectibles.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader1, Me.ColumnHeader10, Me.ColumnHeader13, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader2, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader14, Me.ColumnHeader16})
-        Me.lvCollectibles.ContextMenuStrip = Me.CMS
-        Me.lvCollectibles.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lvCollectibles.FullRowSelect = True
-        Me.lvCollectibles.GridLines = True
-        Me.lvCollectibles.Location = New System.Drawing.Point(9, 96)
-        Me.lvCollectibles.Name = "lvCollectibles"
-        Me.lvCollectibles.Size = New System.Drawing.Size(1031, 383)
-        Me.lvCollectibles.TabIndex = 30
-        Me.lvCollectibles.UseCompatibleStateImageBehavior = False
-        Me.lvCollectibles.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Text = "Loan ID"
-        Me.ColumnHeader3.Width = 70
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Text = "Due Date"
-        Me.ColumnHeader4.Width = 93
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "Name"
-        Me.ColumnHeader5.Width = 200
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "Payable Amount"
-        Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader1.Width = 120
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Collected Amount"
-        Me.ColumnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader10.Width = 120
-        '
-        'ColumnHeader13
-        '
-        Me.ColumnHeader13.Text = "Inputted Amount"
-        Me.ColumnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader13.Width = 112
-        '
-        'ColumnHeader11
-        '
-        Me.ColumnHeader11.Text = "Penalty Amount"
-        Me.ColumnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader11.Width = 120
-        '
-        'ColumnHeader12
-        '
-        Me.ColumnHeader12.Text = "Previous Balance"
-        Me.ColumnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader12.Width = 120
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "Principal Amount"
-        Me.ColumnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader2.Width = 120
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Text = "Interest"
-        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader6.Width = 100
-        '
-        'ColumnHeader7
-        '
-        Me.ColumnHeader7.Text = "Outstanding Balance"
-        Me.ColumnHeader7.Width = 0
-        '
-        'ColumnHeader14
-        '
-        Me.ColumnHeader14.Text = "ctb_id"
-        Me.ColumnHeader14.Width = 0
-        '
-        'ColumnHeader16
-        '
-        Me.ColumnHeader16.Text = "ctb_id specific"
-        Me.ColumnHeader16.Width = 0
-        '
-        'CMS
-        '
-        Me.CMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmViewPH, Me.tsmInputAmount, Me.tsmManagePenalties})
-        Me.CMS.Name = "ContextMenuStrip1"
-        Me.CMS.Size = New System.Drawing.Size(191, 70)
-        Me.CMS.Text = "LMS"
-        '
-        'tsmViewPH
-        '
-        Me.tsmViewPH.Name = "tsmViewPH"
-        Me.tsmViewPH.Size = New System.Drawing.Size(190, 22)
-        Me.tsmViewPH.Text = "View Payment History"
-        '
-        'tsmInputAmount
-        '
-        Me.tsmInputAmount.Name = "tsmInputAmount"
-        Me.tsmInputAmount.Size = New System.Drawing.Size(190, 22)
-        Me.tsmInputAmount.Text = "Input amount"
-        '
-        'tsmManagePenalties
-        '
-        Me.tsmManagePenalties.Name = "tsmManagePenalties"
-        Me.tsmManagePenalties.Size = New System.Drawing.Size(190, 22)
-        Me.tsmManagePenalties.Text = "Manage penalties"
         '
         'gbxAdvanceSearch
         '
@@ -997,8 +997,8 @@ Partial Class frmCollectibles
         Me.Controls.Add(Me.gbxAdvanceSearch)
         Me.Controls.Add(Me.gbxClientCollectible)
         Me.Controls.Add(Me.gbxPH)
-        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxPrint)
+        Me.Controls.Add(Me.pnlMain)
         Me.Name = "frmCollectibles"
         Me.Size = New System.Drawing.Size(1079, 706)
         Me.pnlMain.ResumeLayout(False)

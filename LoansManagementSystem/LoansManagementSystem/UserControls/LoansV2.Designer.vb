@@ -25,6 +25,8 @@ Partial Class LoansV2
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoansV2))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlMain = New System.Windows.Forms.Panel()
+        Me.cbx_viewStats = New System.Windows.Forms.ComboBox()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.gbx_restructure = New System.Windows.Forms.GroupBox()
         Me.cbx_include_penalty = New System.Windows.Forms.CheckBox()
         Me.btn_scheme_two = New System.Windows.Forms.Button()
@@ -162,6 +164,8 @@ Partial Class LoansV2
         Me.pnlMain.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlMain.Controls.Add(Me.cbx_viewStats)
+        Me.pnlMain.Controls.Add(Me.Label18)
         Me.pnlMain.Controls.Add(Me.gbx_restructure)
         Me.pnlMain.Controls.Add(Me.btnPrint)
         Me.pnlMain.Controls.Add(Me.lvLoanList)
@@ -178,6 +182,27 @@ Partial Class LoansV2
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(1079, 610)
         Me.pnlMain.TabIndex = 53
+        '
+        'cbx_viewStats
+        '
+        Me.cbx_viewStats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbx_viewStats.FormattingEnabled = True
+        Me.cbx_viewStats.Items.AddRange(New Object() {"In process", "Approved", "Declined", "Active", "Restructured", "Force stop", "Completed"})
+        Me.cbx_viewStats.Location = New System.Drawing.Point(76, 44)
+        Me.cbx_viewStats.Name = "cbx_viewStats"
+        Me.cbx_viewStats.Size = New System.Drawing.Size(210, 21)
+        Me.cbx_viewStats.TabIndex = 226
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(19, 45)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(40, 16)
+        Me.Label18.TabIndex = 225
+        Me.Label18.Text = "View:"
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'gbx_restructure
         '
@@ -322,10 +347,10 @@ Partial Class LoansV2
         Me.lvLoanList.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvLoanList.FullRowSelect = True
         Me.lvLoanList.GridLines = True
-        Me.lvLoanList.Location = New System.Drawing.Point(22, 62)
+        Me.lvLoanList.Location = New System.Drawing.Point(22, 80)
         Me.lvLoanList.Name = "lvLoanList"
         Me.lvLoanList.OwnerDraw = True
-        Me.lvLoanList.Size = New System.Drawing.Size(1043, 458)
+        Me.lvLoanList.Size = New System.Drawing.Size(1043, 440)
         Me.lvLoanList.TabIndex = 30
         Me.lvLoanList.UseCompatibleStateImageBehavior = False
         Me.lvLoanList.View = System.Windows.Forms.View.Details
@@ -1373,11 +1398,11 @@ Partial Class LoansV2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.gbxAddEdit)
-        Me.Controls.Add(Me.gbxVerifyActivation)
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.pnlMain)
+        Me.Controls.Add(Me.gbxAddEdit)
+        Me.Controls.Add(Me.gbxVerifyActivation)
         Me.Name = "LoansV2"
         Me.Size = New System.Drawing.Size(1110, 674)
         Me.pnlMain.ResumeLayout(False)
@@ -1512,5 +1537,7 @@ Partial Class LoansV2
     Friend WithEvents btn_scheme_one As System.Windows.Forms.Button
     Friend WithEvents btn_scheme_two As System.Windows.Forms.Button
     Friend WithEvents cbx_include_penalty As System.Windows.Forms.CheckBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents cbx_viewStats As System.Windows.Forms.ComboBox
 
 End Class

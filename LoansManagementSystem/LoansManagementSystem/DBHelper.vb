@@ -23,20 +23,29 @@ Public Class DBHelper
     Private Function BuildCommand(ByRef cmd As SQLiteCommand, params As Dictionary(Of String, Object)) As SQLiteCommand
         Try
             con = New SQLiteConnection(Connectionstring)
+
+            'con = New SQLiteConnection(Connectionstring)
+
+
             cmd.Connection = con
             AddParameters(cmd, params)
+            'con.SetPassword("p@ssword")
+
             con.Open()
+            'con.ChangePassword("")
+            '## there should be a connection before you can change/set a password
+            'con.ChangePassword("p@ssword")
+
+
             Connected = True
         Catch ex As Exception
             Connected = False
             MsgBox("Unable to connect to the database", MsgBoxStyle.Critical)
         End Try
-
         Return cmd
 
 
     End Function
-
     Private Sub AddParameters(ByRef cmd As SQLiteCommand, params As Dictionary(Of String, Object))
         If params Is Nothing Then Exit Sub
         For Each kvp As KeyValuePair(Of String, Object) In params
@@ -70,7 +79,7 @@ Public Class DBHelper
             Return cmd.ExecuteScalar
         End Using
     End Function
-    
+
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
 

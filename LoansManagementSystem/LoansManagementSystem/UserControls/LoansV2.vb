@@ -544,6 +544,8 @@ Public Class LoansV2
     End Sub
 
     Public Sub LoadListView()
+
+
         lvLoanList.Items.Clear()
         Using db As New DBHelper(My.Settings.ConnectionString)
             Dim dr As SQLite.SQLiteDataReader
@@ -802,6 +804,7 @@ Public Class LoansV2
             End If
             'conditiones.
             rembal = totalUtangWInterest - (overAllPayment - overAllPenaltyStats)
+
             If rembal > creditLimit Then
                 Return "0.00"
             ElseIf rembal <= creditLimit Then
@@ -1001,7 +1004,7 @@ Fix2:
     End Sub
 
     Private Sub LoansV2_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
-        LoadListView()
+        ' LoadListView()
     End Sub
 
     Private Sub LoansV2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -1011,7 +1014,9 @@ Fix2:
         Me.lvLoanList.ListViewItemSorter = lvwColumnSorter
         Me.lvClientList.ListViewItemSorter = lvwColumnSorter
 
-        LoadListView()
+        'LoadListView()
+       
+        
     End Sub
 
     Private Sub btnSearchLoan_Click(sender As Object, e As EventArgs) Handles btnSearchLoan.Click
@@ -1556,7 +1561,7 @@ Fix2:
         lbl_is_restructure.Text = 1
         gbxAddEdit.Visible = True
         gbxAddEdit.Enabled = True
-        pnlMain.Enabled = True
+        'pnlMain.Enabled = True
         gbxAddEdit.BringToFront()
         gbx_restructure.Visible = False
         cboLoanStatus.SelectedIndex = 1
@@ -1714,4 +1719,226 @@ Fix2:
         restructure(1)
 
     End Sub
+
+
+
+    Private Sub cboApplicationStatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApplicationStatus.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cbx_viewStats_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbx_viewStats.SelectedIndexChanged
+        lvLoanList.Items.Clear()
+        If cbx_viewStats.Text = "" Then Exit Sub
+
+        Using db As New DBHelper(My.Settings.ConnectionString)
+            Try
+                Dim dr As SQLite.SQLiteDataReader
+
+
+                Select Case cbx_viewStats.Text
+
+                    Case "In process"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where loan_status = 0")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+
+
+
+                    Case "Approved"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where application_status = 1")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                    Case "Declined"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where application_status = 2")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                    Case "Active"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where loan_status = 1")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                    Case "Restructured"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where loan_status = 3")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                    Case "Force stop"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where loan_status = 4")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                    Case "Completed"
+                        dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                        "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                        "from tbl_loans L " & _
+                                        "left join tbl_clients C on L.client_id = C.client_id " & _
+                                        "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                        "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                        "where loan_status = 2")
+                        If dr.HasRows Then
+                            Do While dr.Read
+                                Dim itmx As ListViewItem = lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                                itmx.SubItems.Add(dr.Item("name").ToString)
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                                itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                                itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                                itmx.SubItems.Add(dr.Item("terms").ToString)
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                                itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                                itmx.SubItems.Add(cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                                itmx.SubItems.Add(cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                                itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                                itmx.SubItems.Add(dr.Item("company_name").ToString)
+                                itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                            Loop
+                        End If
+                        '            
+
+                End Select
+            Catch ex As Exception
+                MsgBox(ex.ToString, MsgBoxStyle.Critical)
+            Finally
+                db.Dispose()
+            End Try
+        End Using
+        
+    End Sub
+
 End Class

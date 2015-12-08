@@ -175,7 +175,7 @@ Partial Class MainMenu
         Me.btnSettings.Name = "btnSettings"
         Me.btnSettings.Size = New System.Drawing.Size(141, 95)
         Me.btnSettings.TabIndex = 72
-        Me.btnSettings.Text = "Settings"
+        Me.btnSettings.Text = "Database Back up"
         Me.btnSettings.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         Me.btnSettings.UseVisualStyleBackColor = False
         '

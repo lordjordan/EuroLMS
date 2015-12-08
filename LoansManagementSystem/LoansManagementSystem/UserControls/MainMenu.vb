@@ -124,7 +124,37 @@
 
     Private Sub btnLoans_Click(sender As Object, e As EventArgs) Handles btnLoans.Click
         showUSC(uscLoans)
-        uscLoans.LoadListView()
+        uscLoans.lvLoanList.Items.Clear()
+        Using db As New DBHelper(My.Settings.ConnectionString)
+            Dim dr As SQLite.SQLiteDataReader
+            dr = db.ExecuteReader("select loan_id, last_name || ', ' || first_name || ' ' || middle_name [name], principal, amortization, interest_percentage, " & _
+                                "terms, date_start, date_end, application_status, loan_status, loan_remarks, company_name, branch_name " & _
+                                "from tbl_loans L " & _
+                                "left join tbl_clients C on L.client_id = C.client_id " & _
+                                "left join tbl_branches B on C.branch_id = B.branch_id " & _
+                                "left join tbl_company Co on B.company_id = Co.company_id " & _
+                                "where loan_status= 1 or loan_status= 0 or loan_status = 3")
+
+            If dr.HasRows Then
+                Do While dr.Read
+                    Dim itmx As ListViewItem = uscLoans.lvLoanList.Items.Add(dr.Item("loan_id").ToString)
+                    itmx.SubItems.Add(dr.Item("name").ToString)
+                    itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("principal").ToString), 2))
+                    itmx.SubItems.Add(FormatNumber(StrToNum(dr.Item("amortization").ToString), 2))
+                    itmx.SubItems.Add(dr.Item("interest_percentage").ToString)
+                    itmx.SubItems.Add(dr.Item("terms").ToString)
+                    itmx.SubItems.Add(StrToDate(dr.Item("date_start").ToString))
+                    itmx.SubItems.Add(StrToDate(dr.Item("date_end").ToString))
+                    itmx.SubItems.Add(uscLoans.cboApplicationStatus.Items(dr.Item("application_status").ToString))
+                    itmx.SubItems.Add(uscLoans.cboLoanStatus.Items(dr.Item("loan_status").ToString))
+                    itmx.SubItems.Add(dr.Item("loan_remarks").ToString)
+                    itmx.SubItems.Add(dr.Item("company_name").ToString)
+                    itmx.SubItems.Add(dr.Item("branch_name").ToString)
+
+
+                Loop
+            End If
+        End Using
     End Sub
 
     Private Sub btnClients_Click(sender As Object, e As EventArgs)
@@ -186,6 +216,29 @@
     End Sub
 
     Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        If MsgBox("Create Backup of database?", MsgBoxStyle.YesNo + MsgBoxStyle.Information, "Database Backup") = MsgBoxResult.Yes Then
 
+            Dim FileToCopy As String
+            Dim NewCopy As String
+
+            FileToCopy = My.Settings.DB_location 'address 
+            NewCopy = My.Settings.BU_location & "LMSbackup" & DateToStr(Date.Now) & ".s3db"
+            Try
+                If System.IO.File.Exists(FileToCopy) = True Then
+                    If System.IO.File.Exists(NewCopy) Then
+                        If MsgBox("Existing backup file will be overwritten. Continue?", MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, "Overwrite Backup") = MsgBoxResult.Ok Then
+                            System.IO.File.Copy(FileToCopy, NewCopy, True)
+                            log("Database backup created")
+                            MsgBox("Database backup complete.", MsgBoxStyle.Information + MsgBoxStyle.OkOnly, "Backup Complete")
+                        Else
+                            Exit Sub
+                        End If
+
+                    End If
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        End If
     End Sub
 End Class

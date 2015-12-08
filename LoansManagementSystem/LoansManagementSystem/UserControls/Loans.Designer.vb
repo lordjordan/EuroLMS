@@ -1446,12 +1446,12 @@ Partial Class Loans
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.gbxAddEdit)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.gbxShowClient)
         Me.Controls.Add(Me.gbxLoanInfo)
-        Me.Controls.Add(Me.pnlMain)
         Me.Name = "Loans"
         Me.Size = New System.Drawing.Size(1272, 698)
         Me.pnlMain.ResumeLayout(False)

@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=D:\LMSdb\LMS.s3db; Version=3;")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=D:\LMSdb\LMS.s3db; Version=3;Password=p@ssword;")>  _
         Public Property ConnectionString() As String
             Get
                 Return CType(Me("ConnectionString"),String)
@@ -99,6 +99,30 @@ Namespace My
             End Get
             Set
                 Me("PCName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("D:\LMSdbBackup\")>  _
+        Public Property BU_location() As String
+            Get
+                Return CType(Me("BU_location"),String)
+            End Get
+            Set
+                Me("BU_location") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("D:\")>  _
+        Public Property DB_location() As String
+            Get
+                Return CType(Me("DB_location"),String)
+            End Get
+            Set
+                Me("DB_location") = value
             End Set
         End Property
     End Class

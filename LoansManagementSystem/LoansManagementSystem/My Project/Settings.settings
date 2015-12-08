@@ -9,10 +9,16 @@
       <Value Profile="(Default)">LMS.s3db</Value>
     </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=D:\LMSdb\LMS.s3db; Version=3;</Value>
+      <Value Profile="(Default)">Data Source=D:\LMSdb\LMS.s3db; Version=3;Password=p@ssword;</Value>
     </Setting>
     <Setting Name="PCName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Jordan-PC</Value>
+    </Setting>
+    <Setting Name="BU_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\LMSdbBackup\</Value>
+    </Setting>
+    <Setting Name="DB_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\</Value>
     </Setting>
   </Settings>
 </SettingsFile>
